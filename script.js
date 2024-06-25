@@ -476,13 +476,35 @@ var demographicGeoJson = L.geoJson(languageGeoJsonData, {
   style: function (feature) {
     var style;
     style = {
-      fillColor: colorScaleForDemo(feature.properties.Estimate),
+      fillColor: colorScaleForDemo(feature.properties.Total_pop),
       weight: 0.5,
       opacity: 1,
       color: "white",
       fillOpacity: 0.8,
     };
     return style;
+  },
+  onEachFeature: function (feature, layer) {
+    var p = feature.properties;
+    var id = p.FID;
+    var popUpContent = `
+      <p>Total population: ${p.Total_pop}</p>
+      <p>Male: ${p.Male} (${(p.Male_Pct * 100).toFixed(1)}%)</p>
+      <p>Female: ${p.Female} (${(p.Female_Pct * 100).toFixed(1)}%)</p>
+      <p>Median age: ${p.Median_age}</p>
+      <p>Under 5: ${p.Under_5} (${(p.Under_5_pct * 100).toFixed(1)}%)</p>
+      <p>Under 18: ${p.Under_18} (${(p.Under_18_pct * 100).toFixed(1)}%)</p>
+      <div id="pie-chart-${id}"></div>
+    `;
+    layer.bindPopup(popUpContent);
+
+    layer.on("popupopen", function () {
+      var pieData = [
+        { label: "Male", value: p.Male },
+        { label: "Female", value: p.Female },
+      ];
+      createPieChart(`#pie-chart-${id}`, pieData);
+    });
   },
 });
 
@@ -495,3 +517,46 @@ var baseLayers = {
 };
 
 L.control.layers(baseLayers, null, { collapsed: false }).addTo(mymap);
+
+// PIE CHART
+function createPieChart(selector, data) {
+  var width = 150,
+    height = 150,
+    radius = Math.min(width, height) / 2;
+
+  var color = d3
+    .scaleOrdinal()
+    .domain(data.map((d) => d.label))
+    .range(d3.schemeCategory10);
+
+  var pie = d3.pie().value((d) => d.value);
+
+  var arc = d3
+    .arc()
+    .outerRadius(radius - 10)
+    .innerRadius(0);
+
+  var svg = d3
+    .select(selector)
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+  var g = svg
+    .selectAll(".arc")
+    .data(pie(data))
+    .enter()
+    .append("g")
+    .attr("class", "arc");
+
+  g.append("path")
+    .attr("d", arc)
+    .style("fill", (d) => color(d.data.label));
+
+  g.append("text")
+    .attr("transform", (d) => "translate(" + arc.centroid(d) + ")")
+    .style("text-anchor", "middle")
+    .text((d) => d.data.label);
+}

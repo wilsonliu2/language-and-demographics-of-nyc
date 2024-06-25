@@ -129,6 +129,24 @@ function getColor(d) {
     : "#606060"; // No Data
 }
 
+function colorScale(n) {
+  return n > 1000
+    ? "#00441b"
+    : n > 800
+    ? "#006d2c"
+    : n > 600
+    ? "#238b45"
+    : n > 400
+    ? "#41ae76"
+    : n > 200
+    ? "#66c2a4"
+    : n > 0
+    ? "#99d8c9"
+    : n == 0
+    ? "#ccece6"
+    : "#e5f5f9";
+}
+
 function style(feature) {
   return {
     fillColor: getColor(feature.properties.Predominant),
@@ -152,27 +170,68 @@ function updateMap() {
 
   languageGroup.clearLayers();
 
-  var filteredData;
-  if (selectedLanguage == "") {
-    // Predominant language
-    filteredData = languageGeoJsonData.features;
-  } else {
-    // Filtered
-    filteredData = languageGeoJsonData.features.filter(function (feature) {
-      return feature.properties.Predominant == selectedLanguage;
-    });
-  }
-
-  var filteredLanguageGeojson = L.geoJson(filteredData, {
+  var selectedLanguageGeojson = L.geoJson(languageGeoJsonData, {
     style: function (feature) {
-      return {
-        fillColor: getColor(feature.properties.Predominant),
-        weight: 0.5,
-        opacity: 1,
-        color: "white",
-        fillOpacity: 0.8,
-      };
+      var style;
+      if (selectedLanguage == "") {
+        style = {
+          fillColor: getColor(feature.properties.Predominant),
+          weight: 0.5,
+          opacity: 1,
+          color: "white",
+          fillOpacity: 0.8,
+        };
+      } else {
+        let count = 0;
+        switch (selectedLanguage) {
+          case "Arabic":
+            count = feature.properties.Arabic;
+            break;
+          case "Chinese":
+            count = feature.properties.Chinese;
+            break;
+          case "French, Haitian Creole, or Cajun":
+            count = feature.properties.French;
+            break;
+          case "German or other West Germanic languages":
+            count = feature.properties.German;
+            break;
+          case "Korean":
+            count = feature.properties.Korean;
+            break;
+          case "Other and unspecified languages":
+            count = feature.properties.Other;
+            break;
+          case "Other Asian and Pacific Island languages":
+            count = feature.properties.Other_Asia;
+            break;
+          case "Other Indo-European languages":
+            count = feature.properties.Other_Indo;
+            break;
+          case "Russian, Polish, or other Slavic languages":
+            count = feature.properties.Russian;
+            break;
+          case "Spanish":
+            count = feature.properties.Spanish;
+            break;
+          case "Tagalog (incl. Filipino)":
+            count = feature.properties.Tagalog;
+            break;
+          case "Vietnamese":
+            count = feature.properties.Vietnamese;
+            break;
+        }
+        style = {
+          fillColor: colorScale(count),
+          weight: 0.5,
+          opacity: 1,
+          color: "white",
+          fillOpacity: 0.8,
+        };
+      }
+      return style;
     },
+
     onEachFeature: function (feature, layer) {
       var p = feature.properties;
       var cdtanameClean = cleanNeighborhoodName(p.cdtaname);

@@ -182,47 +182,47 @@ function updateMap() {
           fillOpacity: 0.8,
         };
       } else {
-        let count = 0;
+        var n = 0;
         switch (selectedLanguage) {
           case "Arabic":
-            count = feature.properties.Arabic;
+            n = feature.properties.Arabic;
             break;
           case "Chinese":
-            count = feature.properties.Chinese;
+            n = feature.properties.Chinese;
             break;
           case "French, Haitian Creole, or Cajun":
-            count = feature.properties.French;
+            n = feature.properties.French;
             break;
           case "German or other West Germanic languages":
-            count = feature.properties.German;
+            n = feature.properties.German;
             break;
           case "Korean":
-            count = feature.properties.Korean;
+            n = feature.properties.Korean;
             break;
           case "Other and unspecified languages":
-            count = feature.properties.Other;
+            n = feature.properties.Other;
             break;
           case "Other Asian and Pacific Island languages":
-            count = feature.properties.Other_Asia;
+            n = feature.properties.Other_Asia;
             break;
           case "Other Indo-European languages":
-            count = feature.properties.Other_Indo;
+            n = feature.properties.Other_Indo;
             break;
           case "Russian, Polish, or other Slavic languages":
-            count = feature.properties.Russian;
+            n = feature.properties.Russian;
             break;
           case "Spanish":
-            count = feature.properties.Spanish;
+            n = feature.properties.Spanish;
             break;
           case "Tagalog (incl. Filipino)":
-            count = feature.properties.Tagalog;
+            n = feature.properties.Tagalog;
             break;
           case "Vietnamese":
-            count = feature.properties.Vietnamese;
+            n = feature.properties.Vietnamese;
             break;
         }
         style = {
-          fillColor: colorScale(count),
+          fillColor: colorScale(n),
           weight: 0.5,
           opacity: 1,
           color: "white",
@@ -260,7 +260,7 @@ function updateMap() {
               "<p>Number of Arabic speakers: " + p.Arabic + "</p>";
             popupContent +=
               "<p>Percentage of population speaking Arabic who are not fluent English speakers: " +
-              p.Arabic_nf +
+              (p.Arabic_nf * 100).toFixed(1) +
               "%</p>";
             break;
 
@@ -269,7 +269,7 @@ function updateMap() {
               "<p>Number of Chinese speakers: " + p.Chinese + "</p>";
             popupContent +=
               "<p>Percentage of population speaking Chinese who are not fluent English speakers " +
-              p.Chinese_nf +
+              (p.Chinese_nf * 100).toFixed(1) +
               "%</p>";
             break;
 
@@ -280,7 +280,7 @@ function updateMap() {
               "</p>";
             popupContent +=
               "<p>Percentage of population speaking French, Haitian Creole, or Cajun who are not fluent English speakers: " +
-              p.French_nf +
+              (p.French_nf * 100).toFixed(1) +
               "%</p>";
             break;
 
@@ -291,7 +291,7 @@ function updateMap() {
               "</p>";
             popupContent +=
               "<p>Percentage of population speaking German or other West Germanic languages who are not fluent English speakers: " +
-              p.German_nf +
+              (p.German_nf * 100).toFixed(1) +
               "%</p>";
             break;
 
@@ -300,7 +300,7 @@ function updateMap() {
               "<p>Number of Korean speakers: " + p.Korean + "</p>";
             popupContent +=
               "<p>Percentage of population speaking Korean who are not fluent English speakers: " +
-              p.Korean_nf +
+              (p.Korean_nf * 100).toFixed(1) +
               "%</p>";
             break;
 
@@ -311,7 +311,7 @@ function updateMap() {
               "</p>";
             popupContent +=
               "<p>Percentage of population speaking Other and unspecified languages who are not fluent English speakers: " +
-              p.Other_nf +
+              (p.Other_nf * 100).toFixed(1) +
               "%</p>";
             break;
 
@@ -322,7 +322,7 @@ function updateMap() {
               "</p>";
             popupContent +=
               "<p>Percentage of population speaking Other Asian and Pacific Island languages who are not fluent English speakers: " +
-              p.Other_Asia_nf +
+              (p.Other_Asia_nf * 100).toFixed(1) +
               "%</p>";
             break;
 
@@ -333,7 +333,7 @@ function updateMap() {
               "</p>";
             popupContent +=
               "<p>Percentage of population speaking Other Indo-European languages who are not fluent English speakers: " +
-              p.Other_Indo_nf +
+              (p.Other_Indo_nf * 100).toFixed(1) +
               "%</p>";
             break;
 
@@ -344,7 +344,7 @@ function updateMap() {
               "</p>";
             popupContent +=
               "<p>Percentage of population speaking Russian, Polish, or other Slavic languages who are not fluent English speakers: " +
-              p.Russian_nf +
+              (p.Russian_nf * 100).toFixed(1) +
               "%</p>";
             break;
 
@@ -353,16 +353,16 @@ function updateMap() {
               "<p>Number of Spanish speakers: " + p.Spanish + "</p>";
             popupContent +=
               "<p>Percentage of population speaking Spanish who are not fluent English speakers: " +
-              p.Spanish_nf +
+              (p.Spanish_nf * 100).toFixed(1) +
               "%</p>";
             break;
 
-          case "Tagalog":
+          case "Tagalog (incl. Filipino)":
             popupContent +=
               "<p>Number of Tagalog speakers: " + p.Tagalog + "</p>";
             popupContent +=
               "<p>Percentage of population speaking Tagalog who are not fluent English speakers: " +
-              p.Tagalog_nf +
+              (p.Tagalog_nf * 100).toFixed(1) +
               "%</p>";
             break;
 
@@ -371,7 +371,7 @@ function updateMap() {
               "<p>Number of Vietnamese speakers: " + p.Vietnamese + "</p>";
             popupContent +=
               "<p>Percentage of population speaking Vietnamese who are not fluent English speakers: " +
-              p.Vietnamese_nf +
+              (p.Vietnamese_nf * 100).toFixed(1) +
               "%</p>";
             break;
         }
@@ -396,7 +396,7 @@ function updateMap() {
 // LANGUAGE CONTROL - create a dropdown control to select languages and update the map
 var LanguageControl = L.Control.extend({
   options: {
-    position: "topright",
+    position: "bottomright",
   },
   onAdd: function (map) {
     var container = L.DomUtil.create("div");
@@ -452,3 +452,46 @@ var LanguageControl = L.Control.extend({
 mymap.addControl(new LanguageControl());
 
 updateMap();
+
+// DEMOGRAPHIC DATA
+function colorScaleForDemo(n) {
+  return n > 10000
+    ? "#00441b"
+    : n > 7500
+    ? "#006d2c"
+    : n > 5000
+    ? "#238b45"
+    : n > 2500
+    ? "#41ae76"
+    : n > 1000
+    ? "#66c2a4"
+    : n > 500
+    ? "#99d8c9"
+    : n == 0
+    ? "#ccece6"
+    : "#e5f5f9";
+}
+
+var demographicGeoJson = L.geoJson(languageGeoJsonData, {
+  style: function (feature) {
+    var style;
+    style = {
+      fillColor: colorScaleForDemo(feature.properties.Estimate),
+      weight: 0.5,
+      opacity: 1,
+      color: "white",
+      fillOpacity: 0.8,
+    };
+    return style;
+  },
+});
+
+demographicGeoJson.addTo(mymap);
+
+// LAYERS
+var baseLayers = {
+  "Language Data": languageGroup,
+  "Demographic Data": demographicGeoJson,
+};
+
+L.control.layers(baseLayers, null, { collapsed: false }).addTo(mymap);

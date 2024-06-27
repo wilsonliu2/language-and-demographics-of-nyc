@@ -232,127 +232,115 @@ function updateMap() {
       } else {
         // Popup content for selected language
         popupContent =
-          "<p>" + p.Geographic + "</p>" + "<p>(" + cdtanameClean + ")</p>";
-
+          "<h3>" + p.Geographic + "</h3>" + "<h5>(" + cdtanameClean + ")</h5>";
         switch (selectedLanguage) {
           case "Arabic":
-            popupContent +=
-              "<p>Number of Arabic speakers: " + p.Arabic + "</p>";
-            popupContent +=
-              "<p>Percentage of population speaking Arabic who are not fluent English speakers: " +
-              (p.Arabic_nf * 100).toFixed(1) +
-              "%</p>";
+            popupContent += `<p>Number of Arabic speakers: <b>${
+              p.Arabic
+            }</b></p>
+              <p>Percentage of population speaking Arabic who are not fluent English speakers: <b>${(
+                p.Arabic_nf * 100
+              ).toFixed(1)}%
+              </b></p>`;
             break;
 
           case "Chinese":
-            popupContent +=
-              "<p>Number of Chinese speakers: " + p.Chinese + "</p>";
-            popupContent +=
-              "<p>Percentage of population speaking Chinese who are not fluent English speakers " +
-              (p.Chinese_nf * 100).toFixed(1) +
-              "%</p>";
+            popupContent += `<p>Number of Chinese speakers: <b>${
+              p.Chinese
+            }</b></p>
+                <p>Percentage of population speaking Chinese who are not fluent English speakers: <b>${(
+                  p.Chinese_nf * 100
+                ).toFixed(1)}%</b></p>`;
             break;
 
           case "French, Haitian Creole, or Cajun":
-            popupContent +=
-              "<p>Number of French, Haitian Creole, or Cajun speakers: " +
-              p.French +
-              "</p>";
-            popupContent +=
-              "<p>Percentage of population speaking French, Haitian Creole, or Cajun who are not fluent English speakers: " +
-              (p.French_nf * 100).toFixed(1) +
-              "%</p>";
+            popupContent += `<p>Number of French, Haitian Creole, or Cajun speakers: <b>${
+              p.French
+            }</b></p>
+                <p>Percentage of population speaking French, Haitian Creole, or Cajun who are not fluent English speakers: <b>${(
+                  p.French_nf * 100
+                ).toFixed(1)}%</b></p>`;
             break;
 
           case "German or other West Germanic languages":
-            popupContent +=
-              "<p>Number of German or other West Germanic languages speakers: " +
-              p.German +
-              "</p>";
-            popupContent +=
-              "<p>Percentage of population speaking German or other West Germanic languages who are not fluent English speakers: " +
-              (p.German_nf * 100).toFixed(1) +
-              "%</p>";
+            popupContent += `<p>Number of German or other West Germanic languages speakers: <b>${
+              p.German
+            }</b></p>
+                <p>Percentage of population speaking German or other West Germanic languages who are not fluent English speakers: <b>${(
+                  p.German_nf * 100
+                ).toFixed(1)}%</b></p>`;
             break;
 
           case "Korean":
-            popupContent +=
-              "<p>Number of Korean speakers: " + p.Korean + "</p>";
-            popupContent +=
-              "<p>Percentage of population speaking Korean who are not fluent English speakers: " +
-              (p.Korean_nf * 100).toFixed(1) +
-              "%</p>";
+            popupContent += `<p>Number of Korean speakers: <b>${
+              p.Korean
+            }</b></p>
+                <p>Percentage of population speaking Korean who are not fluent English speakers: <b>${(
+                  p.Korean_nf * 100
+                ).toFixed(1)}%</b></p>`;
             break;
 
           case "Other and unspecified languages":
-            popupContent +=
-              "<p>Number of Other and unspecified languages speakers: " +
-              p.Other +
-              "</p>";
-            popupContent +=
-              "<p>Percentage of population speaking Other and unspecified languages who are not fluent English speakers: " +
-              (p.Other_nf * 100).toFixed(1) +
-              "%</p>";
+            popupContent += `<p>Number of Other and unspecified languages speakers: <b>${
+              p.Other
+            }</b></p>
+                <p>Percentage of population speaking Other and unspecified languages who are not fluent English speakers: <b>${(
+                  p.Other_nf * 100
+                ).toFixed(1)}%</b></p>`;
             break;
 
           case "Other Asian and Pacific Island languages":
-            popupContent +=
-              "<p>Number of speakers of Other Asian and Pacific Island languages: " +
-              p.Other_Asia +
-              "</p>";
-            popupContent +=
-              "<p>Percentage of population speaking Other Asian and Pacific Island languages who are not fluent English speakers: " +
-              (p.Other_Asia_nf * 100).toFixed(1) +
-              "%</p>";
+            popupContent += `<p>Number of speakers of Other Asian and Pacific Island languages: <b>${
+              p.Other_Asia
+            }</b></p>
+                <p>Percentage of population speaking Other Asian and Pacific Island languages who are not fluent English speakers: <b>${(
+                  p.Other_Asia_nf * 100
+                ).toFixed(1)}%</b></p>`;
             break;
 
           case "Other Indo-European languages":
-            popupContent +=
-              "<p>Number of speakers of Other Indo-European languages: " +
-              p.Other_Indo +
-              "</p>";
-            popupContent +=
-              "<p>Percentage of population speaking Other Indo-European languages who are not fluent English speakers: " +
-              (p.Other_Indo_nf * 100).toFixed(1) +
-              "%</p>";
+            popupContent += `<p>Number of speakers of Other Indo-European languages: <b>${
+              p.Other_Indo
+            }</b></p>
+                <p>Percentage of population speaking Other Indo-European languages who are not fluent English speakers: <b>${(
+                  p.Other_Indo_nf * 100
+                ).toFixed(1)}%</b></p>`;
             break;
 
           case "Russian, Polish, or other Slavic languages":
-            popupContent +=
-              "<p>Number of Russian, Polish, or other Slavic languages speakers: " +
-              p.Russian +
-              "</p>";
-            popupContent +=
-              "<p>Percentage of population speaking Russian, Polish, or other Slavic languages who are not fluent English speakers: " +
-              (p.Russian_nf * 100).toFixed(1) +
-              "%</p>";
+            popupContent += `<p>Number of Russian, Polish, or other Slavic languages speakers: <b>${
+              p.Russian
+            }</b></p>
+                <p>Percentage of population speaking Russian, Polish, or other Slavic languages who are not fluent English speakers: <b>${(
+                  p.Russian_nf * 100
+                ).toFixed(1)}%</b></p>`;
             break;
 
           case "Spanish":
-            popupContent +=
-              "<p>Number of Spanish speakers: " + p.Spanish + "</p>";
-            popupContent +=
-              "<p>Percentage of population speaking Spanish who are not fluent English speakers: " +
-              (p.Spanish_nf * 100).toFixed(1) +
-              "%</p>";
+            popupContent += `<p>Number of Spanish speakers: <b>${
+              p.Spanish
+            }</b></p>
+                <p>Percentage of population speaking Spanish who are not fluent English speakers: <b>${(
+                  p.Spanish_nf * 100
+                ).toFixed(1)}%</b></p>`;
             break;
 
           case "Tagalog (incl. Filipino)":
-            popupContent +=
-              "<p>Number of Tagalog speakers: " + p.Tagalog + "</p>";
-            popupContent +=
-              "<p>Percentage of population speaking Tagalog who are not fluent English speakers: " +
-              (p.Tagalog_nf * 100).toFixed(1) +
-              "%</p>";
+            popupContent += `<p>Number of Tagalog speakers: <b>${
+              p.Tagalog
+            }</b></p>
+                <p>Percentage of population speaking Tagalog who are not fluent English speakers: <b>${(
+                  p.Tagalog_nf * 100
+                ).toFixed(1)}%</b></p>`;
             break;
 
           case "Vietnamese":
-            popupContent +=
-              "<p>Number of Vietnamese speakers: " + p.Vietnamese + "</p>";
-            popupContent +=
-              "<p>Percentage of population speaking Vietnamese who are not fluent English speakers: " +
-              (p.Vietnamese_nf * 100).toFixed(1) +
-              "%</p>";
+            popupContent += `<p>Number of Vietnamese speakers: <b>${
+              p.Vietnamese
+            }</b></p>
+                <p>Percentage of population speaking Vietnamese who are not fluent English speakers: <b>${(
+                  p.Vietnamese_nf * 100
+                ).toFixed(1)}%</b></p>`;
             break;
         }
       }

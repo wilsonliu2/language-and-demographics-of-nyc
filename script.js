@@ -213,12 +213,19 @@ function updateMap() {
       if (selectedLanguage == "") {
         // Default popup content for predominant language
         popupContent =
-          "<p>" +
+          "<h3>" +
           p.Geographic +
-          "</p>" +
-          "<p>(" +
+          "</h3>" +
+          "<h5>(" +
           cdtanameClean +
-          ")</p>" +
+          ")</h5>" +
+          "Approximately " +
+          p.population +
+          " people live in " +
+          p.Total_pop +
+          ", and around " +
+          (p.Speak_anot * 100).toFixed(1) +
+          "% of these residents speak a language other than English." +
           "The predominant non-English spoken language is: <b>" +
           p.Predominant +
           "</b>";
@@ -436,6 +443,20 @@ var LanguageControl = L.Control.extend({
 
 mymap.addControl(new LanguageControl());
 
+function addLanguageControl() {
+  if (!languageControl) {
+    languageControl = new LanguageControl();
+    mymap.addControl(languageControl);
+  }
+}
+
+function removeLanguageControl() {
+  if (languageControl) {
+    mymap.removeControl(languageControl);
+    languageControl = null;
+  }
+}
+
 updateMap();
 
 //=========================================================== DEMOGRAPHICS =================================================================
@@ -520,15 +541,26 @@ var demographicGeoJson = L.geoJson(languageGeoJsonData, {
     // Unique identifier to ensure each pie chart is rendered in the correct popup
     var p = feature.properties;
     var id = p.FID;
+    var cdtanameClean = formatNeighborhoodName(p.cdtaname);
 
     // Crate popup content with demographic details
-    var popUpContent = `
-      <p>Total population: ${p.Total_pop}</p>
-      <p>Male: ${p.Male} (${(p.Male_Pct * 100).toFixed(1)}%)</p>
-      <p>Female: ${p.Female} (${(p.Female_Pct * 100).toFixed(1)}%)</p>
-      <p>Median age: ${p.Median_age}</p>
-      <p>Under 5: ${p.Under_5} (${(p.Under_5_pct * 100).toFixed(1)}%)</p>
-      <p>Under 18: ${p.Under_18} (${(p.Under_18_pct * 100).toFixed(1)}%)</p>
+    var popUpContent =
+      "<h3>" +
+      p.Geographic +
+      "</h3>" +
+      "<h5>(" +
+      cdtanameClean +
+      ")</h5>" +
+      `
+      <p>Approximately <b>${
+        p.Total_pop
+      }</b> people live in this census tract.</p>
+            <p><b>${(p.Male_Pct * 100).toFixed(1)}%</b> (${
+        p.Male
+      }) of the population are male and <b>${(p.Female_Pct * 100).toFixed(
+        1
+      )}%</b> (${p.Female}) of the population are female</p>
+      <p>The median age is <b>${p.Median_age}</b>.</p>
       <div id="pie-chart-${id}"></div>
     `;
 

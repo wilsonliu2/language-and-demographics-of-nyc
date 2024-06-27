@@ -1,3 +1,5 @@
+//=========================================================== MAP SETUP =================================================================
+
 // MAP BOUNDS - set bounds so the map has limits for visibility
 var southWest = L.latLng(40.477399, -74.25909), // Southwest bound (farther south and west)
   northEast = L.latLng(40.917577, -73.700272), // Northeast bound (farther north and east)
@@ -7,7 +9,7 @@ var southWest = L.latLng(40.477399, -74.25909), // Southwest bound (farther sout
 var mymap = L.map("mapid", {
   maxBounds: bounds, // Map automatically bounces back to center
   maxZoom: 18,
-  minZoom: 11, // LOWERED minZoom TO SHOW MORE AREA
+  minZoom: 11,
 }).setView([40.65, -73.97], 11);
 
 // BASEMAP
@@ -25,53 +27,24 @@ var baseLayer = L.tileLayer(
   }
 ).addTo(mymap);
 
-//=========================================================== LANGUAGE LAYERS =================================================================
+//=========================================================== VARIABLES =================================================================
 
+var selectedLayer = "language";
+
+//=========================================================== LANGUAGE =================================================================
+
+// Create a FeatureGroup for language layers
 var languageGroup = new L.featureGroup();
 
-// LANGUAGE GEOJSON
-var languageGeoJson = L.geoJson(languageGeoJsonData, {
-  style: style,
-  onEachFeature: function (feature, layer) {
-    var p = feature.properties;
-    var cdtanameClean = cleanNeighborhoodName(p.cdtaname);
-
-    var popupContent =
-      "<p>" +
-      p.Geographic +
-      "</p>" +
-      "<p>(" +
-      cdtanameClean +
-      ")</p>" +
-      "The predominant non-English spoken language is: <b>" +
-      p.Predominant +
-      "</b>";
-
-    layer.bindPopup(popupContent);
-
-    // ADD MOUSEOVER
-    layer.on("mouseover", function () {
-      layer.setStyle({
-        fillOpacity: 0.3,
-      });
-    });
-    layer.on("mouseout", function () {
-      layer.setStyle({
-        fillOpacity: 0.8,
-      });
-    });
-  },
-}).addTo(languageGroup);
-
-languageGroup.addTo(mymap);
-
-// LANGUAGE LEGEND
+// Predominant language legend
 var languageLegend = L.control({
   position: "bottomleft",
 });
 
 languageLegend.onAdd = function () {
   var div = L.DomUtil.create("div", "legend");
+
+  // Color boxes and labels for each language
   div.innerHTML += "<h4>Predominant Languages</h4>";
   div.innerHTML +=
     '<i style="background: #fa9993ff"></i><span>Arabic</span><br>';
@@ -101,128 +74,127 @@ languageLegend.onAdd = function () {
 
 languageLegend.addTo(mymap);
 
-function getColor(d) {
-  return d == "Arabic"
+// Function to get color based on predominant language
+function getColorBasedOnLanguageLegend(language) {
+  return language == "Arabic"
     ? "#fa9993ff"
-    : d == "Chinese"
+    : language == "Chinese"
     ? "#963f92ff"
-    : d == "French, Haitian Creole, or Cajun"
+    : language == "French, Haitian Creole, or Cajun"
     ? "#6b5b95"
-    : d == "German or other West Germanic languages"
+    : language == "German or other West Germanic languages"
     ? "#91c1fdff"
-    : d == "Korean"
+    : language == "Korean"
     ? "#e7298a"
-    : d == "Other and unspecified languages"
+    : language == "Other and unspecified languages"
     ? "#606060"
-    : d == "Other Asian and Pacific Island languages"
+    : language == "Other Asian and Pacific Island languages"
     ? "#30bfc7ff"
-    : d == "Other Indo-European languages"
+    : language == "Other Indo-European languages"
     ? "#3288bd"
-    : d == "Russian, Polish, or other Slavic languages"
+    : language == "Russian, Polish, or other Slavic languages"
     ? "#51eba6ff"
-    : d == "Spanish"
+    : language == "Spanish"
     ? "#41ab5d"
-    : d == "Tagalog (incl. Filipino)"
+    : language == "Tagalog (incl. Filipino)"
     ? "#eb554dff"
-    : d == "Vietnamese"
+    : language == "Vietnamese"
     ? "#ccb8cbff"
-    : "#606060"; // No Data
+    : "#606060";
 }
 
-function colorScale(n) {
-  return n > 1000
+// Function to get color based on the number of speakers of a selected language
+function colorScaleNumbersForLanguage(value) {
+  return value > 1000
     ? "#00441b"
-    : n > 800
+    : value > 800
     ? "#006d2c"
-    : n > 600
+    : value > 600
     ? "#238b45"
-    : n > 400
+    : value > 400
     ? "#41ae76"
-    : n > 200
+    : value > 200
     ? "#66c2a4"
-    : n > 0
+    : value > 0
     ? "#99d8c9"
-    : n == 0
+    : value == 0
     ? "#ccece6"
     : "#e5f5f9";
 }
 
-function style(feature) {
-  return {
-    fillColor: getColor(feature.properties.Predominant),
-    weight: 0.5,
-    opacity: 1,
-    color: "white",
-    fillOpacity: 0.8,
-  };
-}
-
-function cleanNeighborhoodName(name) {
+// Function to format neighborhood names
+function formatNeighborhoodName(name) {
   const firstSpaceIndex = name.indexOf(" ");
   const lastParenIndex = name.lastIndexOf("(");
 
   return name.substring(firstSpaceIndex + 1, lastParenIndex).trim();
 }
 
-// LANGUAGE DROP-DOWN
+// Function to update map based on selected language from the dropdown
 function updateMap() {
+  // Get selected language from the dropdown
   var selectedLanguage = document.getElementById("languageSelect").value;
 
+  // Clear existing layer
   languageGroup.clearLayers();
 
+  // Add new layer based on the selected language
   var selectedLanguageGeojson = L.geoJson(languageGeoJsonData, {
     style: function (feature) {
       var style;
       if (selectedLanguage == "") {
+        // Default style for predominant language (if no language is selected)
         style = {
-          fillColor: getColor(feature.properties.Predominant),
+          fillColor: getColorBasedOnLanguageLegend(
+            feature.properties.Predominant
+          ),
           weight: 0.5,
           opacity: 1,
           color: "white",
           fillOpacity: 0.8,
         };
       } else {
-        var n = 0;
+        var numberOfSpeakers = 0;
         switch (selectedLanguage) {
           case "Arabic":
-            n = feature.properties.Arabic;
+            numberOfSpeakers = feature.properties.Arabic;
             break;
           case "Chinese":
-            n = feature.properties.Chinese;
+            numberOfSpeakers = feature.properties.Chinese;
             break;
           case "French, Haitian Creole, or Cajun":
-            n = feature.properties.French;
+            numberOfSpeakers = feature.properties.French;
             break;
           case "German or other West Germanic languages":
-            n = feature.properties.German;
+            numberOfSpeakers = feature.properties.German;
             break;
           case "Korean":
-            n = feature.properties.Korean;
+            numberOfSpeakers = feature.properties.Korean;
             break;
           case "Other and unspecified languages":
-            n = feature.properties.Other;
+            numberOfSpeakers = feature.properties.Other;
             break;
           case "Other Asian and Pacific Island languages":
-            n = feature.properties.Other_Asia;
+            numberOfSpeakers = feature.properties.Other_Asia;
             break;
           case "Other Indo-European languages":
-            n = feature.properties.Other_Indo;
+            numberOfSpeakers = feature.properties.Other_Indo;
             break;
           case "Russian, Polish, or other Slavic languages":
-            n = feature.properties.Russian;
+            numberOfSpeakers = feature.properties.Russian;
             break;
           case "Spanish":
-            n = feature.properties.Spanish;
+            numberOfSpeakers = feature.properties.Spanish;
             break;
           case "Tagalog (incl. Filipino)":
-            n = feature.properties.Tagalog;
+            numberOfSpeakers = feature.properties.Tagalog;
             break;
           case "Vietnamese":
-            n = feature.properties.Vietnamese;
+            numberOfSpeakers = feature.properties.Vietnamese;
             break;
         }
         style = {
-          fillColor: colorScale(n),
+          fillColor: colorScaleNumbersForLanguage(numberOfSpeakers),
           weight: 0.5,
           opacity: 1,
           color: "white",
@@ -232,9 +204,10 @@ function updateMap() {
       return style;
     },
 
+    // Adding a popup for each features
     onEachFeature: function (feature, layer) {
       var p = feature.properties;
-      var cdtanameClean = cleanNeighborhoodName(p.cdtaname);
+      var cdtanameClean = formatNeighborhoodName(p.cdtaname);
 
       var popupContent;
       if (selectedLanguage == "") {
@@ -379,11 +352,13 @@ function updateMap() {
 
       layer.bindPopup(popupContent);
 
+      // Change style base on mouse events
       layer.on("mouseover", function () {
         layer.setStyle({
           fillOpacity: 0.3,
         });
       });
+
       layer.on("mouseout", function () {
         layer.setStyle({
           fillOpacity: 0.8,
@@ -391,20 +366,29 @@ function updateMap() {
       });
     },
   }).addTo(languageGroup);
+
+  // Update the legend based on the selected layer and language
+  selectedLayer = "language";
+  updateLegend(selectedLayer, selectedLanguage);
 }
 
-// LANGUAGE CONTROL - create a dropdown control to select languages and update the map
+//=========================================================== LANGUAGE DROPDOWN =================================================================
+
 var LanguageControl = L.Control.extend({
+  // Position
   options: {
-    position: "bottomright",
+    position: "topright",
   },
+
   onAdd: function (map) {
     var container = L.DomUtil.create("div");
 
     var select = L.DomUtil.create("select", "", container);
+    // ID = languageSelect
     select.id = "languageSelect";
     select.onchange = updateMap;
 
+    // Define languages for dropdown
     var languages = [
       { value: "", text: "Select Language" },
       { value: "Arabic", text: "Arabic" },
@@ -439,6 +423,7 @@ var LanguageControl = L.Control.extend({
       { value: "Vietnamese", text: "Vietnamese" },
     ];
 
+    // Populate dropdown
     for (var i = 0; i < languages.length; i++) {
       var option = L.DomUtil.create("option", "", select);
       option.value = languages[i].value;
@@ -453,73 +438,29 @@ mymap.addControl(new LanguageControl());
 
 updateMap();
 
-// DEMOGRAPHIC DATA
-function colorScaleForDemo(n) {
-  return n > 10000
+//=========================================================== DEMOGRAPHICS =================================================================
+
+// Function for demographic data to get color based on population
+function getColorScaleForDemographics(population) {
+  return population > 10000
     ? "#00441b"
-    : n > 7500
+    : population > 7500
     ? "#006d2c"
-    : n > 5000
+    : population > 5000
     ? "#238b45"
-    : n > 2500
+    : population > 2500
     ? "#41ae76"
-    : n > 1000
+    : population > 1000
     ? "#66c2a4"
-    : n > 500
+    : population > 500
     ? "#99d8c9"
-    : n == 0
+    : population == 0
     ? "#ccece6"
-    : "#e5f5f9";
+    : "#e5f5f9"; // Default color (for undefined population)
 }
 
-var demographicGeoJson = L.geoJson(languageGeoJsonData, {
-  style: function (feature) {
-    var style;
-    style = {
-      fillColor: colorScaleForDemo(feature.properties.Total_pop),
-      weight: 0.5,
-      opacity: 1,
-      color: "white",
-      fillOpacity: 0.8,
-    };
-    return style;
-  },
-  onEachFeature: function (feature, layer) {
-    var p = feature.properties;
-    var id = p.FID;
-    var popUpContent = `
-      <p>Total population: ${p.Total_pop}</p>
-      <p>Male: ${p.Male} (${(p.Male_Pct * 100).toFixed(1)}%)</p>
-      <p>Female: ${p.Female} (${(p.Female_Pct * 100).toFixed(1)}%)</p>
-      <p>Median age: ${p.Median_age}</p>
-      <p>Under 5: ${p.Under_5} (${(p.Under_5_pct * 100).toFixed(1)}%)</p>
-      <p>Under 18: ${p.Under_18} (${(p.Under_18_pct * 100).toFixed(1)}%)</p>
-      <div id="pie-chart-${id}"></div>
-    `;
-    layer.bindPopup(popUpContent);
-
-    layer.on("popupopen", function () {
-      var pieData = [
-        { label: "Male", value: p.Male },
-        { label: "Female", value: p.Female },
-      ];
-      createPieChart(`#pie-chart-${id}`, pieData);
-    });
-  },
-});
-
-demographicGeoJson.addTo(mymap);
-
-// LAYERS
-var baseLayers = {
-  "Language Data": languageGroup,
-  "Demographic Data": demographicGeoJson,
-};
-
-L.control.layers(baseLayers, null, { collapsed: false }).addTo(mymap);
-
-// PIE CHART
-function createPieChart(selector, data) {
+// Function for demographic data to create a pie chart
+function createPieChartForDemographic(id, data) {
   var width = 150,
     height = 150,
     radius = Math.min(width, height) / 2;
@@ -537,7 +478,7 @@ function createPieChart(selector, data) {
     .innerRadius(0);
 
   var svg = d3
-    .select(selector)
+    .select(id)
     .append("svg")
     .attr("width", width)
     .attr("height", height)
@@ -560,3 +501,142 @@ function createPieChart(selector, data) {
     .style("text-anchor", "middle")
     .text((d) => d.data.label);
 }
+
+// Create a GeoJSON layer for demographic data
+var demographicGeoJson = L.geoJson(languageGeoJsonData, {
+  style: function (feature) {
+    var style;
+    style = {
+      fillColor: getColorScaleForDemographics(feature.properties.Total_pop),
+      weight: 0.5,
+      opacity: 1,
+      color: "white",
+      fillOpacity: 0.8,
+    };
+    return style;
+  },
+
+  onEachFeature: function (feature, layer) {
+    // Unique identifier to ensure each pie chart is rendered in the correct popup
+    var p = feature.properties;
+    var id = p.FID;
+
+    // Crate popup content with demographic details
+    var popUpContent = `
+      <p>Total population: ${p.Total_pop}</p>
+      <p>Male: ${p.Male} (${(p.Male_Pct * 100).toFixed(1)}%)</p>
+      <p>Female: ${p.Female} (${(p.Female_Pct * 100).toFixed(1)}%)</p>
+      <p>Median age: ${p.Median_age}</p>
+      <p>Under 5: ${p.Under_5} (${(p.Under_5_pct * 100).toFixed(1)}%)</p>
+      <p>Under 18: ${p.Under_18} (${(p.Under_18_pct * 100).toFixed(1)}%)</p>
+      <div id="pie-chart-${id}"></div>
+    `;
+
+    layer.bindPopup(popUpContent);
+
+    // Event listener to create a pie chart when popup is opened
+    layer.on("popupopen", function () {
+      var pieData = [
+        { label: "Male", value: p.Male },
+        { label: "Female", value: p.Female },
+      ];
+      createPieChartForDemographic(`#pie-chart-${id}`, pieData);
+    });
+  },
+});
+
+demographicGeoJson.addTo(mymap);
+
+//=========================================================== LEGEND =================================================================
+
+// Function to update the legend based on the selected layer and language
+function updateLegend(selectedLayer, selectedLanguage) {
+  var legendContent = "<h4>Legend</h4>";
+
+  if (selectedLayer == "language") {
+    if (selectedLanguage == "") {
+      legendContent += "<h4>Predominant Languages</h4>";
+      legendContent +=
+        '<i style="background: #fa9993ff"></i><span>Arabic</span><br>';
+      legendContent +=
+        '<i style="background: #963f92ff"></i><span>Chinese</span><br>';
+      legendContent +=
+        '<i style="background: #6b5b95"></i><span>French, Haitian Creole, or Cajun</span><br>';
+      legendContent +=
+        '<i style="background: #91c1fdff"></i><span>German or other West Germanic languages</span><br>';
+      legendContent +=
+        '<i style="background: #e7298a"></i><span>Korean</span><br>';
+      legendContent +=
+        '<i style="background: #606060"></i><span>Other and unspecified languages</span><br>';
+      legendContent +=
+        '<i style="background: #30bfc7ff"></i><span>Other Asian and Pacific Island languages</span><br>';
+      legendContent +=
+        '<i style="background: #3288bd"></i><span>Other Indo-European languages</span><br>';
+      legendContent +=
+        '<i style="background: #51eba6ff"></i><span>Russian, Polish, or other Slavic languages</span><br>';
+      legendContent +=
+        '<i style="background: #41ab5d"></i><span>Spanish</span><br>';
+      legendContent +=
+        '<i style="background: #eb554dff"></i><span>Tagalog (incl. Filipino)</span><br>';
+      legendContent +=
+        '<i style="background: #ccb8cbff"></i><span>Vietnamese</span><br>';
+    } else {
+      legendContent += "<h4>Language</h4>";
+      legendContent +=
+        '<i style="background: #00441b"></i><span>> 1000</span><br>';
+      legendContent +=
+        '<i style="background: #006d2c"></i><span>800 - 1000</span><br>';
+      legendContent +=
+        '<i style="background: #238b45"></i><span>600 - 800</span><br>';
+      legendContent +=
+        '<i style="background: #41ae76"></i><span>400 - 600</span><br>';
+      legendContent +=
+        '<i style="background: #66c2a4"></i><span>200 - 400</span><br>';
+      legendContent +=
+        '<i style="background: #99d8c9"></i><span>0 - 200</span><br>';
+      legendContent += '<i style="background: #ccece6"></i><span>0</span><br>';
+    }
+  } else if ((selectedLayer = "demographics")) {
+    legendContent += "<h4>Population Density</h4>";
+    legendContent +=
+      '<i style="background: #00441b"></i><span>> 10000</span><br>';
+    legendContent +=
+      '<i style="background: #006d2c"></i><span>7500 - 10000</span><br>';
+    legendContent +=
+      '<i style="background: #238b45"></i><span>5000 - 7500</span><br>';
+    legendContent +=
+      '<i style="background: #41ae76"></i><span>2500 - 5000</span><br>';
+    legendContent +=
+      '<i style="background: #66c2a4"></i><span>1000 - 2500</span><br>';
+    legendContent +=
+      '<i style="background: #99d8c9"></i><span>500 - 1000</span><br>';
+    legendContent += '<i style="background: #ccece6"></i><span>0</span><br>';
+  }
+
+  document.querySelector(".legend").innerHTML = legendContent;
+}
+
+// Event listener for baselayer change to update the legend
+mymap.on("baselayerchange", function (e) {
+  if (e.name === "Language Data") {
+    selectedLayer = "language";
+    updateLegend(
+      selectedLayer,
+      document.getElementById("languageSelect").value
+    );
+  } else if (e.name === "Demographic Data") {
+    selectedLayer = "demographics";
+    updateLegend(selectedLayer, "");
+  }
+});
+
+updateLegend(selectedLayer, "");
+
+//=========================================================== LAYERS CONTROL =================================================================
+
+var baseLayers = {
+  "Language Data": languageGroup,
+  "Demographic Data": demographicGeoJson,
+};
+
+L.control.layers(baseLayers, null, { collapsed: false }).addTo(mymap);

@@ -30,11 +30,12 @@ var baseLayer = L.tileLayer(
 //=========================================================== VARIABLES =================================================================
 
 var selectedLayer = "language";
+var languageControl;
 
 //=========================================================== LANGUAGE =================================================================
 
 // Create a FeatureGroup for language layers
-var languageGroup = new L.featureGroup();
+var languageGroup = new L.featureGroup().addTo(mymap);
 
 // Predominant language legend
 var languageLegend = L.control({
@@ -117,9 +118,7 @@ function colorScaleNumbersForLanguage(value) {
     ? "#66c2a4"
     : value > 0
     ? "#99d8c9"
-    : value == 0
-    ? "#ccece6"
-    : "#e5f5f9";
+    : "#606060";
 }
 
 // Function to format neighborhood names
@@ -213,135 +212,141 @@ function updateMap() {
       if (selectedLanguage == "") {
         // Default popup content for predominant language
         popupContent =
-          "<h3>" +
-          p.Geographic +
-          "</h3>" +
-          "<h5>(" +
-          cdtanameClean +
-          ")</h5>" +
-          "Approximately " +
-          p.population +
-          " people live in " +
-          p.Total_pop +
-          ", and around " +
-          (p.Speak_anot * 100).toFixed(1) +
-          "% of these residents speak a language other than English." +
-          "The predominant non-English spoken language is: <b>" +
-          p.Predominant +
-          "</b>";
+          "<h3>" + p.Geographic + "</h3>" + "<h5>(" + cdtanameClean + ")</h5>";
+
+        if (p.Estimate == "no data") {
+          popupContent += `No data avavailable for this Census Tract`;
+        } else {
+          popupContent +=
+            "Approximately " +
+            p.population +
+            " people live in " +
+            p.Total_pop +
+            ", and around " +
+            (p.Speak_anot * 100).toFixed(1) +
+            "% of these residents speak a language other than English." +
+            "The predominant non-English spoken language is: <b>" +
+            p.Predominant +
+            "</b>";
+        }
       } else {
         // Popup content for selected language
         popupContent =
           "<h3>" + p.Geographic + "</h3>" + "<h5>(" + cdtanameClean + ")</h5>";
-        switch (selectedLanguage) {
-          case "Arabic":
-            popupContent += `<p>Number of Arabic speakers: <b>${
-              p.Arabic
-            }</b></p>
+
+        if (p.Estimate == "no data") {
+          popupContent += `No data avavailable for this Census Tract`;
+        } else {
+          switch (selectedLanguage) {
+            case "Arabic":
+              popupContent += `<p>Number of Arabic speakers: <b>${
+                p.Arabic
+              }</b></p>
               <p>Percentage of population speaking Arabic who are not fluent English speakers: <b>${(
                 p.Arabic_nf * 100
               ).toFixed(1)}%
               </b></p>`;
-            break;
+              break;
 
-          case "Chinese":
-            popupContent += `<p>Number of Chinese speakers: <b>${
-              p.Chinese
-            }</b></p>
+            case "Chinese":
+              popupContent += `<p>Number of Chinese speakers: <b>${
+                p.Chinese
+              }</b></p>
                 <p>Percentage of population speaking Chinese who are not fluent English speakers: <b>${(
                   p.Chinese_nf * 100
                 ).toFixed(1)}%</b></p>`;
-            break;
+              break;
 
-          case "French, Haitian Creole, or Cajun":
-            popupContent += `<p>Number of French, Haitian Creole, or Cajun speakers: <b>${
-              p.French
-            }</b></p>
+            case "French, Haitian Creole, or Cajun":
+              popupContent += `<p>Number of French, Haitian Creole, or Cajun speakers: <b>${
+                p.French
+              }</b></p>
                 <p>Percentage of population speaking French, Haitian Creole, or Cajun who are not fluent English speakers: <b>${(
                   p.French_nf * 100
                 ).toFixed(1)}%</b></p>`;
-            break;
+              break;
 
-          case "German or other West Germanic languages":
-            popupContent += `<p>Number of German or other West Germanic languages speakers: <b>${
-              p.German
-            }</b></p>
+            case "German or other West Germanic languages":
+              popupContent += `<p>Number of German or other West Germanic languages speakers: <b>${
+                p.German
+              }</b></p>
                 <p>Percentage of population speaking German or other West Germanic languages who are not fluent English speakers: <b>${(
                   p.German_nf * 100
                 ).toFixed(1)}%</b></p>`;
-            break;
+              break;
 
-          case "Korean":
-            popupContent += `<p>Number of Korean speakers: <b>${
-              p.Korean
-            }</b></p>
+            case "Korean":
+              popupContent += `<p>Number of Korean speakers: <b>${
+                p.Korean
+              }</b></p>
                 <p>Percentage of population speaking Korean who are not fluent English speakers: <b>${(
                   p.Korean_nf * 100
                 ).toFixed(1)}%</b></p>`;
-            break;
+              break;
 
-          case "Other and unspecified languages":
-            popupContent += `<p>Number of Other and unspecified languages speakers: <b>${
-              p.Other
-            }</b></p>
+            case "Other and unspecified languages":
+              popupContent += `<p>Number of Other and unspecified languages speakers: <b>${
+                p.Other
+              }</b></p>
                 <p>Percentage of population speaking Other and unspecified languages who are not fluent English speakers: <b>${(
                   p.Other_nf * 100
                 ).toFixed(1)}%</b></p>`;
-            break;
+              break;
 
-          case "Other Asian and Pacific Island languages":
-            popupContent += `<p>Number of speakers of Other Asian and Pacific Island languages: <b>${
-              p.Other_Asia
-            }</b></p>
+            case "Other Asian and Pacific Island languages":
+              popupContent += `<p>Number of speakers of Other Asian and Pacific Island languages: <b>${
+                p.Other_Asia
+              }</b></p>
                 <p>Percentage of population speaking Other Asian and Pacific Island languages who are not fluent English speakers: <b>${(
                   p.Other_Asia_nf * 100
                 ).toFixed(1)}%</b></p>`;
-            break;
+              break;
 
-          case "Other Indo-European languages":
-            popupContent += `<p>Number of speakers of Other Indo-European languages: <b>${
-              p.Other_Indo
-            }</b></p>
+            case "Other Indo-European languages":
+              popupContent += `<p>Number of speakers of Other Indo-European languages: <b>${
+                p.Other_Indo
+              }</b></p>
                 <p>Percentage of population speaking Other Indo-European languages who are not fluent English speakers: <b>${(
                   p.Other_Indo_nf * 100
                 ).toFixed(1)}%</b></p>`;
-            break;
+              break;
 
-          case "Russian, Polish, or other Slavic languages":
-            popupContent += `<p>Number of Russian, Polish, or other Slavic languages speakers: <b>${
-              p.Russian
-            }</b></p>
+            case "Russian, Polish, or other Slavic languages":
+              popupContent += `<p>Number of Russian, Polish, or other Slavic languages speakers: <b>${
+                p.Russian
+              }</b></p>
                 <p>Percentage of population speaking Russian, Polish, or other Slavic languages who are not fluent English speakers: <b>${(
                   p.Russian_nf * 100
                 ).toFixed(1)}%</b></p>`;
-            break;
+              break;
 
-          case "Spanish":
-            popupContent += `<p>Number of Spanish speakers: <b>${
-              p.Spanish
-            }</b></p>
+            case "Spanish":
+              popupContent += `<p>Number of Spanish speakers: <b>${
+                p.Spanish
+              }</b></p>
                 <p>Percentage of population speaking Spanish who are not fluent English speakers: <b>${(
                   p.Spanish_nf * 100
                 ).toFixed(1)}%</b></p>`;
-            break;
+              break;
 
-          case "Tagalog (incl. Filipino)":
-            popupContent += `<p>Number of Tagalog speakers: <b>${
-              p.Tagalog
-            }</b></p>
+            case "Tagalog (incl. Filipino)":
+              popupContent += `<p>Number of Tagalog speakers: <b>${
+                p.Tagalog
+              }</b></p>
                 <p>Percentage of population speaking Tagalog who are not fluent English speakers: <b>${(
                   p.Tagalog_nf * 100
                 ).toFixed(1)}%</b></p>`;
-            break;
+              break;
 
-          case "Vietnamese":
-            popupContent += `<p>Number of Vietnamese speakers: <b>${
-              p.Vietnamese
-            }</b></p>
+            case "Vietnamese":
+              popupContent += `<p>Number of Vietnamese speakers: <b>${
+                p.Vietnamese
+              }</b></p>
                 <p>Percentage of population speaking Vietnamese who are not fluent English speakers: <b>${(
                   p.Vietnamese_nf * 100
                 ).toFixed(1)}%</b></p>`;
-            break;
+              break;
+          }
         }
       }
 
@@ -429,8 +434,6 @@ var LanguageControl = L.Control.extend({
   },
 });
 
-mymap.addControl(new LanguageControl());
-
 function addLanguageControl() {
   if (!languageControl) {
     languageControl = new LanguageControl();
@@ -444,8 +447,6 @@ function removeLanguageControl() {
     languageControl = null;
   }
 }
-
-updateMap();
 
 //=========================================================== DEMOGRAPHICS =================================================================
 
@@ -463,9 +464,9 @@ function getColorScaleForDemographics(population) {
     ? "#66c2a4"
     : population > 500
     ? "#99d8c9"
-    : population == 0
+    : population > 0
     ? "#ccece6"
-    : "#e5f5f9"; // Default color (for undefined population)
+    : "#606060";
 }
 
 // Function for demographic data to create a pie chart
@@ -533,24 +534,24 @@ var demographicGeoJson = L.geoJson(languageGeoJsonData, {
 
     // Crate popup content with demographic details
     var popUpContent =
-      "<h3>" +
-      p.Geographic +
-      "</h3>" +
-      "<h5>(" +
-      cdtanameClean +
-      ")</h5>" +
-      `
-      <p>Approximately <b>${
-        p.Total_pop
-      }</b> people live in this census tract.</p>
-            <p><b>${(p.Male_Pct * 100).toFixed(1)}%</b> (${
+      "<h3>" + p.Geographic + "</h3>" + "<h5>(" + cdtanameClean + ")</h5>";
+
+    if (p.Estimate == "no data") {
+      popUpContent += `No data avavailable for this Census Tract`;
+    } else {
+      popUpContent += `
+        <p>Approximately <b>${
+          p.Total_pop
+        }</b> people live in this census tract.</p>
+              <p><b>${(p.Male_Pct * 100).toFixed(1)}%</b> (${
         p.Male
       }) of the population are male and <b>${(p.Female_Pct * 100).toFixed(
         1
       )}%</b> (${p.Female}) of the population are female</p>
-      <p>The median age is <b>${p.Median_age}</b>.</p>
-      <div id="pie-chart-${id}"></div>
-    `;
+        <p>The median age is <b>${p.Median_age}</b>.</p>
+        <div id="pie-chart-${id}"></div>
+      `;
+    }
 
     layer.bindPopup(popUpContent);
 
@@ -560,12 +561,13 @@ var demographicGeoJson = L.geoJson(languageGeoJsonData, {
         { label: "Male", value: p.Male },
         { label: "Female", value: p.Female },
       ];
-      createPieChartForDemographic(`#pie-chart-${id}`, pieData);
+      // Create a pie chart only for places with valid data
+      if (p.Estimate != "no data") {
+        createPieChartForDemographic(`#pie-chart-${id}`, pieData);
+      }
     });
   },
 });
-
-demographicGeoJson.addTo(mymap);
 
 //=========================================================== LEGEND =================================================================
 
@@ -613,7 +615,7 @@ function updateLegend(selectedLayer, selectedLanguage) {
       legendContent +=
         '<i style="background: #66c2a4"></i><span>200 - 400</span><br>';
       legendContent +=
-        '<i style="background: #99d8c9"></i><span>0 - 200</span><br>';
+        '<i style="background: #99d8c9"></i><span>1 - 200</span><br>';
       legendContent += '<i style="background: #ccece6"></i><span>0</span><br>';
     }
   } else if ((selectedLayer = "demographics")) {
@@ -630,7 +632,9 @@ function updateLegend(selectedLayer, selectedLanguage) {
       '<i style="background: #66c2a4"></i><span>1000 - 2500</span><br>';
     legendContent +=
       '<i style="background: #99d8c9"></i><span>500 - 1000</span><br>';
-    legendContent += '<i style="background: #ccece6"></i><span>0</span><br>';
+    legendContent +=
+      '<i style="background: #ccece6"></i><span>1 - 500</span><br>';
+    legendContent += '<i style="background: #606060"></i><span>0</span><br>';
   }
 
   document.querySelector(".legend").innerHTML = legendContent;
@@ -640,12 +644,14 @@ function updateLegend(selectedLayer, selectedLanguage) {
 mymap.on("baselayerchange", function (e) {
   if (e.name === "Language Data") {
     selectedLayer = "language";
+    addLanguageControl();
     updateLegend(
       selectedLayer,
       document.getElementById("languageSelect").value
     );
   } else if (e.name === "Demographic Data") {
     selectedLayer = "demographics";
+    removeLanguageControl();
     updateLegend(selectedLayer, "");
   }
 });
@@ -660,3 +666,7 @@ var baseLayers = {
 };
 
 L.control.layers(baseLayers, null, { collapsed: false }).addTo(mymap);
+
+addLanguageControl();
+
+updateMap();

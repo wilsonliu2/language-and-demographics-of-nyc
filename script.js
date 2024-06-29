@@ -508,8 +508,18 @@ function createPieChartForDemographic(id, data) {
 
   g.append("text")
     .attr("transform", (d) => "translate(" + arc.centroid(d) + ")")
+    .attr("dy", "0.35em")
     .style("text-anchor", "middle")
     .text((d) => d.data.label);
+
+  g.append("text")
+    .attr("transform", (d) => "translate(" + arc.centroid(d) + ")")
+    .attr("dy", "1.35em")
+    .style("text-anchor", "middle")
+    .text(
+      (d) =>
+        Math.round((d.data.value / d3.sum(data, (d) => d.value)) * 100) + "%"
+    );
 }
 
 // Create a GeoJSON layer for demographic data

@@ -471,6 +471,9 @@ function getColorScaleForDemographics(population) {
 
 // Function for demographic data to create a pie chart
 function createPieChartForDemographic(id, data) {
+  // Clear any existing element from the container
+  d3.select(id).selectAll("*").remove();
+
   var width = 150,
     height = 150,
     radius = Math.min(width, height) / 2;
@@ -523,7 +526,7 @@ function createPieChartForDemographic(id, data) {
 }
 
 // Create a GeoJSON layer for demographic data
-var demographicGeoJson = L.geoJson(languageGeoJsonData, {
+demographicGeoJson = L.geoJson(languageGeoJsonData, {
   style: function (feature) {
     var style;
     style = {
@@ -542,23 +545,36 @@ var demographicGeoJson = L.geoJson(languageGeoJsonData, {
     var id = p.FID;
     var cdtanameClean = formatNeighborhoodName(p.cdtaname);
 
-    // Crate popup content with demographic details
+    // Create popup content with demographic details
     var popUpContent =
       "<h3>" + p.Geographic + "</h3>" + "<h5>(" + cdtanameClean + ")</h5>";
 
     if (p.Estimate == "no data") {
-      popUpContent += `No data avavailable for this Census Tract`;
+      popUpContent += `No data available for this Census Tract`;
     } else {
+      // Text section
       popUpContent += `
         <p>Approximately <b>${
           p.Total_pop
         }</b> people live in this census tract.</p>
-              <p><b>${(p.Male_Pct * 100).toFixed(1)}%</b> (${
+        <p><b>${(p.Male_Pct * 100).toFixed(1)}%</b> (${
         p.Male
       }) of the population are male and <b>${(p.Female_Pct * 100).toFixed(
         1
       )}%</b> (${p.Female}) of the population are female</p>
-        <p>The median age is <b>${p.Median_age}</b>.</p>
+        <p>The median age is <b>${p.Median_age}</b>.</p>`;
+
+      // Pie chart section
+      // Use JSON.stringify to turn the properties object into a string so it can be passed into updatePieChart function
+      popUpContent += `
+        <button onclick='updatePieChart(${id}, "gender", ${JSON.stringify(
+        p
+      )})'>Gender Distribution</button>
+
+        <button onclick='updatePieChart(${id}, "age", ${JSON.stringify(
+        p
+      )})'>Age Distribution</button>
+
         <div id="pie-chart-${id}"></div>
       `;
     }
@@ -567,17 +583,32 @@ var demographicGeoJson = L.geoJson(languageGeoJsonData, {
 
     // Event listener to create a pie chart when popup is opened
     layer.on("popupopen", function () {
-      var pieData = [
-        { label: "Male", value: p.Male },
-        { label: "Female", value: p.Female },
-      ];
-      // Create a pie chart only for places with valid data
-      if (p.Estimate != "no data") {
-        createPieChartForDemographic(`#pie-chart-${id}`, pieData);
-      }
+      // Show gender pie chart by default
+      updatePieChart(id, "gender", p);
     });
   },
 });
+
+// Create pie chart based on selected type (gender or age)
+function updatePieChart(id, type, properties) {
+  var pieData = [];
+
+  if (type === "gender") {
+    pieData = [
+      { label: "Male", value: properties.Male },
+      { label: "Female", value: properties.Female },
+    ];
+  } else if (type === "age") {
+    pieData = [
+      { label: "Under 5", value: properties.Under_5 },
+      { label: "Under 18", value: properties.Under_18 },
+      { label: "18 and over", value: properties["18_plus"] },
+      { label: "65 and over", value: properties["65_plus"] },
+    ];
+  }
+
+  createPieChartForDemographic(`#pie-chart-${id}`, pieData);
+}
 
 //=========================================================== LEGEND =================================================================
 

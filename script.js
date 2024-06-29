@@ -654,11 +654,13 @@ function updateLegend(selectedLayer, selectedLanguage) {
 mymap.on("baselayerchange", function (e) {
   if (e.name === "Language Data") {
     selectedLayer = "language";
+    selectedLanguage = "";
     addLanguageControl();
     updateLegend(
       selectedLayer,
       document.getElementById("languageSelect").value
     );
+    updateMap();
   } else if (e.name === "Demographic Data") {
     selectedLayer = "demographics";
     removeLanguageControl();

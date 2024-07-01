@@ -450,6 +450,74 @@ function removeLanguageControl() {
 
 //=========================================================== DEMOGRAPHICS =================================================================
 
+// Create a GeoJSON layer for demographic data
+demographicGeoJson = L.geoJson(languageGeoJsonData, {
+  style: function (feature) {
+    var style;
+    style = {
+      fillColor: getColorScaleForDemographics(feature.properties.Total_pop),
+      weight: 0.5,
+      opacity: 1,
+      color: "white",
+      fillOpacity: 0.8,
+    };
+    return style;
+  },
+
+  onEachFeature: function (feature, layer) {
+    // Unique identifier to ensure each pie chart is rendered in the correct popup
+    var p = feature.properties;
+    var id = p.FID;
+    var cdtanameClean = formatNeighborhoodName(p.cdtaname);
+
+    // Create popup content with demographic details
+    var popUpContent =
+      "<h3>" + p.Geographic + "</h3>" + "<h5>(" + cdtanameClean + ")</h5>";
+
+    if (p.Estimate == "no data") {
+      popUpContent += `No data available for this Census Tract`;
+    } else {
+      // Text section
+      popUpContent += `
+        <p>Approximately <b>${
+          p.Total_pop
+        }</b> people live in this census tract.</p>
+        <p><b>${(p.Male_Pct * 100).toFixed(1)}%</b> (${
+        p.Male
+      }) of the population are male and <b>${(p.Female_Pct * 100).toFixed(
+        1
+      )}%</b> (${p.Female}) of the population are female</p>
+        <p>The median age is <b>${p.Median_age}</b>.</p>`;
+
+      // Pie chart section
+      // Use JSON.stringify to turn the properties object into a string so it can be passed into updatePieChart function
+      popUpContent += `
+        <button onclick='updatePieChart(${id}, "gender", ${JSON.stringify(
+        p
+      )})'>Gender Distribution</button>
+
+       <button onclick='updatePieChart(${id}, "age", ${JSON.stringify(
+        p
+      )})'>Age Distribution</button>
+      
+       <button onclick='updateBarPlotForRace(${id}, ${JSON.stringify(
+        p
+      )})'>Race Distribution</button>
+
+        <div id="chart-container-${id}"></div>
+      `;
+    }
+
+    layer.bindPopup(popUpContent);
+
+    // Event listener to create a pie chart when popup is opened
+    layer.on("popupopen", function () {
+      // Show gender pie chart by default
+      updatePieChart(id, "gender", p);
+    });
+  },
+});
+
 // Function for demographic data to get color based on population
 function getColorScaleForDemographics(population) {
   return population > 10000
@@ -525,74 +593,6 @@ function createPieChartForDemographic(id, data) {
     );
 }
 
-// Create a GeoJSON layer for demographic data
-demographicGeoJson = L.geoJson(languageGeoJsonData, {
-  style: function (feature) {
-    var style;
-    style = {
-      fillColor: getColorScaleForDemographics(feature.properties.Total_pop),
-      weight: 0.5,
-      opacity: 1,
-      color: "white",
-      fillOpacity: 0.8,
-    };
-    return style;
-  },
-
-  onEachFeature: function (feature, layer) {
-    // Unique identifier to ensure each pie chart is rendered in the correct popup
-    var p = feature.properties;
-    var id = p.FID;
-    var cdtanameClean = formatNeighborhoodName(p.cdtaname);
-
-    // Create popup content with demographic details
-    var popUpContent =
-      "<h3>" + p.Geographic + "</h3>" + "<h5>(" + cdtanameClean + ")</h5>";
-
-    if (p.Estimate == "no data") {
-      popUpContent += `No data available for this Census Tract`;
-    } else {
-      // Text section
-      popUpContent += `
-        <p>Approximately <b>${
-          p.Total_pop
-        }</b> people live in this census tract.</p>
-        <p><b>${(p.Male_Pct * 100).toFixed(1)}%</b> (${
-        p.Male
-      }) of the population are male and <b>${(p.Female_Pct * 100).toFixed(
-        1
-      )}%</b> (${p.Female}) of the population are female</p>
-        <p>The median age is <b>${p.Median_age}</b>.</p>`;
-
-      // Pie chart section
-      // Use JSON.stringify to turn the properties object into a string so it can be passed into updatePieChart function
-      popUpContent += `
-        <button onclick='updatePieChart(${id}, "gender", ${JSON.stringify(
-        p
-      )})'>Gender Distribution</button>
-
-       <button onclick='updatePieChart(${id}, "age", ${JSON.stringify(
-        p
-      )})'>Age Distribution</button>
-      
-       <button onclick='createBarPlot(${id}, ${JSON.stringify(
-        p
-      )})'>Bar Plot</button>
-
-        <div id="chart-container-${id}"></div>
-      `;
-    }
-
-    layer.bindPopup(popUpContent);
-
-    // Event listener to create a pie chart when popup is opened
-    layer.on("popupopen", function () {
-      // Show gender pie chart by default
-      updatePieChart(id, "gender", p);
-    });
-  },
-});
-
 // Create pie chart based on selected type (gender or age)
 function updatePieChart(id, type, properties) {
   var pieData = [];
@@ -614,6 +614,7 @@ function updatePieChart(id, type, properties) {
   createPieChartForDemographic(`#chart-container-${id}`, pieData);
 }
 
+// Create bar plot base on race data
 function createBarPlotForDemographics(id, data) {
   // Remove any existing barplot from the container
   d3.select(id).selectAll("*").remove();
@@ -678,7 +679,8 @@ function createBarPlotForDemographics(id, data) {
     .attr("fill", "#69b3a2");
 }
 
-function createBarPlot(id, properties) {
+// Update bar plot value base on race data
+function updateBarPlotForRace(id, properties) {
   var barData = [
     { label: "Arabic", value: parseInt(properties.Arabic) },
     { label: "Chinese", value: parseInt(properties.Chinese) },

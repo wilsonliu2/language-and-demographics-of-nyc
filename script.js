@@ -571,11 +571,15 @@ demographicGeoJson = L.geoJson(languageGeoJsonData, {
         p
       )})'>Gender Distribution</button>
 
-        <button onclick='updatePieChart(${id}, "age", ${JSON.stringify(
+       <button onclick='updatePieChart(${id}, "age", ${JSON.stringify(
         p
       )})'>Age Distribution</button>
+      
+       <button onclick='createBarPlot(${id}, ${JSON.stringify(
+        p
+      )})'>Bar Plot</button>
 
-        <div id="pie-chart-${id}"></div>
+        <div id="chart-container-${id}"></div>
       `;
     }
 
@@ -607,7 +611,108 @@ function updatePieChart(id, type, properties) {
     ];
   }
 
-  createPieChartForDemographic(`#pie-chart-${id}`, pieData);
+  createPieChartForDemographic(`#chart-container-${id}`, pieData);
+}
+
+function createBarPlotForDemographics(id, data) {
+  // Remove any existing barplot from the container
+  d3.select(id).selectAll("*").remove();
+
+  // set the dimensions and margins of the graph
+  var margin = { top: 20, right: 20, bottom: 50, left: 40 },
+    width = 350 - margin.left - margin.right,
+    height = 250 - margin.top - margin.bottom;
+
+  // append the svg object to the body of the page
+  var svg = d3
+    .select(id)
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  // sort data
+  data.sort(function (b, a) {
+    return a.value - b.value;
+  });
+
+  // X axis
+  var x = d3
+    .scaleBand()
+    .range([0, width])
+    .domain(
+      data.map(function (d) {
+        return d.label;
+      })
+    )
+    .padding(0.2);
+  svg
+    .append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x))
+    .selectAll("text")
+    .attr("transform", "translate(-10,0)rotate(-45)")
+    .style("text-anchor", "end");
+
+  // Add Y axis
+  var y = d3.scaleLinear().domain([0, 1000]).range([height, 0]);
+  svg.append("g").call(d3.axisLeft(y));
+
+  // Bars
+  svg
+    .selectAll("mybar")
+    .data(data)
+    .enter()
+    .append("rect")
+    .attr("x", function (d) {
+      return x(d.label);
+    })
+    .attr("y", function (d) {
+      return y(d.value);
+    })
+    .attr("width", x.bandwidth())
+    .attr("height", function (d) {
+      return height - y(d.value);
+    })
+    .attr("fill", "#69b3a2");
+}
+
+function createBarPlot(id, properties) {
+  var barData = [
+    { label: "Arabic", value: parseInt(properties.Arabic) },
+    { label: "Chinese", value: parseInt(properties.Chinese) },
+    {
+      label: "French, Haitian Creole, or Cajun",
+      value: parseInt(properties.French),
+    },
+    {
+      label: "German or other West Germanic languages",
+      value: parseInt(properties.German),
+    },
+    { label: "Korean", value: parseInt(properties.Korean) },
+    {
+      label: "Other and unspecified languages",
+      value: parseInt(properties.Other),
+    },
+    {
+      label: "Other Asian and Pacific Island languages",
+      value: parseInt(properties.Other_Asia),
+    },
+    {
+      label: "Other Indo-European languages",
+      value: parseInt(properties.Other_Indo),
+    },
+    {
+      label: "Russian, Polish, or other Slavic languages",
+      value: parseInt(properties.Russian),
+    },
+    { label: "Spanish", value: parseInt(properties.Spanish) },
+    { label: "Tagalog (incl. Filipino)", value: parseInt(properties.Tagalog) },
+    { label: "Vietnamese", value: parseInt(properties.Vietnamese) },
+  ];
+
+  createBarPlotForDemographics(`#chart-container-${id}`, barData);
 }
 
 //=========================================================== LEGEND =================================================================

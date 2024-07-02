@@ -6,8 +6,14 @@
   padding: 0;
 }
 
-#mapid {
-  height: 100vh;
+#map-container {
+  height: 90vh;
+  position: relative;
+}
+
+.map {
+  height: 100%;
+  width: 100%;
 }
 
 /* LEGEND STYLING */

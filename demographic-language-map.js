@@ -6,7 +6,7 @@ var southWest = L.latLng(40.477399, -74.25909), // Southwest bound (farther sout
   bounds = L.latLngBounds(southWest, northEast);
 
 // MAP OBJECT
-var mymap = L.map("demographic-language-map", {
+var mymap = L.map("demographicLanguageMap", {
   maxBounds: bounds, // Map automatically bounces back to center
   maxZoom: 18,
   minZoom: 11,

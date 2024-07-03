@@ -1,8 +1,9 @@
 function showMap(mapId) {
-  const maps = document.querySelectorAll(".map");
-  maps.forEach((map) => {
+  const mapsElements = document.querySelectorAll(".map");
+  mapsElements.forEach((map) => {
     if (map.id === mapId) {
       map.classList.add("active");
+      maps[mapId].invalidateSize();
     } else {
       map.classList.remove("active");
     }
@@ -16,9 +17,9 @@ document
   });
 
 document
-  .getElementById("btnUnhealthyBehaviorsMap")
+  .getElementById("btnHealthRiskBehaviorsMap")
   .addEventListener("click", () => {
-    showMap("unhealthyBehaviorsMap");
+    showMap("healthRiskBehaviorsMap");
   });
 
 document
@@ -33,7 +34,12 @@ document
     showMap("screeningRatesMap");
   });
 
+document.getElementById("btnHealthStatusMap").addEventListener("click", () => {
+  showMap("healthStatusMap");
+});
+
 // Show demo-lang map by default
 document.addEventListener("DOMContentLoaded", () => {
   showMap("demographicLanguageMap");
+  maps["demographicLanguageMap"].invalidateSize();
 });

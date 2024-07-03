@@ -18,24 +18,23 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <div id="map-btn-container">
-      <button id="btnDemographicLanguageMap">Demographics</button>
-      <button id="btnUnhealthyBehaviorsMap">Unhealthy Behaviors</button>
-      <button id="btnHealthOutcomesMap">Health Outcomes</button>
-      <button id="btnScreeningRatesMap">Screening Rates</button>
-    </div>
-    <div id="map-container">
-      <div id="demographicLanguageMap" class="map"></div>
-      <div id="unhealthyBehaviorsMap" class="map"></div>
-      <div id="healthOutcomesMap" class="map"></div>
-      <div id="screeningRatesMap" class="map"></div>
-    </div>
-  </body>
+  <div id="map-btn-container">
+    <button id="btnDemographicLanguageMap">Demographics</button>
+    <button id="btnHealthRiskBehaviorsMap">Health Risk Behaviors</button>
+    <button id="btnHealthOutcomesMap">Health Outcomes</button>
+    <button id="btnScreeningRatesMap">Screening Rates</button>
+    <button id="btnHealthStatusMap">Health Status</button>
+  </div>
+  <div id="map-container">
+    <div id="demographicLanguageMap" class="map"></div>
+    <div id="healthRiskBehaviorsMap" class="map"></div>
+    <div id="healthOutcomesMap" class="map"></div>
+    <div id="screeningRatesMap" class="map"></div>
+    <div id="healthStatusMap" class="map"></div>
+  </div>
   <script src="ALL - language demographics.js"></script>
   <script src="NYC Borough Boundaries.js"></script>
   <script src="NYC PLACES.js"></script>
-  <script src="demographic-language-map.js"></script>
-  <script src="unhealthy-behavior-map.js"></script>
+  <script src="map.js"></script>
   <script src="main.js"></script>
 </html>

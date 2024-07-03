@@ -1,4 +1,5 @@
 //=========================================================== MAP SETUP =================================================================
+var maps = {};
 
 // MAP BOUNDS - set bounds so the map has limits for visibility
 var southWest = L.latLng(40.477399, -74.25909), // Southwest bound (farther south and west)
@@ -6,7 +7,7 @@ var southWest = L.latLng(40.477399, -74.25909), // Southwest bound (farther sout
   bounds = L.latLngBounds(southWest, northEast);
 
 // MAP OBJECT
-var mymap = L.map("demographicLanguageMap", {
+maps["demographicLanguageMap"] = L.map("demographicLanguageMap", {
   maxBounds: bounds, // Map automatically bounces back to center
   maxZoom: 18,
   minZoom: 11,
@@ -25,12 +26,13 @@ var baseLayer = L.tileLayer(
     accessToken:
       "pk.eyJ1Ijoic2hlZW5hcCIsImEiOiJja25hdXE3aGcxbGI4MnVxbnFoenhwdGRrIn0.DhFwD-KlRigYLaVwL8ipGA",
   }
-).addTo(mymap);
+).addTo(maps["demographicLanguageMap"]);
 
 //=========================================================== VARIABLES =================================================================
 
 var selectedLayer = "language";
 var languageControl;
+var mymap = maps["demographicLanguageMap"];
 
 //=========================================================== LANGUAGE =================================================================
 
@@ -820,3 +822,448 @@ L.control.layers(baseLayers, null, { collapsed: false }).addTo(mymap);
 addLanguageControl();
 
 updateMap();
+
+//=========================================================== Health Risk Behaviors Map =================================================================
+
+maps["healthRiskBehaviorsMap"] = L.map("healthRiskBehaviorsMap", {
+  maxBounds: bounds,
+  maxZoom: 18,
+  minZoom: 11,
+}).setView([40.65, -73.97], 11);
+
+var baseLayer2 = L.tileLayer(
+  "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+  {
+    attribution:
+      'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: "mapbox/light-v9",
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken:
+      "pk.eyJ1Ijoic2hlZW5hcCIsImEiOiJja25hdXE3aGcxbGI4MnVxbnFoenhwdGRrIn0.DhFwD-KlRigYLaVwL8ipGA",
+  }
+).addTo(maps["healthRiskBehaviorsMap"]);
+
+var healthRiskLayers = {
+  uninsured: L.geoJson(null, {
+    style: healthRiskStyle(
+      "Lack of health insurance crude prevalence (%)",
+      getColorForUninsured
+    ),
+  }),
+  frequentDrinkers: L.geoJson(null, {
+    style: healthRiskStyle(
+      "Binge drinking crude prevalence (%)",
+      getColorForFrequentDrinkers
+    ),
+  }),
+  currentSmokers: L.geoJson(null, {
+    style: healthRiskStyle(
+      "Current smoking crude prevalence (%)",
+      getColorForCurrentSmokers
+    ),
+  }),
+  sedentaryLifestyle: L.geoJson(null, {
+    style: healthRiskStyle(
+      "Physical inactivity crude prevalence (%)",
+      getColorForSedentaryLifestyle
+    ),
+  }),
+  sleepLessThan7Hours: L.geoJson(null, {
+    style: healthRiskStyle(
+      "Sleep <7 hours crude prevalence (%)",
+      getColorForSleepLessThan7Hours
+    ),
+  }),
+};
+
+function healthRiskStyle(propertyName, colorFunction) {
+  return function (feature) {
+    return {
+      fillColor: colorFunction(feature.properties[propertyName]),
+      weight: 0.5,
+      opacity: 1,
+      color: "white",
+      fillOpacity: 0.8,
+    };
+  };
+}
+
+// TEMPORARY WILL CHANGE LATER
+function getColorForUninsured(percent) {
+  return percent > 35.8
+    ? "#034e7b"
+    : percent > 28.3
+    ? "#0570b0"
+    : percent > 23.4
+    ? "#3690c0"
+    : percent > 19.1
+    ? "#74a9cf"
+    : percent > 15.6
+    ? "#a6bddb"
+    : percent > 12.8
+    ? "#d0d1e6"
+    : percent > 9.8
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+// TEMPORARY WILL CHANGE LATER
+function getColorForFrequentDrinkers(percent) {
+  return percent > 35.8
+    ? "#034e7b"
+    : percent > 28.3
+    ? "#0570b0"
+    : percent > 23.4
+    ? "#3690c0"
+    : percent > 19.1
+    ? "#74a9cf"
+    : percent > 15.6
+    ? "#a6bddb"
+    : percent > 12.8
+    ? "#d0d1e6"
+    : percent > 9.8
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+// TEMPORARY WILL CHANGE LATER
+function getColorForCurrentSmokers(percent) {
+  return percent > 35.8
+    ? "#034e7b"
+    : percent > 28.3
+    ? "#0570b0"
+    : percent > 23.4
+    ? "#3690c0"
+    : percent > 19.1
+    ? "#74a9cf"
+    : percent > 15.6
+    ? "#a6bddb"
+    : percent > 12.8
+    ? "#d0d1e6"
+    : percent > 9.8
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+// TEMPORARY WILL CHANGE LATER
+function getColorForSedentaryLifestyle(percent) {
+  return percent > 35.8
+    ? "#034e7b"
+    : percent > 28.3
+    ? "#0570b0"
+    : percent > 23.4
+    ? "#3690c0"
+    : percent > 19.1
+    ? "#74a9cf"
+    : percent > 15.6
+    ? "#a6bddb"
+    : percent > 12.8
+    ? "#d0d1e6"
+    : percent > 9.8
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+// TEMPORARY WILL CHANGE LATER
+function getColorForSleepLessThan7Hours(percent) {
+  return percent > 35.8
+    ? "#034e7b"
+    : percent > 28.3
+    ? "#0570b0"
+    : percent > 23.4
+    ? "#3690c0"
+    : percent > 19.1
+    ? "#74a9cf"
+    : percent > 15.6
+    ? "#a6bddb"
+    : percent > 12.8
+    ? "#d0d1e6"
+    : percent > 9.8
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function addHealthRiskData(data) {
+  data.features.forEach(function (feature) {
+    var p = feature.properties;
+
+    var uninsuredPopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Uninsured: ${p["Lack of health insurance crude prevalence (%)"]}%
+    `;
+
+    var frequentDrinkersPopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Frequent Drinkers: ${p["Binge drinking crude prevalence (%)"]}%
+    `;
+
+    var currentSmokersPopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Current Smokers: ${p["Current smoking crude prevalence (%)"]}%
+    `;
+
+    var sedentaryLifestylePopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Sedentary Lifestyle: ${p["Physical inactivity crude prevalence (%)"]}%
+    `;
+
+    var sleepLessThan7HoursPopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Sleep < 7 Hours: ${p["Sleep <7 hours crude prevalence (%)"]}%
+    `;
+
+    var uninsuredLayer = L.geoJson(feature, {
+      style: healthRiskStyle(
+        "Lack of health insurance crude prevalence (%)",
+        getColorForUninsured
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(uninsuredPopup);
+      },
+    });
+    healthRiskLayers.uninsured.addLayer(uninsuredLayer);
+
+    var frequentDrinkersLayer = L.geoJson(feature, {
+      style: healthRiskStyle(
+        "Binge drinking crude prevalence (%)",
+        getColorForFrequentDrinkers
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(frequentDrinkersPopup);
+      },
+    });
+    healthRiskLayers.frequentDrinkers.addLayer(frequentDrinkersLayer);
+
+    var currentSmokersLayer = L.geoJson(feature, {
+      style: healthRiskStyle(
+        "Current smoking crude prevalence (%)",
+        getColorForCurrentSmokers
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(currentSmokersPopup);
+      },
+    });
+    healthRiskLayers.currentSmokers.addLayer(currentSmokersLayer);
+
+    var sedentaryLifestyleLayer = L.geoJson(feature, {
+      style: healthRiskStyle(
+        "Physical inactivity crude prevalence (%)",
+        getColorForSedentaryLifestyle
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(sedentaryLifestylePopup);
+      },
+    });
+    healthRiskLayers.sedentaryLifestyle.addLayer(sedentaryLifestyleLayer);
+
+    var sleepLessThan7HoursLayer = L.geoJson(feature, {
+      style: healthRiskStyle(
+        "Sleep <7 hours crude prevalence (%)",
+        getColorForSleepLessThan7Hours
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(sleepLessThan7HoursPopup);
+      },
+    });
+    healthRiskLayers.sleepLessThan7Hours.addLayer(sleepLessThan7HoursLayer);
+  });
+}
+
+addHealthRiskData(healthDataGeojson);
+
+var baseLayers = {
+  Uninsured: healthRiskLayers.uninsured,
+  "Frequent Drinkers": healthRiskLayers.frequentDrinkers,
+  "Current Smokers": healthRiskLayers.currentSmokers,
+  "Sedentary Lifestyle": healthRiskLayers.sedentaryLifestyle,
+  "Sleep < 7 Hours": healthRiskLayers.sleepLessThan7Hours,
+};
+
+L.control
+  .layers(baseLayers, null, { collapsed: false })
+  .addTo(maps["healthRiskBehaviorsMap"]);
+
+// HEALTH RISK LEGEND CONTROL
+var healthRisklegend = L.control({ position: "bottomleft" });
+
+healthRisklegend.onAdd = function () {
+  var div = L.DomUtil.create("div", "healthRiskLegend");
+  div.innerHTML = `
+    <h4>Percent Uninsured</h4>
+    <i style="background: #034e7b"></i><span>35.8%+</span><br>
+    <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
+    <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
+    <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
+    <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
+    <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
+    <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
+    <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+    <i style="background: #606060"></i><span>No Data</span><br>
+  `;
+  return div;
+};
+
+healthRisklegend.addTo(maps["healthRiskBehaviorsMap"]);
+
+function updateLegendForHealthRisk(layerName) {
+  var legendContent = "";
+  switch (layerName) {
+    case "Uninsured":
+      legendContent = `
+        <h4>Percent Uninsured</h4>
+        <i style="background: #034e7b"></i><span>35.8%+</span><br>
+        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
+        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
+        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
+        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
+        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
+        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
+      `;
+      break;
+    case "Frequent Drinkers":
+      legendContent = `
+        <h4>Percent Frequent Drinkers</h4>
+        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
+        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
+        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
+        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
+        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
+        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
+        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
+      `;
+      break;
+    case "Current Smokers":
+      legendContent = `
+        <h4>Percent Current Smokers</h4>
+        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
+        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
+        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
+        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
+        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
+        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
+        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
+      `;
+      break;
+    case "Sedentary Lifestyle":
+      legendContent = `
+        <h4>Percent Sedentary Lifestyle</h4>
+        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
+        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
+        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
+        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
+        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
+        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
+        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
+      `;
+      break;
+    case "Sleep < 7 Hours":
+      legendContent = `
+        <h4>Percent Sleeping Less Than 7 Hours</h4>
+        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
+        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
+        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
+        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
+        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
+        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
+        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
+      `;
+      break;
+  }
+  document.querySelector(".healthRiskLegend").innerHTML = legendContent;
+}
+
+maps["healthRiskBehaviorsMap"].on("baselayerchange", function (e) {
+  updateLegendForHealthRisk(e.name);
+});
+
+// Set uninsured layer as the default
+updateLegendForHealthRisk("Uninsured");
+healthRiskLayers.uninsured.addTo(maps["healthRiskBehaviorsMap"]);
+
+//=========================================================== Health Outcomes Map =================================================================
+
+maps["healthOutcomesMap"] = L.map("healthOutcomesMap", {
+  maxBounds: bounds,
+  maxZoom: 18,
+  minZoom: 11,
+}).setView([40.65, -73.97], 11);
+
+var baseLayer3 = L.tileLayer(
+  "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+  {
+    attribution:
+      'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: "mapbox/light-v9",
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken:
+      "pk.eyJ1Ijoic2hlZW5hcCIsImEiOiJja25hdXE3aGcxbGI4MnVxbnFoenhwdGRrIn0.DhFwD-KlRigYLaVwL8ipGA",
+  }
+).addTo(maps["healthOutcomesMap"]);
+
+//=========================================================== Screening Rates Map =================================================================
+
+maps["screeningRatesMap"] = L.map("screeningRatesMap", {
+  maxBounds: bounds,
+  maxZoom: 18,
+  minZoom: 11,
+}).setView([40.65, -73.97], 11);
+
+var baseLayer4 = L.tileLayer(
+  "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+  {
+    attribution:
+      'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: "mapbox/light-v9",
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken:
+      "pk.eyJ1Ijoic2hlZW5hcCIsImEiOiJja25hdXE3aGcxbGI4MnVxbnFoenhwdGRrIn0.DhFwD-KlRigYLaVwL8ipGA",
+  }
+).addTo(maps["screeningRatesMap"]);
+
+//=========================================================== Health Status Map =================================================================
+
+maps["healthStatusMap"] = L.map("healthStatusMap", {
+  maxBounds: bounds,
+  maxZoom: 18,
+  minZoom: 11,
+}).setView([40.65, -73.97], 11);
+
+var baseLayer5 = L.tileLayer(
+  "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+  {
+    attribution:
+      'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: "mapbox/light-v9",
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken:
+      "pk.eyJ1Ijoic2hlZW5hcCIsImEiOiJja25hdXE3aGcxbGI4MnVxbnFoenhwdGRrIn0.DhFwD-KlRigYLaVwL8ipGA",
+  }
+).addTo(maps["healthStatusMap"]);

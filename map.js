@@ -514,6 +514,10 @@ demographicGeoJson = L.geoJson(languageGeoJsonData, {
       // Use JSON.stringify to turn the properties object into a string so it can be passed into updatePieChart function
       // Chart container must have a set size or responsive popup plugin will not work as intended
       popUpContent += `
+      <button id="more-btn-${id}" onclick='showMoreButtons(${id})'>More</button>
+        <button id="hide-btn-${id}" onclick='hideMoreButtons(${id})' style="display:none;">Hide</button>
+        <div id="more-buttons-${id}" style="display:none;">
+        
         <button onclick='updatePieChart(${id}, "gender", ${JSON.stringify(
         p
       )})'>Gender Distribution</button>
@@ -526,7 +530,7 @@ demographicGeoJson = L.geoJson(languageGeoJsonData, {
         p
       )})'>Race Distribution</button>
 
-        <div id="chart-container-${id}" style="width: 150px; height: 150px;"></div>
+        <div id="chart-container-${id}" style="width: 150px; height: 200px;"></div>
       `;
     }
 
@@ -752,6 +756,18 @@ function updateBarPlotForRace(id, properties) {
   ];
 
   createBarPlotForDemographics(`#chart-container-${id}`, barData);
+}
+
+function showMoreButtons(id) {
+  document.getElementById(`more-buttons-${id}`).style.display = "block";
+  document.getElementById(`more-btn-${id}`).style.display = "none";
+  document.getElementById(`hide-btn-${id}`).style.display = "block";
+}
+
+function hideMoreButtons(id) {
+  document.getElementById(`more-buttons-${id}`).style.display = "none";
+  document.getElementById(`more-btn-${id}`).style.display = "block";
+  document.getElementById(`hide-btn-${id}`).style.display = "none";
 }
 
 //=========================================================== LEGEND =================================================================

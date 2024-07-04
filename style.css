@@ -24,7 +24,9 @@
 /* LEGEND STYLING */
 .legend,
 .healthRiskLegend,
-.healthOutcomesLegend {
+.healthOutcomesLegend,
+.screeningRatesLegend,
+.healthStatusLegend {
   background: white;
   line-height: 1.2;
   padding: 5px;
@@ -36,7 +38,9 @@
 
 .legend h4,
 .healthRiskLegend h4,
-.healthOutcomesLegend h4 {
+.healthOutcomesLegend h4,
+.screeningRatesLegend h4,
+.healthStatusLegend h4 {
   margin: 0 0 5px;
   font-weight: bold;
   font-size: 14px;
@@ -44,7 +48,9 @@
 
 .legend i,
 .healthRiskLegend i,
-.healthOutcomesLegend i {
+.healthOutcomesLegend i,
+.screeningRatesLegend i,
+.healthStatusLegend i {
   width: 14px;
   height: 14px;
   float: left;
@@ -54,7 +60,9 @@
 
 .legend span,
 .healthRiskLegend span,
-.healthOutcomesLegend span {
+.healthOutcomesLegend span,
+.screeningRatesLegend span,
+.healthStatusLegend span {
   display: block;
   margin-bottom: 3px;
 }

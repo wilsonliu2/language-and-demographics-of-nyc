@@ -1884,6 +1884,419 @@ var baseLayer4 = L.tileLayer(
   }
 ).addTo(maps["screeningRatesMap"]);
 
+var screeningRatesLayers = {
+  annualCheckUp: L.geoJson(null, {
+    style: screeningRatesStyle(
+      "Annual checkup crude prevalence (%)",
+      getColorForAnnualCheckUp
+    ),
+  }),
+  dentalVisit: L.geoJson(null, {
+    style: screeningRatesStyle(
+      "Dental visit crude prevalence (%)",
+      getColorForDentalVisit
+    ),
+  }),
+  cholesterolScreening: L.geoJson(null, {
+    style: screeningRatesStyle(
+      "Cholesterol screening crude prevalence (%)",
+      getColorForCholesterolScreening
+    ),
+  }),
+  mammographyScreening: L.geoJson(null, {
+    style: screeningRatesStyle(
+      "Mammography use crude prevalence (%)",
+      getColorForMammographyScreening
+    ),
+  }),
+  cervicalScreening: L.geoJson(null, {
+    style: screeningRatesStyle(
+      "Cervical cancer screening crude prevalence (%)",
+      getColorForCervicalScreening
+    ),
+  }),
+  colorectalScreening: L.geoJson(null, {
+    style: screeningRatesStyle(
+      "Colorectal cancer screening crude prevalence (%)",
+      getColorForColorectalScreening
+    ),
+  }),
+};
+
+function screeningRatesStyle(propertyName, colorFunction) {
+  return function (feature) {
+    return {
+      fillColor: colorFunction(feature.properties[propertyName]),
+      weight: 0.5,
+      opacity: 1,
+      color: "white",
+      fillOpacity: 0.8,
+    };
+  };
+}
+
+function getColorForAnnualCheckUp(percent) {
+  return percent > 70
+    ? "#034e7b"
+    : percent > 60
+    ? "#0570b0"
+    : percent > 50
+    ? "#3690c0"
+    : percent > 40
+    ? "#74a9cf"
+    : percent > 30
+    ? "#a6bddb"
+    : percent > 20
+    ? "#d0d1e6"
+    : percent > 10
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForDentalVisit(percent) {
+  return percent > 70
+    ? "#034e7b"
+    : percent > 60
+    ? "#0570b0"
+    : percent > 50
+    ? "#3690c0"
+    : percent > 40
+    ? "#74a9cf"
+    : percent > 30
+    ? "#a6bddb"
+    : percent > 20
+    ? "#d0d1e6"
+    : percent > 10
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForCholesterolScreening(percent) {
+  return percent > 70
+    ? "#034e7b"
+    : percent > 60
+    ? "#0570b0"
+    : percent > 50
+    ? "#3690c0"
+    : percent > 40
+    ? "#74a9cf"
+    : percent > 30
+    ? "#a6bddb"
+    : percent > 20
+    ? "#d0d1e6"
+    : percent > 10
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForMammographyScreening(percent) {
+  return percent > 70
+    ? "#034e7b"
+    : percent > 60
+    ? "#0570b0"
+    : percent > 50
+    ? "#3690c0"
+    : percent > 40
+    ? "#74a9cf"
+    : percent > 30
+    ? "#a6bddb"
+    : percent > 20
+    ? "#d0d1e6"
+    : percent > 10
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForCervicalScreening(percent) {
+  return percent > 70
+    ? "#034e7b"
+    : percent > 60
+    ? "#0570b0"
+    : percent > 50
+    ? "#3690c0"
+    : percent > 40
+    ? "#74a9cf"
+    : percent > 30
+    ? "#a6bddb"
+    : percent > 20
+    ? "#d0d1e6"
+    : percent > 10
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForColorectalScreening(percent) {
+  return percent > 70
+    ? "#034e7b"
+    : percent > 60
+    ? "#0570b0"
+    : percent > 50
+    ? "#3690c0"
+    : percent > 40
+    ? "#74a9cf"
+    : percent > 30
+    ? "#a6bddb"
+    : percent > 20
+    ? "#d0d1e6"
+    : percent > 10
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function addScreeningRatesData(data) {
+  data.features.forEach(function (feature) {
+    var p = feature.properties;
+
+    var annualCheckUpPopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Annual Checkup: ${p["Annual checkup crude prevalence (%)"]}%
+    `;
+
+    var dentalVisitPopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Dental Visit: ${p["Dental visit crude prevalence (%)"]}%
+    `;
+
+    var cholesterolScreeningPopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Cholesterol Screening: ${p["Cholesterol screening crude prevalence (%)"]}%
+    `;
+
+    var mammographyScreeningPopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Mammography Screening: ${p["Mammography use crude prevalence (%)"]}%
+    `;
+
+    var cervicalScreeningPopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Cervical Screening: ${p["Cervical cancer screening crude prevalence (%)"]}%
+    `;
+
+    var colorectalScreeningPopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Colorectal Screening: ${p["Colorectal cancer screening crude prevalence (%)"]}%
+    `;
+
+    var annualCheckUpLayer = L.geoJson(feature, {
+      style: screeningRatesStyle(
+        "Annual checkup crude prevalence (%)",
+        getColorForAnnualCheckUp
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(annualCheckUpPopup);
+      },
+    });
+    screeningRatesLayers.annualCheckUp.addLayer(annualCheckUpLayer);
+
+    var dentalVisitLayer = L.geoJson(feature, {
+      style: screeningRatesStyle(
+        "Dental visit crude prevalence (%)",
+        getColorForDentalVisit
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(dentalVisitPopup);
+      },
+    });
+    screeningRatesLayers.dentalVisit.addLayer(dentalVisitLayer);
+
+    var cholesterolScreeningLayer = L.geoJson(feature, {
+      style: screeningRatesStyle(
+        "Cholesterol screening crude prevalence (%)",
+        getColorForCholesterolScreening
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(cholesterolScreeningPopup);
+      },
+    });
+    screeningRatesLayers.cholesterolScreening.addLayer(
+      cholesterolScreeningLayer
+    );
+
+    var mammographyScreeningLayer = L.geoJson(feature, {
+      style: screeningRatesStyle(
+        "Mammography use crude prevalence (%)",
+        getColorForMammographyScreening
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(mammographyScreeningPopup);
+      },
+    });
+    screeningRatesLayers.mammographyScreening.addLayer(
+      mammographyScreeningLayer
+    );
+
+    var cervicalScreeningLayer = L.geoJson(feature, {
+      style: screeningRatesStyle(
+        "Cervical cancer screening crude prevalence (%)",
+        getColorForCervicalScreening
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(cervicalScreeningPopup);
+      },
+    });
+    screeningRatesLayers.cervicalScreening.addLayer(cervicalScreeningLayer);
+
+    var colorectalScreeningLayer = L.geoJson(feature, {
+      style: screeningRatesStyle(
+        "Colorectal cancer screening crude prevalence (%)",
+        getColorForColorectalScreening
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(colorectalScreeningPopup);
+      },
+    });
+    screeningRatesLayers.colorectalScreening.addLayer(colorectalScreeningLayer);
+  });
+}
+
+addScreeningRatesData(healthDataGeojson);
+
+var screeningBaseLayers = {
+  "Annual Checkup": screeningRatesLayers.annualCheckUp,
+  "Dental Visit": screeningRatesLayers.dentalVisit,
+  "Cholesterol Screening": screeningRatesLayers.cholesterolScreening,
+  "Mammography Screening": screeningRatesLayers.mammographyScreening,
+  "Cervical Screening": screeningRatesLayers.cervicalScreening,
+  "Colorectal Screening": screeningRatesLayers.colorectalScreening,
+};
+
+L.control
+  .layers(screeningBaseLayers, null, { collapsed: false })
+  .addTo(maps["screeningRatesMap"]);
+
+// SCREENING RATES LEGEND CONTROL
+var screeningRatesLegend = L.control({ position: "bottomleft" });
+
+screeningRatesLegend.onAdd = function () {
+  var div = L.DomUtil.create("div", "screeningRatesLegend");
+  div.innerHTML = `
+    <h4>Percent Annual Checkup</h4>
+    <i style="background: #034e7b"></i><span>70% - above</span><br>
+    <i style="background: #0570b0"></i><span>60% - 70%</span><br>
+    <i style="background: #3690c0"></i><span>50% - 60%</span><br>
+    <i style="background: #74a9cf"></i><span>40% - 50%</span><br>
+    <i style="background: #a6bddb"></i><span>30% - 40%</span><br>
+    <i style="background: #d0d1e6"></i><span>20% - 30%</span><br>
+    <i style="background: #f1eef6"></i><span>10% - 20%</span><br>
+    <i style="background: #f1eef6"></i><span>0% - 10%</span><br>
+    <i style="background: #606060"></i><span>No Data</span><br>
+  `;
+  return div;
+};
+
+screeningRatesLegend.addTo(maps["screeningRatesMap"]);
+
+function updateLegendForScreeningRates(layerName) {
+  var legendContent = "";
+  switch (layerName) {
+    case "Annual Checkup":
+      legendContent = `
+        <h4>Percent Annual Checkup</h4>
+        <i style="background: #034e7b"></i><span>70% - above</span><br>
+        <i style="background: #0570b0"></i><span>60% - 70%</span><br>
+        <i style="background: #3690c0"></i><span>50% - 60%</span><br>
+        <i style="background: #74a9cf"></i><span>40% - 50%</span><br>
+        <i style="background: #a6bddb"></i><span>30% - 40%</span><br>
+        <i style="background: #d0d1e6"></i><span>20% - 30%</span><br>
+        <i style="background: #f1eef6"></i><span>10% - 20%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 10%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
+      `;
+      break;
+    case "Dental Visit":
+      legendContent = `
+        <h4>Percent Dental Visit</h4>
+        <i style="background: #034e7b"></i><span>70% - above</span><br>
+        <i style="background: #0570b0"></i><span>60% - 70%</span><br>
+        <i style="background: #3690c0"></i><span>50% - 60%</span><br>
+        <i style="background: #74a9cf"></i><span>40% - 50%</span><br>
+        <i style="background: #a6bddb"></i><span>30% - 40%</span><br>
+        <i style="background: #d0d1e6"></i><span>20% - 30%</span><br>
+        <i style="background: #f1eef6"></i><span>10% - 20%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 10%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
+      `;
+      break;
+    case "Cholesterol Screening":
+      legendContent = `
+        <h4>Percent Cholesterol Screening</h4>
+        <i style="background: #034e7b"></i><span>70% - above</span><br>
+        <i style="background: #0570b0"></i><span>60% - 70%</span><br>
+        <i style="background: #3690c0"></i><span>50% - 60%</span><br>
+        <i style="background: #74a9cf"></i><span>40% - 50%</span><br>
+        <i style="background: #a6bddb"></i><span>30% - 40%</span><br>
+        <i style="background: #d0d1e6"></i><span>20% - 30%</span><br>
+        <i style="background: #f1eef6"></i><span>10% - 20%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 10%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
+      `;
+      break;
+    case "Mammography Screening":
+      legendContent = `
+        <h4>Percent Mammography Screening</h4>
+        <i style="background: #034e7b"></i><span>70% - above</span><br>
+        <i style="background: #0570b0"></i><span>60% - 70%</span><br>
+        <i style="background: #3690c0"></i><span>50% - 60%</span><br>
+        <i style="background: #74a9cf"></i><span>40% - 50%</span><br>
+        <i style="background: #a6bddb"></i><span>30% - 40%</span><br>
+        <i style="background: #d0d1e6"></i><span>20% - 30%</span><br>
+        <i style="background: #f1eef6"></i><span>10% - 20%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 10%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
+      `;
+      break;
+    case "Cervical Screening":
+      legendContent = `
+        <h4>Percent Cervical Screening</h4>
+        <i style="background: #034e7b"></i><span>70% - above</span><br>
+        <i style="background: #0570b0"></i><span>60% - 70%</span><br>
+        <i style="background: #3690c0"></i><span>50% - 60%</span><br>
+        <i style="background: #74a9cf"></i><span>40% - 50%</span><br>
+        <i style="background: #a6bddb"></i><span>30% - 40%</span><br>
+        <i style="background: #d0d1e6"></i><span>20% - 30%</span><br>
+        <i style="background: #f1eef6"></i><span>10% - 20%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 10%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
+      `;
+      break;
+    case "Colorectal Screening":
+      legendContent = `
+        <h4>Percent Colorectal Screening</h4>
+        <i style="background: #034e7b"></i><span>70% - above</span><br>
+        <i style="background: #0570b0"></i><span>60% - 70%</span><br>
+        <i style="background: #3690c0"></i><span>50% - 60%</span><br>
+        <i style="background: #74a9cf"></i><span>40% - 50%</span><br>
+        <i style="background: #a6bddb"></i><span>30% - 40%</span><br>
+        <i style="background: #d0d1e6"></i><span>20% - 30%</span><br>
+        <i style="background: #f1eef6"></i><span>10% - 20%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 10%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
+      `;
+      break;
+  }
+  document.querySelector(".screeningRatesLegend").innerHTML = legendContent;
+}
+
+maps["screeningRatesMap"].on("baselayerchange", function (e) {
+  updateLegendForScreeningRates(e.name);
+});
+
+// Set annualCheckUp layer as the default
+updateLegendForScreeningRates("Annual Checkup");
+screeningRatesLayers.annualCheckUp.addTo(maps["screeningRatesMap"]);
+
 //=========================================================== Health Status Map =================================================================
 
 maps["healthStatusMap"] = L.map("healthStatusMap", {
@@ -1905,3 +2318,312 @@ var baseLayer5 = L.tileLayer(
       "pk.eyJ1Ijoic2hlZW5hcCIsImEiOiJja25hdXE3aGcxbGI4MnVxbnFoenhwdGRrIn0.DhFwD-KlRigYLaVwL8ipGA",
   }
 ).addTo(maps["healthStatusMap"]);
+
+var healthStatusLayers = {
+  depression: L.geoJson(null, {
+    style: healthStatusStyle(
+      "Depression crude prevalence (%)",
+      getColorForDepression
+    ),
+  }),
+  mentalHealthBad: L.geoJson(null, {
+    style: healthStatusStyle(
+      "Frequent mental health distress crude prevalence (%)",
+      getColorForMentalHealthBad
+    ),
+  }),
+  physicalHealthBad: L.geoJson(null, {
+    style: healthStatusStyle(
+      "Frequent physical health distress crude prevalence (%)",
+      getColorForPhysicalHealthBad
+    ),
+  }),
+  poorSelfRatedHealth: L.geoJson(null, {
+    style: healthStatusStyle(
+      "Fair or poor health crude prevalence (%)",
+      getColorForPoorSelfRatedHealth
+    ),
+  }),
+  disability: L.geoJson(null, {
+    style: healthStatusStyle(
+      "Any disability crude prevalence (%)",
+      getColorForDisability
+    ),
+  }),
+};
+
+function healthStatusStyle(propertyName, colorFunction) {
+  return function (feature) {
+    return {
+      fillColor: colorFunction(feature.properties[propertyName]),
+      weight: 0.5,
+      opacity: 1,
+      color: "white",
+      fillOpacity: 0.8,
+    };
+  };
+}
+
+// ALL COLOR FUNCTIONS ARE TEMPORARY WILL CHANGE LATER
+function getColorForDepression(percent) {
+  return percent > 20
+    ? "#034e7b"
+    : percent > 15
+    ? "#0570b0"
+    : percent > 10
+    ? "#3690c0"
+    : percent > 5
+    ? "#74a9cf"
+    : percent > 0
+    ? "#a6bddb"
+    : "#d0d1e6";
+}
+
+function getColorForMentalHealthBad(percent) {
+  return percent > 20
+    ? "#034e7b"
+    : percent > 15
+    ? "#0570b0"
+    : percent > 10
+    ? "#3690c0"
+    : percent > 5
+    ? "#74a9cf"
+    : percent > 0
+    ? "#a6bddb"
+    : "#d0d1e6";
+}
+
+function getColorForPhysicalHealthBad(percent) {
+  return percent > 20
+    ? "#034e7b"
+    : percent > 15
+    ? "#0570b0"
+    : percent > 10
+    ? "#3690c0"
+    : percent > 5
+    ? "#74a9cf"
+    : percent > 0
+    ? "#a6bddb"
+    : "#d0d1e6";
+}
+
+function getColorForPoorSelfRatedHealth(percent) {
+  return percent > 20
+    ? "#034e7b"
+    : percent > 15
+    ? "#0570b0"
+    : percent > 10
+    ? "#3690c0"
+    : percent > 5
+    ? "#74a9cf"
+    : percent > 0
+    ? "#a6bddb"
+    : "#d0d1e6";
+}
+
+function getColorForDisability(percent) {
+  return percent > 30
+    ? "#034e7b"
+    : percent > 25
+    ? "#0570b0"
+    : percent > 20
+    ? "#3690c0"
+    : percent > 15
+    ? "#74a9cf"
+    : percent > 10
+    ? "#a6bddb"
+    : percent > 5
+    ? "#d0d1e6"
+    : "#f1eef6";
+}
+
+function addHealthStatusData(data) {
+  data.features.forEach(function (feature) {
+    var p = feature.properties;
+
+    var depressionPopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Depression: ${p["Depression crude prevalence (%)"]}%
+    `;
+
+    var mentalHealthBadPopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Frequent Mental Health Distress: ${p["Frequent mental health distress crude prevalence (%)"]}%
+    `;
+
+    var physicalHealthBadPopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Frequent Physical Health Distress: ${p["Frequent physical health distress crude prevalence (%)"]}%
+    `;
+
+    var poorSelfRatedHealthPopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Fair or Poor Health: ${p["Fair or poor health crude prevalence (%)"]}%
+    `;
+
+    var disabilityPopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Any Disability: ${p["Any disability crude prevalence (%)"]}%
+    `;
+
+    var depressionLayer = L.geoJson(feature, {
+      style: healthStatusStyle(
+        "Depression crude prevalence (%)",
+        getColorForDepression
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(depressionPopup);
+      },
+    });
+    healthStatusLayers.depression.addLayer(depressionLayer);
+
+    var mentalHealthBadLayer = L.geoJson(feature, {
+      style: healthStatusStyle(
+        "Frequent mental health distress crude prevalence (%)",
+        getColorForMentalHealthBad
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(mentalHealthBadPopup);
+      },
+    });
+    healthStatusLayers.mentalHealthBad.addLayer(mentalHealthBadLayer);
+
+    var physicalHealthBadLayer = L.geoJson(feature, {
+      style: healthStatusStyle(
+        "Frequent physical health distress crude prevalence (%)",
+        getColorForPhysicalHealthBad
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(physicalHealthBadPopup);
+      },
+    });
+    healthStatusLayers.physicalHealthBad.addLayer(physicalHealthBadLayer);
+
+    var poorSelfRatedHealthLayer = L.geoJson(feature, {
+      style: healthStatusStyle(
+        "Fair or poor health crude prevalence (%)",
+        getColorForPoorSelfRatedHealth
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(poorSelfRatedHealthPopup);
+      },
+    });
+    healthStatusLayers.poorSelfRatedHealth.addLayer(poorSelfRatedHealthLayer);
+
+    var disabilityLayer = L.geoJson(feature, {
+      style: healthStatusStyle(
+        "Any disability crude prevalence (%)",
+        getColorForDisability
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(disabilityPopup);
+      },
+    });
+    healthStatusLayers.disability.addLayer(disabilityLayer);
+  });
+}
+
+addHealthStatusData(healthDataGeojson);
+
+var healthStatusBaseLayers = {
+  Depression: healthStatusLayers.depression,
+  "Frequent Mental Health Distress": healthStatusLayers.mentalHealthBad,
+  "Frequent Physical Health Distress": healthStatusLayers.physicalHealthBad,
+  "Fair or Poor Health": healthStatusLayers.poorSelfRatedHealth,
+  Disability: healthStatusLayers.disability,
+};
+
+L.control
+  .layers(healthStatusBaseLayers, null, { collapsed: false })
+  .addTo(maps["healthStatusMap"]);
+
+// HEALTH STATUS LEGEND CONTROL
+var healthStatusLegend = L.control({ position: "bottomleft" });
+
+healthStatusLegend.onAdd = function () {
+  var div = L.DomUtil.create("div", "healthStatusLegend");
+  div.innerHTML = `
+    <h4>Percent Depression</h4>
+    <i style="background: #034e7b"></i><span>20% - above</span><br>
+    <i style="background: #0570b0"></i><span>15% - 20%</span><br>
+    <i style="background: #3690c0"></i><span>10% - 15%</span><br>
+    <i style="background: #74a9cf"></i><span>5% - 10%</span><br>
+    <i style="background: #a6bddb"></i><span>0% - 5%</span><br>
+    <i style="background: #d0d1e6"></i><span>No Data</span><br>
+  `;
+  return div;
+};
+
+healthStatusLegend.addTo(maps["healthStatusMap"]);
+
+function updateLegendForHealthStatus(layerName) {
+  var legendContent = "";
+  switch (layerName) {
+    case "Depression":
+      legendContent = `
+        <h4>Percent Depression</h4>
+        <i style="background: #034e7b"></i><span>20% - above</span><br>
+        <i style="background: #0570b0"></i><span>15% - 20%</span><br>
+        <i style="background: #3690c0"></i><span>10% - 15%</span><br>
+        <i style="background: #74a9cf"></i><span>5% - 10%</span><br>
+        <i style="background: #a6bddb"></i><span>0% - 5%</span><br>
+        <i style="background: #d0d1e6"></i><span>No Data</span><br>
+      `;
+      break;
+    case "Frequent Mental Health Distress":
+      legendContent = `
+        <h4>Percent Frequent Mental Health Distress</h4>
+        <i style="background: #034e7b"></i><span>20% - above</span><br>
+        <i style="background: #0570b0"></i><span>15% - 20%</span><br>
+        <i style="background: #3690c0"></i><span>10% - 15%</span><br>
+        <i style="background: #74a9cf"></i><span>5% - 10%</span><br>
+        <i style="background: #a6bddb"></i><span>0% - 5%</span><br>
+        <i style="background: #d0d1e6"></i><span>No Data</span><br>
+      `;
+      break;
+    case "Frequent Physical Health Distress":
+      legendContent = `
+        <h4>Percent Frequent Physical Health Distress</h4>
+        <i style="background: #034e7b"></i><span>20% - above</span><br>
+        <i style="background: #0570b0"></i><span>15% - 20%</span><br>
+        <i style="background: #3690c0"></i><span>10% - 15%</span><br>
+        <i style="background: #74a9cf"></i><span>5% - 10%</span><br>
+        <i style="background: #a6bddb"></i><span>0% - 5%</span><br>
+        <i style="background: #d0d1e6"></i><span>No Data</span><br>
+      `;
+      break;
+    case "Fair or Poor Health":
+      legendContent = `
+        <h4>Percent Fair or Poor Health</h4>
+        <i style="background: #034e7b"></i><span>20% - above</span><br>
+        <i style="background: #0570b0"></i><span>15% - 20%</span><br>
+        <i style="background: #3690c0"></i><span>10% - 15%</span><br>
+        <i style="background: #74a9cf"></i><span>5% - 10%</span><br>
+        <i style="background: #a6bddb"></i><span>0% - 5%</span><br>
+        <i style="background: #d0d1e6"></i><span>No Data</span><br>
+      `;
+      break;
+    case "Disability":
+      legendContent = `
+        <h4>Percent Disability</h4>
+        <i style="background: #034e7b"></i><span>30% - above</span><br>
+        <i style="background: #0570b0"></i><span>25% - 30%</span><br>
+        <i style="background: #3690c0"></i><span>20% - 25%</span><br>
+        <i style="background: #74a9cf"></i><span>15% - 20%</span><br>
+        <i style="background: #a6bddb"></i><span>10% - 15%</span><br>
+        <i style="background: #d0d1e6"></i><span>5% - 10%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 5%</span><br>
+        <i style="background: #f1eef6"></i><span>No Data</span><br>
+      `;
+      break;
+  }
+  document.querySelector(".healthStatusLegend").innerHTML = legendContent;
+}
+
+maps["healthStatusMap"].on("baselayerchange", function (e) {
+  updateLegendForHealthStatus(e.name);
+});
+
+// Set depression layer as the default
+updateLegendForHealthStatus("Depression");
+healthStatusLayers.depression.addTo(maps["healthStatusMap"]);

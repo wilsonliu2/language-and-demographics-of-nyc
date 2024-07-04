@@ -23,7 +23,8 @@
 
 /* LEGEND STYLING */
 .legend,
-.healthRiskLegend {
+.healthRiskLegend,
+.healthOutcomesLegend {
   background: white;
   line-height: 1.2;
   padding: 5px;
@@ -34,14 +35,16 @@
 }
 
 .legend h4,
-.healthRiskLegend h4 {
+.healthRiskLegend h4,
+.healthOutcomesLegend h4 {
   margin: 0 0 5px;
   font-weight: bold;
   font-size: 14px;
 }
 
 .legend i,
-.healthRiskLegend i {
+.healthRiskLegend i,
+.healthOutcomesLegend i {
   width: 14px;
   height: 14px;
   float: left;
@@ -50,7 +53,8 @@
 }
 
 .legend span,
-.healthRiskLegend span {
+.healthRiskLegend span,
+.healthOutcomesLegend span {
   display: block;
   margin-bottom: 3px;
 }

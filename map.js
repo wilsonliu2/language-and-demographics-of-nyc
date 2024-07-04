@@ -1102,7 +1102,7 @@ healthRisklegend.onAdd = function () {
   var div = L.DomUtil.create("div", "healthRiskLegend");
   div.innerHTML = `
     <h4>Percent Uninsured</h4>
-    <i style="background: #034e7b"></i><span>35.8%+</span><br>
+    <i style="background: #034e7b"></i><span>35.8% - above</span><br>
     <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
     <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
     <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
@@ -1123,7 +1123,7 @@ function updateLegendForHealthRisk(layerName) {
     case "Uninsured":
       legendContent = `
         <h4>Percent Uninsured</h4>
-        <i style="background: #034e7b"></i><span>35.8%+</span><br>
+        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
         <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
         <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
         <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
@@ -1223,6 +1223,644 @@ var baseLayer3 = L.tileLayer(
       "pk.eyJ1Ijoic2hlZW5hcCIsImEiOiJja25hdXE3aGcxbGI4MnVxbnFoenhwdGRrIn0.DhFwD-KlRigYLaVwL8ipGA",
   }
 ).addTo(maps["healthOutcomesMap"]);
+
+var healthOutcomesLayers = {
+  currentAsthma: L.geoJson(null, {
+    style: healthOutcomesStyle(
+      "Current asthma crude prevalence (%)",
+      getColorForCurrentAsthma
+    ),
+  }),
+  highBlood: L.geoJson(null, {
+    style: healthOutcomesStyle(
+      "High blood pressure crude prevalence (%)",
+      getColorForHighBlood
+    ),
+  }),
+  cancerAdults: L.geoJson(null, {
+    style: healthOutcomesStyle(
+      "Cancer (except skin) crude prevalence (%)",
+      getColorForCurrentSmokers
+    ),
+  }),
+  highCholesterol: L.geoJson(null, {
+    style: healthOutcomesStyle(
+      "Cholesterol screening crude prevalence (%)",
+      getColorForCancerAdults
+    ),
+  }),
+  kidneyDisease: L.geoJson(null, {
+    style: healthOutcomesStyle(
+      "Chronic kidney disease crude prevalence (%)",
+      getColorForHighCholesterol
+    ),
+  }),
+  pulmonaryDisease: L.geoJson(null, {
+    style: healthOutcomesStyle(
+      "Arthritis crude prevalence (%)",
+      getColorForPulmonaryDisease
+    ),
+  }),
+  heartDisease: L.geoJson(null, {
+    style: healthOutcomesStyle(
+      "Coronary heart disease crude prevalence (%)",
+      getColorForHeartDisease
+    ),
+  }),
+  diabetes: L.geoJson(null, {
+    style: healthOutcomesStyle(
+      "Diabetes crude prevalence (%)",
+      getColorForDiabetes
+    ),
+  }),
+  obesity: L.geoJson(null, {
+    style: healthOutcomesStyle(
+      "Obesity crude prevalence (%)",
+      getColorForObesity
+    ),
+  }),
+  stroke: L.geoJson(null, {
+    style: healthOutcomesStyle(
+      "Stroke crude prevalence (%)",
+      getColorForStroke
+    ),
+  }),
+};
+
+function healthOutcomesStyle(propertyName, colorFunction) {
+  return function (feature) {
+    return {
+      fillColor: colorFunction(feature.properties[propertyName]),
+      weight: 0.5,
+      opacity: 1,
+      color: "white",
+      fillOpacity: 0.8,
+    };
+  };
+}
+
+// ALL COLOR FUNCTIONS ARE TEMPORARY WILL CHANGE LATER
+function getColorForCurrentAsthma(percent) {
+  return percent > 35.8
+    ? "#034e7b"
+    : percent > 28.3
+    ? "#0570b0"
+    : percent > 23.4
+    ? "#3690c0"
+    : percent > 19.1
+    ? "#74a9cf"
+    : percent > 15.6
+    ? "#a6bddb"
+    : percent > 12.8
+    ? "#d0d1e6"
+    : percent > 9.8
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForHighBlood(percent) {
+  return percent > 35.8
+    ? "#034e7b"
+    : percent > 28.3
+    ? "#0570b0"
+    : percent > 23.4
+    ? "#3690c0"
+    : percent > 19.1
+    ? "#74a9cf"
+    : percent > 15.6
+    ? "#a6bddb"
+    : percent > 12.8
+    ? "#d0d1e6"
+    : percent > 9.8
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForCancerAdults(percent) {
+  return percent > 35.8
+    ? "#034e7b"
+    : percent > 28.3
+    ? "#0570b0"
+    : percent > 23.4
+    ? "#3690c0"
+    : percent > 19.1
+    ? "#74a9cf"
+    : percent > 15.6
+    ? "#a6bddb"
+    : percent > 12.8
+    ? "#d0d1e6"
+    : percent > 9.8
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForHighCholesterol(percent) {
+  return percent > 35.8
+    ? "#034e7b"
+    : percent > 28.3
+    ? "#0570b0"
+    : percent > 23.4
+    ? "#3690c0"
+    : percent > 19.1
+    ? "#74a9cf"
+    : percent > 15.6
+    ? "#a6bddb"
+    : percent > 12.8
+    ? "#d0d1e6"
+    : percent > 9.8
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForKidneyDisease(percent) {
+  return percent > 35.8
+    ? "#034e7b"
+    : percent > 28.3
+    ? "#0570b0"
+    : percent > 23.4
+    ? "#3690c0"
+    : percent > 19.1
+    ? "#74a9cf"
+    : percent > 15.6
+    ? "#a6bddb"
+    : percent > 12.8
+    ? "#d0d1e6"
+    : percent > 9.8
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForPulmonaryDisease(percent) {
+  return percent > 35.8
+    ? "#034e7b"
+    : percent > 28.3
+    ? "#0570b0"
+    : percent > 23.4
+    ? "#3690c0"
+    : percent > 19.1
+    ? "#74a9cf"
+    : percent > 15.6
+    ? "#a6bddb"
+    : percent > 12.8
+    ? "#d0d1e6"
+    : percent > 9.8
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForHeartDisease(percent) {
+  return percent > 35.8
+    ? "#034e7b"
+    : percent > 28.3
+    ? "#0570b0"
+    : percent > 23.4
+    ? "#3690c0"
+    : percent > 19.1
+    ? "#74a9cf"
+    : percent > 15.6
+    ? "#a6bddb"
+    : percent > 12.8
+    ? "#d0d1e6"
+    : percent > 9.8
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForDiabetes(percent) {
+  return percent > 35.8
+    ? "#034e7b"
+    : percent > 28.3
+    ? "#0570b0"
+    : percent > 23.4
+    ? "#3690c0"
+    : percent > 19.1
+    ? "#74a9cf"
+    : percent > 15.6
+    ? "#a6bddb"
+    : percent > 12.8
+    ? "#d0d1e6"
+    : percent > 9.8
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForObesity(percent) {
+  return percent > 35.8
+    ? "#034e7b"
+    : percent > 28.3
+    ? "#0570b0"
+    : percent > 23.4
+    ? "#3690c0"
+    : percent > 19.1
+    ? "#74a9cf"
+    : percent > 15.6
+    ? "#a6bddb"
+    : percent > 12.8
+    ? "#d0d1e6"
+    : percent > 9.8
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForStroke(percent) {
+  return percent > 35.8
+    ? "#034e7b"
+    : percent > 28.3
+    ? "#0570b0"
+    : percent > 23.4
+    ? "#3690c0"
+    : percent > 19.1
+    ? "#74a9cf"
+    : percent > 15.6
+    ? "#a6bddb"
+    : percent > 12.8
+    ? "#d0d1e6"
+    : percent > 9.8
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function addHealthOutcomesData(data) {
+  data.features.forEach(function (feature) {
+    var p = feature.properties;
+
+    var currentAsthmaPopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Current Asthma: ${p["Current asthma crude prevalence (%)"]}%
+    `;
+
+    var highBloodPopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      High Blood Pressure: ${p["High blood pressure crude prevalence (%)"]}%
+    `;
+
+    var cancerAdultsPopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Cancer (except skin): ${p["Cancer (except skin) crude prevalence (%)"]}%
+    `;
+
+    var highCholesterolPopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      High Cholesterol: ${p["Cholesterol screening crude prevalence (%)"]}%
+    `;
+
+    var kidneyDiseasePopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Chronic Kidney Disease: ${p["Chronic kidney disease crude prevalence (%)"]}%
+    `;
+
+    var pulmonaryDiseasePopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Pulmonary Disease: ${p["Arthritis crude prevalence (%)"]}%
+    `;
+
+    var heartDiseasePopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Heart Disease: ${p["Coronary heart disease crude prevalence (%)"]}%
+    `;
+
+    var diabetesPopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Diabetes: ${p["Diabetes crude prevalence (%)"]}%
+    `;
+
+    var obesityPopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Obesity: ${p["Obesity crude prevalence (%)"]}%
+    `;
+
+    var strokePopup = `
+      Census tract: ${p["Census tract FIPS"]}<br>
+      Stroke: ${p["Stroke crude prevalence (%)"]}%
+    `;
+
+    var currentAsthmaLayer = L.geoJson(feature, {
+      style: healthOutcomesStyle(
+        "Current asthma crude prevalence (%)",
+        getColorForCurrentAsthma
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(currentAsthmaPopup);
+      },
+    });
+    healthOutcomesLayers.currentAsthma.addLayer(currentAsthmaLayer);
+
+    var highBloodLayer = L.geoJson(feature, {
+      style: healthOutcomesStyle(
+        "High blood pressure crude prevalence (%)",
+        getColorForHighBlood
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(highBloodPopup);
+      },
+    });
+    healthOutcomesLayers.highBlood.addLayer(highBloodLayer);
+
+    var cancerAdultsLayer = L.geoJson(feature, {
+      style: healthOutcomesStyle(
+        "Cancer (except skin) crude prevalence (%)",
+        getColorForCancerAdults
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(cancerAdultsPopup);
+      },
+    });
+    healthOutcomesLayers.cancerAdults.addLayer(cancerAdultsLayer);
+
+    var highCholesterolLayer = L.geoJson(feature, {
+      style: healthOutcomesStyle(
+        "Cholesterol screening crude prevalence (%)",
+        getColorForHighCholesterol
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(highCholesterolPopup);
+      },
+    });
+    healthOutcomesLayers.highCholesterol.addLayer(highCholesterolLayer);
+
+    var kidneyDiseaseLayer = L.geoJson(feature, {
+      style: healthOutcomesStyle(
+        "Chronic kidney disease crude prevalence (%)",
+        getColorForKidneyDisease
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(kidneyDiseasePopup);
+      },
+    });
+    healthOutcomesLayers.kidneyDisease.addLayer(kidneyDiseaseLayer);
+
+    var pulmonaryDiseaseLayer = L.geoJson(feature, {
+      style: healthOutcomesStyle(
+        "Arthritis crude prevalence (%)",
+        getColorForPulmonaryDisease
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(pulmonaryDiseasePopup);
+      },
+    });
+    healthOutcomesLayers.pulmonaryDisease.addLayer(pulmonaryDiseaseLayer);
+
+    var heartDiseaseLayer = L.geoJson(feature, {
+      style: healthOutcomesStyle(
+        "Coronary heart disease crude prevalence (%)",
+        getColorForHeartDisease
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(heartDiseasePopup);
+      },
+    });
+    healthOutcomesLayers.heartDisease.addLayer(heartDiseaseLayer);
+
+    var diabetesLayer = L.geoJson(feature, {
+      style: healthOutcomesStyle(
+        "Diabetes crude prevalence (%)",
+        getColorForDiabetes
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(diabetesPopup);
+      },
+    });
+    healthOutcomesLayers.diabetes.addLayer(diabetesLayer);
+
+    var obesityLayer = L.geoJson(feature, {
+      style: healthOutcomesStyle(
+        "Obesity crude prevalence (%)",
+        getColorForObesity
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(obesityPopup);
+      },
+    });
+    healthOutcomesLayers.obesity.addLayer(obesityLayer);
+
+    var strokeLayer = L.geoJson(feature, {
+      style: healthOutcomesStyle(
+        "Stroke crude prevalence (%)",
+        getColorForStroke
+      ),
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(strokePopup);
+      },
+    });
+    healthOutcomesLayers.stroke.addLayer(strokeLayer);
+  });
+}
+
+addHealthOutcomesData(healthDataGeojson);
+
+var outcomeBaseLayers = {
+  "Current Asthma": healthOutcomesLayers.currentAsthma,
+  "High Blood Pressure": healthOutcomesLayers.highBlood,
+  "Cancer (except skin)": healthOutcomesLayers.cancerAdults,
+  "High Cholesterol": healthOutcomesLayers.highCholesterol,
+  "Chronic Kidney Disease": healthOutcomesLayers.kidneyDisease,
+  "Pulmonary Disease": healthOutcomesLayers.pulmonaryDisease,
+  "Heart Disease": healthOutcomesLayers.heartDisease,
+  Diabetes: healthOutcomesLayers.diabetes,
+  Obesity: healthOutcomesLayers.obesity,
+  Stroke: healthOutcomesLayers.stroke,
+};
+
+L.control
+  .layers(outcomeBaseLayers, null, { collapsed: false })
+  .addTo(maps["healthOutcomesMap"]);
+
+// HEALTH RISK LEGEND CONTROL
+var healthOutcomesLegend = L.control({ position: "bottomleft" });
+
+healthOutcomesLegend.onAdd = function () {
+  var div = L.DomUtil.create("div", "healthOutcomesLegend");
+  div.innerHTML = `
+    <h4>Percent Current Asthma</h4>
+    <i style="background: #034e7b"></i><span>35.8% - above</span><br>
+    <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
+    <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
+    <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
+    <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
+    <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
+    <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
+    <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+    <i style="background: #606060"></i><span>No Data</span><br>
+  `;
+  return div;
+};
+
+healthOutcomesLegend.addTo(maps["healthOutcomesMap"]);
+
+function updateLegendForHealthOutcomes(layerName) {
+  var legendContent = "";
+  switch (layerName) {
+    case "Current Asthma":
+      legendContent = `
+        <h4>Percent Current Asthma</h4>
+        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
+        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
+        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
+        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
+        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
+        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
+        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
+      `;
+      break;
+    case "High Blood Pressure":
+      legendContent = `
+        <h4>Percent High Blood Pressure</h4>
+        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
+        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
+        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
+        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
+        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
+        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
+        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
+      `;
+      break;
+    case "Cancer (except skin)":
+      legendContent = `
+        <h4>Percent Cancer (except skin)</h4>
+        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
+        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
+        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
+        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
+        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
+        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
+        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
+      `;
+      break;
+    case "High Cholesterol":
+      legendContent = `
+        <h4>Percent High Cholesterol</h4>
+        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
+        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
+        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
+        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
+        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
+        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
+        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
+      `;
+      break;
+    case "Chronic Kidney Disease":
+      legendContent = `
+        <h4>Percent Chronic Kidney Disease</h4>
+        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
+        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
+        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
+        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
+        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
+        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
+        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
+      `;
+      break;
+    case "Pulmonary Disease":
+      legendContent = `
+        <h4>Percent Pulmonary Disease</h4>
+        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
+        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
+        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
+        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
+        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
+        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
+        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
+      `;
+      break;
+    case "Heart Disease":
+      legendContent = `
+        <h4>Percent Heart Disease</h4>
+        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
+        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
+        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
+        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
+        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
+        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
+        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
+      `;
+      break;
+    case "Diabetes":
+      legendContent = `
+        <h4>Percent Diabetes</h4>
+        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
+        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
+        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
+        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
+        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
+        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
+        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
+      `;
+      break;
+    case "Obesity":
+      legendContent = `
+        <h4>Percent Obesity</h4>
+        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
+        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
+        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
+        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
+        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
+        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
+        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
+      `;
+      break;
+    case "Stroke":
+      legendContent = `
+        <h4>Percent Stroke</h4>
+        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
+        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
+        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
+        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
+        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
+        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
+        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
+      `;
+      break;
+  }
+  document.querySelector(".healthOutcomesLegend").innerHTML = legendContent;
+}
+
+maps["healthOutcomesMap"].on("baselayerchange", function (e) {
+  updateLegendForHealthOutcomes(e.name);
+});
+
+// Set currentAsthma layer as the default
+updateLegendForHealthOutcomes("Current Asthma");
+healthOutcomesLayers.currentAsthma.addTo(maps["healthOutcomesMap"]);
 
 //=========================================================== Screening Rates Map =================================================================
 

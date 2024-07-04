@@ -34,6 +34,23 @@ var selectedLayer = "language";
 var languageControl;
 var mymap = maps["demographicLanguageMap"];
 
+//=========================================================== FUNCTIONS =================================================================
+
+// All maps will have this mouse effect
+function allFeatures(feature, layer) {
+  layer.on("mouseover", function () {
+    layer.setStyle({
+      fillOpacity: 0.3,
+    });
+  });
+
+  layer.on("mouseout", function () {
+    layer.setStyle({
+      fillOpacity: 0.8,
+    });
+  });
+}
+
 //=========================================================== LANGUAGE =================================================================
 
 // Create a FeatureGroup for language layers
@@ -352,7 +369,9 @@ function updateMap() {
         }
       }
 
-      layer.bindPopup(popupContent);
+      var popup = L.responsivePopup().setContent(popupContent);
+
+      layer.bindPopup(popup);
 
       // Change style base on mouse events
       layer.on("mouseover", function () {
@@ -392,7 +411,7 @@ var LanguageControl = L.Control.extend({
 
     // Define languages for dropdown
     var languages = [
-      { value: "", text: "Select Language" },
+      { value: "", text: "Predominant Languages" },
       { value: "Arabic", text: "Arabic" },
       { value: "Chinese", text: "Chinese" },
       {
@@ -493,6 +512,7 @@ demographicGeoJson = L.geoJson(languageGeoJsonData, {
 
       // Pie chart section
       // Use JSON.stringify to turn the properties object into a string so it can be passed into updatePieChart function
+      // Chart container must have a set size or responsive popup plugin will not work as intended
       popUpContent += `
         <button onclick='updatePieChart(${id}, "gender", ${JSON.stringify(
         p
@@ -506,11 +526,12 @@ demographicGeoJson = L.geoJson(languageGeoJsonData, {
         p
       )})'>Race Distribution</button>
 
-        <div id="chart-container-${id}"></div>
+        <div id="chart-container-${id}" style="width: 150px; height: 150px;"></div>
       `;
     }
 
-    layer.bindPopup(popUpContent);
+    var popup = L.responsivePopup().setContent(popUpContent);
+    layer.bindPopup(popup);
 
     // Event listener to create a pie chart when popup is opened
     layer.on("popupopen", function () {
@@ -635,9 +656,19 @@ function createBarPlotForDemographics(id, data) {
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  // sort data
+  // Calculate total sum
+  var total = d3.sum(data, function (d) {
+    return d.value;
+  });
+
+  // Convert each value to percentage
+  data.forEach(function (d) {
+    d.percentage = (d.value / total) * 100;
+  });
+
+  // sort data by percentage
   data.sort(function (b, a) {
-    return a.value - b.value;
+    return a.percentage - b.percentage;
   });
 
   // X axis
@@ -658,9 +689,13 @@ function createBarPlotForDemographics(id, data) {
     .attr("transform", "translate(-10,0)rotate(-45)")
     .style("text-anchor", "end");
 
-  // Add Y axis
-  var y = d3.scaleLinear().domain([0, 1000]).range([height, 0]);
-  svg.append("g").call(d3.axisLeft(y));
+  // Y axis percentage
+  var y = d3.scaleLinear().domain([0, 100]).range([height, 0]);
+  svg.append("g").call(
+    d3.axisLeft(y).tickFormat(function (d) {
+      return d + "%";
+    })
+  );
 
   // Bars
   svg
@@ -672,11 +707,11 @@ function createBarPlotForDemographics(id, data) {
       return x(d.label);
     })
     .attr("y", function (d) {
-      return y(d.value);
+      return y(d.percentage);
     })
     .attr("width", x.bandwidth())
     .attr("height", function (d) {
-      return height - y(d.value);
+      return height - y(d.percentage);
     })
     .attr("fill", "#69b3a2");
 }
@@ -723,7 +758,7 @@ function updateBarPlotForRace(id, properties) {
 
 // Function to update the legend based on the selected layer and language
 function updateLegend(selectedLayer, selectedLanguage) {
-  var legendContent = "<h4>Legend</h4>";
+  var legendContent = "";
 
   if (selectedLayer == "language") {
     if (selectedLanguage == "") {
@@ -1030,7 +1065,9 @@ function addHealthRiskData(data) {
         getColorForUninsured
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(uninsuredPopup);
+        var popup = L.responsivePopup().setContent(uninsuredPopup);
+        layer.bindPopup(popup);
+        allFeatures(feature, layer);
       },
     });
     healthRiskLayers.uninsured.addLayer(uninsuredLayer);
@@ -1041,7 +1078,9 @@ function addHealthRiskData(data) {
         getColorForFrequentDrinkers
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(frequentDrinkersPopup);
+        var popup = L.responsivePopup().setContent(frequentDrinkersPopup);
+        layer.bindPopup(popup);
+        allFeatures(feature, layer);
       },
     });
     healthRiskLayers.frequentDrinkers.addLayer(frequentDrinkersLayer);
@@ -1052,7 +1091,9 @@ function addHealthRiskData(data) {
         getColorForCurrentSmokers
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(currentSmokersPopup);
+        var popup = L.responsivePopup().setContent(currentSmokersPopup);
+        layer.bindPopup(popup);
+        allFeatures(feature, layer);
       },
     });
     healthRiskLayers.currentSmokers.addLayer(currentSmokersLayer);
@@ -1063,7 +1104,9 @@ function addHealthRiskData(data) {
         getColorForSedentaryLifestyle
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(sedentaryLifestylePopup);
+        var popup = L.responsivePopup().setContent(sedentaryLifestylePopup);
+        layer.bindPopup(popup);
+        allFeatures(feature, layer);
       },
     });
     healthRiskLayers.sedentaryLifestyle.addLayer(sedentaryLifestyleLayer);
@@ -1074,7 +1117,9 @@ function addHealthRiskData(data) {
         getColorForSleepLessThan7Hours
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(sleepLessThan7HoursPopup);
+        var popup = L.responsivePopup().setContent(sleepLessThan7HoursPopup);
+        layer.bindPopup(popup);
+        allFeatures(feature, layer);
       },
     });
     healthRiskLayers.sleepLessThan7Hours.addLayer(sleepLessThan7HoursLayer);
@@ -1560,7 +1605,8 @@ function addHealthOutcomesData(data) {
         getColorForCurrentAsthma
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(currentAsthmaPopup);
+        var popup = L.responsivePopup().setContent(currentAsthmaPopup);
+        layer.bindPopup(popup);
       },
     });
     healthOutcomesLayers.currentAsthma.addLayer(currentAsthmaLayer);
@@ -1571,7 +1617,8 @@ function addHealthOutcomesData(data) {
         getColorForHighBlood
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(highBloodPopup);
+        var popup = L.responsivePopup().setContent(highBloodPopup);
+        layer.bindPopup(popup);
       },
     });
     healthOutcomesLayers.highBlood.addLayer(highBloodLayer);
@@ -1582,7 +1629,8 @@ function addHealthOutcomesData(data) {
         getColorForCancerAdults
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(cancerAdultsPopup);
+        var popup = L.responsivePopup().setContent(cancerAdultsPopup);
+        layer.bindPopup(popup);
       },
     });
     healthOutcomesLayers.cancerAdults.addLayer(cancerAdultsLayer);
@@ -1593,7 +1641,8 @@ function addHealthOutcomesData(data) {
         getColorForHighCholesterol
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(highCholesterolPopup);
+        var popup = L.responsivePopup().setContent(highCholesterolPopup);
+        layer.bindPopup(popup);
       },
     });
     healthOutcomesLayers.highCholesterol.addLayer(highCholesterolLayer);
@@ -1604,7 +1653,8 @@ function addHealthOutcomesData(data) {
         getColorForKidneyDisease
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(kidneyDiseasePopup);
+        var popup = L.responsivePopup().setContent(kidneyDiseasePopup);
+        layer.bindPopup(popup);
       },
     });
     healthOutcomesLayers.kidneyDisease.addLayer(kidneyDiseaseLayer);
@@ -1615,7 +1665,8 @@ function addHealthOutcomesData(data) {
         getColorForPulmonaryDisease
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(pulmonaryDiseasePopup);
+        var popup = L.responsivePopup().setContent(pulmonaryDiseasePopup);
+        layer.bindPopup(popup);
       },
     });
     healthOutcomesLayers.pulmonaryDisease.addLayer(pulmonaryDiseaseLayer);
@@ -1626,7 +1677,8 @@ function addHealthOutcomesData(data) {
         getColorForHeartDisease
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(heartDiseasePopup);
+        var popup = L.responsivePopup().setContent(heartDiseasePopup);
+        layer.bindPopup(popup);
       },
     });
     healthOutcomesLayers.heartDisease.addLayer(heartDiseaseLayer);
@@ -1637,7 +1689,8 @@ function addHealthOutcomesData(data) {
         getColorForDiabetes
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(diabetesPopup);
+        var popup = L.responsivePopup().setContent(diabetesPopup);
+        layer.bindPopup(popup);
       },
     });
     healthOutcomesLayers.diabetes.addLayer(diabetesLayer);
@@ -1648,7 +1701,8 @@ function addHealthOutcomesData(data) {
         getColorForObesity
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(obesityPopup);
+        var popup = L.responsivePopup().setContent(obesityPopup);
+        layer.bindPopup(popup);
       },
     });
     healthOutcomesLayers.obesity.addLayer(obesityLayer);
@@ -1659,7 +1713,8 @@ function addHealthOutcomesData(data) {
         getColorForStroke
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(strokePopup);
+        var popup = L.responsivePopup().setContent(strokePopup);
+        layer.bindPopup(popup);
       },
     });
     healthOutcomesLayers.stroke.addLayer(strokeLayer);
@@ -2095,7 +2150,8 @@ function addScreeningRatesData(data) {
         getColorForAnnualCheckUp
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(annualCheckUpPopup);
+        var popup = L.responsivePopup().setContent(annualCheckUpPopup);
+        layer.bindPopup(popup);
       },
     });
     screeningRatesLayers.annualCheckUp.addLayer(annualCheckUpLayer);
@@ -2106,7 +2162,8 @@ function addScreeningRatesData(data) {
         getColorForDentalVisit
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(dentalVisitPopup);
+        var popup = L.responsivePopup().setContent(dentalVisitPopup);
+        layer.bindPopup(popup);
       },
     });
     screeningRatesLayers.dentalVisit.addLayer(dentalVisitLayer);
@@ -2117,7 +2174,8 @@ function addScreeningRatesData(data) {
         getColorForCholesterolScreening
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(cholesterolScreeningPopup);
+        var popup = L.responsivePopup().setContent(cholesterolScreeningPopup);
+        layer.bindPopup(popup);
       },
     });
     screeningRatesLayers.cholesterolScreening.addLayer(
@@ -2130,7 +2188,8 @@ function addScreeningRatesData(data) {
         getColorForMammographyScreening
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(mammographyScreeningPopup);
+        var popup = L.responsivePopup().setContent(mammographyScreeningPopup);
+        layer.bindPopup(popup);
       },
     });
     screeningRatesLayers.mammographyScreening.addLayer(
@@ -2143,7 +2202,8 @@ function addScreeningRatesData(data) {
         getColorForCervicalScreening
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(cervicalScreeningPopup);
+        var popup = L.responsivePopup().setContent(cervicalScreeningPopup);
+        layer.bindPopup(popup);
       },
     });
     screeningRatesLayers.cervicalScreening.addLayer(cervicalScreeningLayer);
@@ -2154,7 +2214,8 @@ function addScreeningRatesData(data) {
         getColorForColorectalScreening
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(colorectalScreeningPopup);
+        var popup = L.responsivePopup().setContent(colorectalScreeningPopup);
+        layer.bindPopup(popup);
       },
     });
     screeningRatesLayers.colorectalScreening.addLayer(colorectalScreeningLayer);
@@ -2472,7 +2533,8 @@ function addHealthStatusData(data) {
         getColorForDepression
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(depressionPopup);
+        var popup = L.responsivePopup().setContent(depressionPopup);
+        layer.bindPopup(popup);
       },
     });
     healthStatusLayers.depression.addLayer(depressionLayer);
@@ -2483,7 +2545,8 @@ function addHealthStatusData(data) {
         getColorForMentalHealthBad
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(mentalHealthBadPopup);
+        var popup = L.responsivePopup().setContent(mentalHealthBadPopup);
+        layer.bindPopup(popup);
       },
     });
     healthStatusLayers.mentalHealthBad.addLayer(mentalHealthBadLayer);
@@ -2494,7 +2557,8 @@ function addHealthStatusData(data) {
         getColorForPhysicalHealthBad
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(physicalHealthBadPopup);
+        var popup = L.responsivePopup().setContent(physicalHealthBadPopup);
+        layer.bindPopup(popup);
       },
     });
     healthStatusLayers.physicalHealthBad.addLayer(physicalHealthBadLayer);
@@ -2505,7 +2569,8 @@ function addHealthStatusData(data) {
         getColorForPoorSelfRatedHealth
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(poorSelfRatedHealthPopup);
+        var popup = L.responsivePopup().setContent(poorSelfRatedHealthPopup);
+        layer.bindPopup(popup);
       },
     });
     healthStatusLayers.poorSelfRatedHealth.addLayer(poorSelfRatedHealthLayer);
@@ -2516,7 +2581,8 @@ function addHealthStatusData(data) {
         getColorForDisability
       ),
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(disabilityPopup);
+        var popup = L.responsivePopup().setContent(disabilityPopup);
+        layer.bindPopup(popup);
       },
     });
     healthStatusLayers.disability.addLayer(disabilityLayer);
@@ -2826,7 +2892,8 @@ function updateHealthStatusMap() {
         `;
       }
 
-      layer.bindPopup(popupContent);
+      var popup = L.responsivePopup().setContent(popupContent);
+      layer.bindPopup(popup);
 
       // Change style based on mouse events
       layer.on("mouseover", function () {

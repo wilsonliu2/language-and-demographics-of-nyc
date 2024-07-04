@@ -2616,6 +2616,84 @@ function updateLegendForHealthStatus(layerName) {
         <i style="background: #f1eef6"></i><span>No Data</span><br>
       `;
       break;
+    case "Hearing disability crude prevalence (%)":
+      legendContent = `
+        <h4>Percent Hearing Disability</h4>
+        <i style="background: #034e7b"></i><span>30% - above</span><br>
+        <i style="background: #0570b0"></i><span>25% - 30%</span><br>
+        <i style="background: #3690c0"></i><span>20% - 25%</span><br>
+        <i style="background: #74a9cf"></i><span>15% - 20%</span><br>
+        <i style="background: #a6bddb"></i><span>10% - 15%</span><br>
+        <i style="background: #d0d1e6"></i><span>5% - 10%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 5%</span><br>
+        <i style="background: #f1eef6"></i><span>No Data</span><br>
+        `;
+      break;
+    case "Vision disability crude prevalence (%)":
+      legendContent = `
+        <h4>Percent Vision Disability</h4>
+        <i style="background: #034e7b"></i><span>30% - above</span><br>
+        <i style="background: #0570b0"></i><span>25% - 30%</span><br>
+        <i style="background: #3690c0"></i><span>20% - 25%</span><br>
+        <i style="background: #74a9cf"></i><span>15% - 20%</span><br>
+        <i style="background: #a6bddb"></i><span>10% - 15%</span><br>
+        <i style="background: #d0d1e6"></i><span>5% - 10%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 5%</span><br>
+        <i style="background: #f1eef6"></i><span>No Data</span><br>
+          `;
+      break;
+    case "Cognitive disability crude prevalence (%)":
+      legendContent = `
+        <h4>Percent Cognitive Disability</h4>
+        <i style="background: #034e7b"></i><span>30% - above</span><br>
+        <i style="background: #0570b0"></i><span>25% - 30%</span><br>
+        <i style="background: #3690c0"></i><span>20% - 25%</span><br>
+        <i style="background: #74a9cf"></i><span>15% - 20%</span><br>
+        <i style="background: #a6bddb"></i><span>10% - 15%</span><br>
+        <i style="background: #d0d1e6"></i><span>5% - 10%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 5%</span><br>
+        <i style="background: #f1eef6"></i><span>No Data</span><br>
+            `;
+      break;
+    case "Mobility disability crude prevalence (%)":
+      legendContent = `
+        <h4>Percent Mobility Disability</h4>
+        <i style="background: #034e7b"></i><span>30% - above</span><br>
+        <i style="background: #0570b0"></i><span>25% - 30%</span><br>
+        <i style="background: #3690c0"></i><span>20% - 25%</span><br>
+        <i style="background: #74a9cf"></i><span>15% - 20%</span><br>
+        <i style="background: #a6bddb"></i><span>10% - 15%</span><br>
+        <i style="background: #d0d1e6"></i><span>5% - 10%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 5%</span><br>
+        <i style="background: #f1eef6"></i><span>No Data</span><br>
+              `;
+      break;
+    case "Self-care disability crude prevalence (%)":
+      legendContent = `
+        <h4>Percent Self-care Disability</h4>
+        <i style="background: #034e7b"></i><span>30% - above</span><br>
+        <i style="background: #0570b0"></i><span>25% - 30%</span><br>
+        <i style="background: #3690c0"></i><span>20% - 25%</span><br>
+        <i style="background: #74a9cf"></i><span>15% - 20%</span><br>
+        <i style="background: #a6bddb"></i><span>10% - 15%</span><br>
+        <i style="background: #d0d1e6"></i><span>5% - 10%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 5%</span><br>
+        <i style="background: #f1eef6"></i><span>No Data</span><br>
+              `;
+      break;
+    case "Independent living disability crude prevalence (%)":
+      legendContent = `
+        <h4>Percent Independent Living Disability</h4>
+        <i style="background: #034e7b"></i><span>30% - above</span><br>
+        <i style="background: #0570b0"></i><span>25% - 30%</span><br>
+        <i style="background: #3690c0"></i><span>20% - 25%</span><br>
+        <i style="background: #74a9cf"></i><span>15% - 20%</span><br>
+        <i style="background: #a6bddb"></i><span>10% - 15%</span><br>
+        <i style="background: #d0d1e6"></i><span>5% - 10%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 5%</span><br>
+        <i style="background: #f1eef6"></i><span>No Data</span><br>
+                `;
+      break;
   }
   document.querySelector(".healthStatusLegend").innerHTML = legendContent;
 }
@@ -2627,3 +2705,154 @@ maps["healthStatusMap"].on("baselayerchange", function (e) {
 // Set depression layer as the default
 updateLegendForHealthStatus("Depression");
 healthStatusLayers.depression.addTo(maps["healthStatusMap"]);
+
+//=========================================================== Health Status DROPDOWN =================================================================
+
+var disabilityControl;
+
+var DisabilityControl = L.Control.extend({
+  // Position
+  options: {
+    position: "topright",
+  },
+
+  onAdd: function (map) {
+    var container = L.DomUtil.create("div", "disability-control");
+
+    var select = L.DomUtil.create("select", "", container);
+    select.id = "disabilitySelect";
+    select.onchange = updateHealthStatusMap;
+
+    var disabilities = [
+      { value: "", text: "Any Disability Among Adults Aged ≥ 18 Years" },
+      {
+        value: "Hearing disability crude prevalence (%)",
+        text: "Hearing Disability Among Adults Aged ≥18 Years",
+      },
+      {
+        value: "Vision disability crude prevalence (%)",
+        text: "Vision Disability Among Adults Aged ≥18 Years",
+      },
+      {
+        value: "Cognitive disability crude prevalence (%)",
+        text: "Cognitive Disability Among Adults Aged ≥18 Years",
+      },
+      {
+        value: "Mobility disability crude prevalence (%)",
+        text: "Mobility Disability Among Adults Aged ≥18 Years",
+      },
+      {
+        value: "Self-care disability crude prevalence (%)",
+        text: "Self-care Disability Among Adults Aged ≥18 Years",
+      },
+      {
+        value: "Independent living disability crude prevalence (%)",
+        text: "Independent Living Disability Among Adults Aged ≥18 Years",
+      },
+    ];
+
+    // Populate dropdown
+    for (var i = 0; i < disabilities.length; i++) {
+      var option = L.DomUtil.create("option", "", select);
+      option.value = disabilities[i].value;
+      option.text = disabilities[i].text;
+    }
+
+    return container;
+  },
+});
+
+function addDisabilityControl() {
+  if (!disabilityControl) {
+    disabilityControl = new DisabilityControl();
+    maps["healthStatusMap"].addControl(disabilityControl);
+  }
+}
+
+function removeDisabilityControl() {
+  if (disabilityControl) {
+    maps["healthStatusMap"].removeControl(disabilityControl);
+    disabilityControl = null;
+  }
+}
+
+function updateHealthStatusMap() {
+  // Get selected disability from the dropdown
+  var selectedDisability = document.getElementById("disabilitySelect").value;
+
+  // Clear existing layer
+  healthStatusLayers.disability.clearLayers();
+
+  // Add new layer based on the selected disability
+  var selectedDisabilityGeojson = L.geoJson(healthDataGeojson, {
+    style: function (feature) {
+      var style;
+      if (selectedDisability === "") {
+        // Default style for any disability (if no specific disability is selected)
+        style = {
+          fillColor: getColorForDisability(
+            feature.properties["Any disability crude prevalence (%)"]
+          ),
+          weight: 0.5,
+          opacity: 1,
+          color: "white",
+          fillOpacity: 0.8,
+        };
+      } else {
+        var percentage = feature.properties[selectedDisability];
+        style = {
+          fillColor: getColorForDisability(percentage),
+          weight: 0.5,
+          opacity: 1,
+          color: "white",
+          fillOpacity: 0.8,
+        };
+      }
+      return style;
+    },
+
+    // Adding a popup for each feature
+    onEachFeature: function (feature, layer) {
+      var p = feature.properties;
+
+      var popupContent;
+      if (selectedDisability === "") {
+        popupContent = `
+          <p>Any Disability Among Adults Aged ≥ 18 Years: ${p["Any disability crude prevalence (%)"]}%</p>
+        `;
+      } else {
+        popupContent = `
+          <p>${selectedDisability}: ${p[selectedDisability]}%</p>
+        `;
+      }
+
+      layer.bindPopup(popupContent);
+
+      // Change style based on mouse events
+      layer.on("mouseover", function () {
+        layer.setStyle({
+          fillOpacity: 0.3,
+        });
+      });
+
+      layer.on("mouseout", function () {
+        layer.setStyle({
+          fillOpacity: 0.8,
+        });
+      });
+    },
+  }).addTo(healthStatusLayers.disability);
+
+  // Update the legend based on selected layer and disability
+  selectedLayer = "disability";
+  updateLegendForHealthStatus(selectedDisability);
+}
+
+// Eventlistener for baselayer change to toggle disability dropdown
+maps["healthStatusMap"].on("baselayerchange", function (e) {
+  if (e.name == "Disability") {
+    addDisabilityControl();
+  } else {
+    removeDisabilityControl();
+  }
+});

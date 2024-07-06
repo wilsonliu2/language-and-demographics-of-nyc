@@ -547,17 +547,17 @@ demographicGeoJson = L.geoJson(languageGeoJsonData, {
 
 // Function for demographic data to get color based on population
 function getColorScaleForDemographics(population) {
-  return population > 10000
+  return population > 15945
     ? "#00441b"
-    : population > 7500
+    : population > 8460
     ? "#006d2c"
-    : population > 5000
+    : population > 6159
     ? "#238b45"
-    : population > 2500
+    : population > 4634
     ? "#41ae76"
-    : population > 1000
+    : population > 3380
     ? "#66c2a4"
-    : population > 500
+    : population > 2181
     ? "#99d8c9"
     : population > 0
     ? "#ccece6"
@@ -822,19 +822,19 @@ function updateLegend(selectedLayer, selectedLanguage) {
   } else if ((selectedLayer = "demographics")) {
     legendContent += "<h4>Population Density</h4>";
     legendContent +=
-      '<i style="background: #00441b"></i><span>> 10000</span><br>';
+      '<i style="background: #00441b"></i><span>15945+</span><br>';
     legendContent +=
-      '<i style="background: #006d2c"></i><span>7500 - 10000</span><br>';
+      '<i style="background: #006d2c"></i><span>8460 - 15945</span><br>';
     legendContent +=
-      '<i style="background: #238b45"></i><span>5000 - 7500</span><br>';
+      '<i style="background: #238b45"></i><span>6159 - 8460</span><br>';
     legendContent +=
-      '<i style="background: #41ae76"></i><span>2500 - 5000</span><br>';
+      '<i style="background: #41ae76"></i><span>4636 - 6159</span><br>';
     legendContent +=
-      '<i style="background: #66c2a4"></i><span>1000 - 2500</span><br>';
+      '<i style="background: #66c2a4"></i><span>3380 - 4636</span><br>';
     legendContent +=
-      '<i style="background: #99d8c9"></i><span>500 - 1000</span><br>';
+      '<i style="background: #99d8c9"></i><span>2181 - 3380</span><br>';
     legendContent +=
-      '<i style="background: #ccece6"></i><span>1 - 500</span><br>';
+      '<i style="background: #ccece6"></i><span>0 - 2181</span><br>';
     legendContent += '<i style="background: #606060"></i><span>0</span><br>';
   }
 
@@ -943,19 +943,19 @@ function healthRiskStyle(propertyName, colorFunction) {
 
 // TEMPORARY WILL CHANGE LATER
 function getColorForUninsured(percent) {
-  return percent > 35.8
+  return percent > 31.1
     ? "#034e7b"
-    : percent > 28.3
+    : percent > 21.3
     ? "#0570b0"
-    : percent > 23.4
+    : percent > 16.1
     ? "#3690c0"
-    : percent > 19.1
+    : percent > 12
     ? "#74a9cf"
-    : percent > 15.6
+    : percent > 8.6
     ? "#a6bddb"
-    : percent > 12.8
+    : percent > 5.6
     ? "#d0d1e6"
-    : percent > 9.8
+    : percent > 2
     ? "#f1eef6"
     : percent > 0
     ? "#f1eef6"
@@ -964,19 +964,19 @@ function getColorForUninsured(percent) {
 
 // TEMPORARY WILL CHANGE LATER
 function getColorForFrequentDrinkers(percent) {
-  return percent > 35.8
+  return percent > 29.4
     ? "#034e7b"
-    : percent > 28.3
+    : percent > 23.1
     ? "#0570b0"
-    : percent > 23.4
+    : percent > 20.1
     ? "#3690c0"
-    : percent > 19.1
+    : percent > 17.3
     ? "#74a9cf"
-    : percent > 15.6
+    : percent > 15
     ? "#a6bddb"
     : percent > 12.8
     ? "#d0d1e6"
-    : percent > 9.8
+    : percent > 4.9
     ? "#f1eef6"
     : percent > 0
     ? "#f1eef6"
@@ -985,19 +985,19 @@ function getColorForFrequentDrinkers(percent) {
 
 // TEMPORARY WILL CHANGE LATER
 function getColorForCurrentSmokers(percent) {
-  return percent > 35.8
+  return percent > 45.4
     ? "#034e7b"
-    : percent > 28.3
+    : percent > 23.1
     ? "#0570b0"
-    : percent > 23.4
+    : percent > 18.7
     ? "#3690c0"
-    : percent > 19.1
+    : percent > 15.4
     ? "#74a9cf"
-    : percent > 15.6
+    : percent > 12.6
     ? "#a6bddb"
-    : percent > 12.8
+    : percent > 9.5
     ? "#d0d1e6"
-    : percent > 9.8
+    : percent > 5.1
     ? "#f1eef6"
     : percent > 0
     ? "#f1eef6"
@@ -1006,19 +1006,19 @@ function getColorForCurrentSmokers(percent) {
 
 // TEMPORARY WILL CHANGE LATER
 function getColorForSedentaryLifestyle(percent) {
-  return percent > 35.8
+  return percent > 63.9
     ? "#034e7b"
-    : percent > 28.3
+    : percent > 40.5
     ? "#0570b0"
-    : percent > 23.4
+    : percent > 34.2
     ? "#3690c0"
-    : percent > 19.1
+    : percent > 28.9
     ? "#74a9cf"
-    : percent > 15.6
+    : percent > 23.7
     ? "#a6bddb"
-    : percent > 12.8
+    : percent > 17.4
     ? "#d0d1e6"
-    : percent > 9.8
+    : percent > 9.4
     ? "#f1eef6"
     : percent > 0
     ? "#f1eef6"
@@ -1027,19 +1027,19 @@ function getColorForSedentaryLifestyle(percent) {
 
 // TEMPORARY WILL CHANGE LATER
 function getColorForSleepLessThan7Hours(percent) {
-  return percent > 35.8
+  return percent > 49.1
     ? "#034e7b"
-    : percent > 28.3
+    : percent > 41.5
     ? "#0570b0"
-    : percent > 23.4
+    : percent > 38.5
     ? "#3690c0"
-    : percent > 19.1
+    : percent > 35.7
     ? "#74a9cf"
-    : percent > 15.6
+    : percent > 32.9
     ? "#a6bddb"
-    : percent > 12.8
+    : percent > 29.9
     ? "#d0d1e6"
-    : percent > 9.8
+    : percent > 23.2
     ? "#f1eef6"
     : percent > 0
     ? "#f1eef6"
@@ -1163,14 +1163,14 @@ healthRisklegend.onAdd = function () {
   var div = L.DomUtil.create("div", "healthRiskLegend");
   div.innerHTML = `
     <h4>Percent Uninsured</h4>
-    <i style="background: #034e7b"></i><span>35.8% - above</span><br>
-    <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
-    <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
-    <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
-    <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
-    <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
-    <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
-    <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+    <i style="background: #034e7b"></i><span> > 31.1%</span><br>
+    <i style="background: #0570b0"></i><span>21.3% - 31.1%</span><br>
+    <i style="background: #3690c0"></i><span>16.1% - 21.3%</span><br>
+    <i style="background: #74a9cf"></i><span>12% - 16.1%</span><br>
+    <i style="background: #a6bddb"></i><span>8.6% - 12%</span><br>
+    <i style="background: #d0d1e6"></i><span>5.6% - 8.6%</span><br>
+    <i style="background: #f1eef6"></i><span>2% - 5.6%</span><br>
+    <i style="background: #f1eef6"></i><span>0% - 2%</span><br>
     <i style="background: #606060"></i><span>No Data</span><br>
   `;
   return div;
@@ -1184,70 +1184,70 @@ function updateLegendForHealthRisk(layerName) {
     case "Uninsured":
       legendContent = `
         <h4>Percent Uninsured</h4>
-        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
-        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
-        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
-        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
-        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
-        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
-        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #034e7b"></i><span> > 31.1%</span><br>
+        <i style="background: #0570b0"></i><span>21.3% - 31.1%</span><br>
+        <i style="background: #3690c0"></i><span>16.1% - 21.3%</span><br>
+        <i style="background: #74a9cf"></i><span>12% - 16.1%</span><br>
+        <i style="background: #a6bddb"></i><span>8.6% - 12%</span><br>
+        <i style="background: #d0d1e6"></i><span>5.6% - 8.6%</span><br>
+        <i style="background: #f1eef6"></i><span>2% - 5.6%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 2%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Frequent Drinkers":
       legendContent = `
         <h4>Percent Frequent Drinkers</h4>
-        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
-        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
-        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
-        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
-        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
-        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
-        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #034e7b"></i><span> > 29.4%</span><br>
+        <i style="background: #0570b0"></i><span>23.1% - 29.4%</span><br>
+        <i style="background: #3690c0"></i><span>20.1% - 23.1%</span><br>
+        <i style="background: #74a9cf"></i><span>17.3% - 20.1%</span><br>
+        <i style="background: #a6bddb"></i><span>15% - 17.3%</span><br>
+        <i style="background: #d0d1e6"></i><span>12.8% - 15%</span><br>
+        <i style="background: #f1eef6"></i><span>4.9% - 12.8%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 4.9%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Current Smokers":
       legendContent = `
         <h4>Percent Current Smokers</h4>
-        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
-        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
-        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
-        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
-        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
-        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
-        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #034e7b"></i><span> > 45.4%</span><br>
+        <i style="background: #0570b0"></i><span>23.1% - 45.4%</span><br>
+        <i style="background: #3690c0"></i><span>18.7% - 23.1%</span><br>
+        <i style="background: #74a9cf"></i><span>15.4% - 18.7%</span><br>
+        <i style="background: #a6bddb"></i><span>12.6% - 15.4%</span><br>
+        <i style="background: #d0d1e6"></i><span>9.5% - 12.6%</span><br>
+        <i style="background: #f1eef6"></i><span>5.1% - 9.5%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 5.1%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Sedentary Lifestyle":
       legendContent = `
         <h4>Percent Sedentary Lifestyle</h4>
-        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
-        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
-        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
-        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
-        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
-        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
-        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #034e7b"></i><span> > 63.9%</span><br>
+        <i style="background: #0570b0"></i><span>40.5% - 63.9%</span><br>
+        <i style="background: #3690c0"></i><span>34.2% - 40.5%</span><br>
+        <i style="background: #74a9cf"></i><span>28.9% - 34.2%</span><br>
+        <i style="background: #a6bddb"></i><span>23.7% - 28.9%</span><br>
+        <i style="background: #d0d1e6"></i><span>17.4% - 23.7%</span><br>
+        <i style="background: #f1eef6"></i><span>9.4% - 17.4%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 9.4%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Sleep < 7 Hours":
       legendContent = `
         <h4>Percent Sleeping Less Than 7 Hours</h4>
-        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
-        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
-        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
-        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
-        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
-        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
-        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #034e7b"></i><span> > 49.1%</span><br>
+        <i style="background: #0570b0"></i><span>41.5% - 49.1%</span><br>
+        <i style="background: #3690c0"></i><span>38.5% - 41.5%</span><br>
+        <i style="background: #74a9cf"></i><span>35.7% - 38.5%</span><br>
+        <i style="background: #a6bddb"></i><span>32.9% - 35.7%</span><br>
+        <i style="background: #d0d1e6"></i><span>29.9% - 32.9%</span><br>
+        <i style="background: #f1eef6"></i><span>23.2% - 29.9%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 23.2%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
@@ -1360,21 +1360,20 @@ function healthOutcomesStyle(propertyName, colorFunction) {
   };
 }
 
-// ALL COLOR FUNCTIONS ARE TEMPORARY WILL CHANGE LATER
 function getColorForCurrentAsthma(percent) {
-  return percent > 35.8
+  return percent > 16.5
     ? "#034e7b"
-    : percent > 28.3
+    : percent > 13.5
     ? "#0570b0"
-    : percent > 23.4
+    : percent > 12.2
     ? "#3690c0"
-    : percent > 19.1
+    : percent > 11
     ? "#74a9cf"
-    : percent > 15.6
+    : percent > 9.9
     ? "#a6bddb"
-    : percent > 12.8
+    : percent > 8.9
     ? "#d0d1e6"
-    : percent > 9.8
+    : percent > 7.4
     ? "#f1eef6"
     : percent > 0
     ? "#f1eef6"
@@ -1382,19 +1381,19 @@ function getColorForCurrentAsthma(percent) {
 }
 
 function getColorForHighBlood(percent) {
-  return percent > 35.8
+  return percent > 73.3
     ? "#034e7b"
-    : percent > 28.3
+    : percent > 37.6
     ? "#0570b0"
-    : percent > 23.4
+    : percent > 32.7
     ? "#3690c0"
-    : percent > 19.1
+    : percent > 28.5
     ? "#74a9cf"
-    : percent > 15.6
+    : percent > 24.4
     ? "#a6bddb"
-    : percent > 12.8
+    : percent > 19.3
     ? "#d0d1e6"
-    : percent > 9.8
+    : percent > 9
     ? "#f1eef6"
     : percent > 0
     ? "#f1eef6"
@@ -1402,19 +1401,19 @@ function getColorForHighBlood(percent) {
 }
 
 function getColorForCancerAdults(percent) {
-  return percent > 35.8
+  return percent > 19.4
     ? "#034e7b"
-    : percent > 28.3
+    : percent > 9.4
     ? "#0570b0"
-    : percent > 23.4
+    : percent > 7.2
     ? "#3690c0"
-    : percent > 19.1
+    : percent > 5.9
     ? "#74a9cf"
-    : percent > 15.6
+    : percent > 4.9
     ? "#a6bddb"
-    : percent > 12.8
+    : percent > 3.9
     ? "#d0d1e6"
-    : percent > 9.8
+    : percent > 1.5
     ? "#f1eef6"
     : percent > 0
     ? "#f1eef6"
@@ -1422,19 +1421,19 @@ function getColorForCancerAdults(percent) {
 }
 
 function getColorForHighCholesterol(percent) {
-  return percent > 35.8
+  return percent > 97.3
     ? "#034e7b"
-    : percent > 28.3
+    : percent > 89.7
     ? "#0570b0"
-    : percent > 23.4
+    : percent > 87.2
     ? "#3690c0"
-    : percent > 19.1
+    : percent > 84.5
     ? "#74a9cf"
-    : percent > 15.6
+    : percent > 81.4
     ? "#a6bddb"
-    : percent > 12.8
+    : percent > 75.9
     ? "#d0d1e6"
-    : percent > 9.8
+    : percent > 62.5
     ? "#f1eef6"
     : percent > 0
     ? "#f1eef6"
@@ -1442,19 +1441,19 @@ function getColorForHighCholesterol(percent) {
 }
 
 function getColorForKidneyDisease(percent) {
-  return percent > 35.8
+  return percent > 11.9
     ? "#034e7b"
-    : percent > 28.3
+    : percent > 5.1
     ? "#0570b0"
-    : percent > 23.4
+    : percent > 3.8
     ? "#3690c0"
-    : percent > 19.1
+    : percent > 3.2
     ? "#74a9cf"
-    : percent > 15.6
+    : percent > 2.7
     ? "#a6bddb"
-    : percent > 12.8
+    : percent > 2.1
     ? "#d0d1e6"
-    : percent > 9.8
+    : percent > 0.8
     ? "#f1eef6"
     : percent > 0
     ? "#f1eef6"
@@ -1462,19 +1461,19 @@ function getColorForKidneyDisease(percent) {
 }
 
 function getColorForPulmonaryDisease(percent) {
-  return percent > 35.8
+  return percent > 49.4
     ? "#034e7b"
-    : percent > 28.3
+    : percent > 27.9
     ? "#0570b0"
-    : percent > 23.4
+    : percent > 22.8
     ? "#3690c0"
-    : percent > 19.1
+    : percent > 20
     ? "#74a9cf"
-    : percent > 15.6
+    : percent > 17.3
     ? "#a6bddb"
-    : percent > 12.8
+    : percent > 14
     ? "#d0d1e6"
-    : percent > 9.8
+    : percent > 6.1
     ? "#f1eef6"
     : percent > 0
     ? "#f1eef6"
@@ -1482,19 +1481,19 @@ function getColorForPulmonaryDisease(percent) {
 }
 
 function getColorForHeartDisease(percent) {
-  return percent > 35.8
+  return percent > 34
     ? "#034e7b"
-    : percent > 28.3
+    : percent > 11.5
     ? "#0570b0"
-    : percent > 23.4
+    : percent > 7.5
     ? "#3690c0"
-    : percent > 19.1
+    : percent > 5.8
     ? "#74a9cf"
-    : percent > 15.6
+    : percent > 4.7
     ? "#a6bddb"
-    : percent > 12.8
+    : percent > 3.5
     ? "#d0d1e6"
-    : percent > 9.8
+    : percent > 1
     ? "#f1eef6"
     : percent > 0
     ? "#f1eef6"
@@ -1502,19 +1501,19 @@ function getColorForHeartDisease(percent) {
 }
 
 function getColorForDiabetes(percent) {
-  return percent > 35.8
+  return percent > 46.1
     ? "#034e7b"
-    : percent > 28.3
+    : percent > 17.7
     ? "#0570b0"
-    : percent > 23.4
+    : percent > 14.4
     ? "#3690c0"
-    : percent > 19.1
+    : percent > 12.1
     ? "#74a9cf"
-    : percent > 15.6
-    ? "#a6bddb"
-    : percent > 12.8
-    ? "#d0d1e6"
     : percent > 9.8
+    ? "#a6bddb"
+    : percent > 6.9
+    ? "#d0d1e6"
+    : percent > 2
     ? "#f1eef6"
     : percent > 0
     ? "#f1eef6"
@@ -1522,19 +1521,19 @@ function getColorForDiabetes(percent) {
 }
 
 function getColorForObesity(percent) {
-  return percent > 35.8
+  return percent > 48.8
     ? "#034e7b"
-    : percent > 28.3
+    : percent > 36.6
     ? "#0570b0"
-    : percent > 23.4
+    : percent > 32.2
     ? "#3690c0"
-    : percent > 19.1
+    : percent > 27.9
     ? "#74a9cf"
-    : percent > 15.6
+    : percent > 23.6
     ? "#a6bddb"
-    : percent > 12.8
+    : percent > 18.9
     ? "#d0d1e6"
-    : percent > 9.8
+    : percent > 12.6
     ? "#f1eef6"
     : percent > 0
     ? "#f1eef6"
@@ -1542,19 +1541,19 @@ function getColorForObesity(percent) {
 }
 
 function getColorForStroke(percent) {
-  return percent > 35.8
+  return percent > 17.4
     ? "#034e7b"
-    : percent > 28.3
+    : percent > 6.3
     ? "#0570b0"
-    : percent > 23.4
+    : percent > 4.3
     ? "#3690c0"
-    : percent > 19.1
+    : percent > 3.4
     ? "#74a9cf"
-    : percent > 15.6
+    : percent > 2.7
     ? "#a6bddb"
-    : percent > 12.8
+    : percent > 1.9
     ? "#d0d1e6"
-    : percent > 9.8
+    : percent > 0.6
     ? "#f1eef6"
     : percent > 0
     ? "#f1eef6"
@@ -1763,14 +1762,14 @@ healthOutcomesLegend.onAdd = function () {
   var div = L.DomUtil.create("div", "healthOutcomesLegend");
   div.innerHTML = `
     <h4>Percent Current Asthma</h4>
-    <i style="background: #034e7b"></i><span>35.8% - above</span><br>
-    <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
-    <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
-    <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
-    <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
-    <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
-    <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
-    <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+    <i style="background: #034e7b"></i><span>> 16.5%</span><br>
+    <i style="background: #0570b0"></i><span>13.5% - 16.5%</span><br>
+    <i style="background: #3690c0"></i><span>12.2% - 13.5%</span><br>
+    <i style="background: #74a9cf"></i><span>11% - 12.2%</span><br>
+    <i style="background: #a6bddb"></i><span>9.9% - 11%</span><br>
+    <i style="background: #d0d1e6"></i><span>8.9% - 9.9%</span><br>
+    <i style="background: #f1eef6"></i><span>7.4% - 8.9%</span><br>
+    <i style="background: #f1eef6"></i><span>0% - 7.4%</span><br>
     <i style="background: #606060"></i><span>No Data</span><br>
   `;
   return div;
@@ -1784,140 +1783,140 @@ function updateLegendForHealthOutcomes(layerName) {
     case "Current Asthma":
       legendContent = `
         <h4>Percent Current Asthma</h4>
-        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
-        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
-        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
-        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
-        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
-        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
-        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #034e7b"></i><span>> 16.5%</span><br>
+        <i style="background: #0570b0"></i><span>13.5% - 16.5%</span><br>
+        <i style="background: #3690c0"></i><span>12.2% - 13.5%</span><br>
+        <i style="background: #74a9cf"></i><span>11% - 12.2%</span><br>
+        <i style="background: #a6bddb"></i><span>9.9% - 11%</span><br>
+        <i style="background: #d0d1e6"></i><span>8.9% - 9.9%</span><br>
+        <i style="background: #f1eef6"></i><span>7.4% - 8.9%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 7.4%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "High Blood Pressure":
       legendContent = `
         <h4>Percent High Blood Pressure</h4>
-        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
-        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
-        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
-        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
-        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
-        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
-        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #034e7b"></i><span>> 73.3%</span><br>
+        <i style="background: #0570b0"></i><span>37.6% - 73.3%</span><br>
+        <i style="background: #3690c0"></i><span>32.7% - 37.6%</span><br>
+        <i style="background: #74a9cf"></i><span>28.5% - 32.7%</span><br>
+        <i style="background: #a6bddb"></i><span>24.4% - 28.5%</span><br>
+        <i style="background: #d0d1e6"></i><span>19.3% - 24.4%</span><br>
+        <i style="background: #f1eef6"></i><span>9% - 19.3%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 9%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Cancer (except skin)":
       legendContent = `
         <h4>Percent Cancer (except skin)</h4>
-        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
-        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
-        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
-        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
-        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
-        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
-        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #034e7b"></i><span>> 19.4%</span><br>
+        <i style="background: #0570b0"></i><span>9.4% - 19.4%</span><br>
+        <i style="background: #3690c0"></i><span>7.2% - 9.4%</span><br>
+        <i style="background: #74a9cf"></i><span>5.9% - 7.2%</span><br>
+        <i style="background: #a6bddb"></i><span>4.9% - 5.9%</span><br>
+        <i style="background: #d0d1e6"></i><span>3.9% - 4.9%</span><br>
+        <i style="background: #f1eef6"></i><span>1.5% - 3.9%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 1.5%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "High Cholesterol":
       legendContent = `
         <h4>Percent High Cholesterol</h4>
-        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
-        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
-        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
-        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
-        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
-        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
-        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #034e7b"></i><span>> 97.3%</span><br>
+        <i style="background: #0570b0"></i><span>89.7% - 97.3%</span><br>
+        <i style="background: #3690c0"></i><span>87.2% - 89.7%</span><br>
+        <i style="background: #74a9cf"></i><span>84.5% - 87.2%</span><br>
+        <i style="background: #a6bddb"></i><span>81.4% - 84.5%</span><br>
+        <i style="background: #d0d1e6"></i><span>75.9% - 81.4%</span><br>
+        <i style="background: #f1eef6"></i><span>62.5% - 75.9%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 62.5%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Chronic Kidney Disease":
       legendContent = `
         <h4>Percent Chronic Kidney Disease</h4>
-        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
-        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
-        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
-        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
-        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
-        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
-        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #034e7b"></i><span>> 11.9%</span><br>
+        <i style="background: #0570b0"></i><span>5.1% - 11.9%</span><br>
+        <i style="background: #3690c0"></i><span>3.8% - 5.1%</span><br>
+        <i style="background: #74a9cf"></i><span>3.2% - 3.8%</span><br>
+        <i style="background: #a6bddb"></i><span>2.7% - 3.2%</span><br>
+        <i style="background: #d0d1e6"></i><span>2.1% - 2.7%</span><br>
+        <i style="background: #f1eef6"></i><span>0.8% - 2.1%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 0.8%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Pulmonary Disease":
       legendContent = `
         <h4>Percent Pulmonary Disease</h4>
-        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
-        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
-        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
-        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
-        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
-        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
-        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #034e7b"></i><span>> 49.4%</span><br>
+        <i style="background: #0570b0"></i><span>27.9% - 49.4%</span><br>
+        <i style="background: #3690c0"></i><span>22.8% - 27.9%</span><br>
+        <i style="background: #74a9cf"></i><span>20% - 22.8%</span><br>
+        <i style="background: #a6bddb"></i><span>17.3% - 20%</span><br>
+        <i style="background: #d0d1e6"></i><span>14% - 17.3%</span><br>
+        <i style="background: #f1eef6"></i><span>6.1% - 14%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 6.1%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Heart Disease":
       legendContent = `
         <h4>Percent Heart Disease</h4>
-        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
-        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
-        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
-        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
-        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
-        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
-        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #034e7b"></i><span>> 34%</span><br>
+        <i style="background: #0570b0"></i><span>11.5% - 34%</span><br>
+        <i style="background: #3690c0"></i><span>7.5% - 11.5%</span><br>
+        <i style="background: #74a9cf"></i><span>5.8% - 7.5%</span><br>
+        <i style="background: #a6bddb"></i><span>4.7% - 5.8%</span><br>
+        <i style="background: #d0d1e6"></i><span>3.5% - 4.7%</span><br>
+        <i style="background: #f1eef6"></i><span>1% - 3.5%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 1%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Diabetes":
       legendContent = `
         <h4>Percent Diabetes</h4>
-        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
-        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
-        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
-        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
-        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
-        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
-        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #034e7b"></i><span>> 46.1%</span><br>
+        <i style="background: #0570b0"></i><span>17.7% - 46.1%</span><br>
+        <i style="background: #3690c0"></i><span>14.4% - 17.7%</span><br>
+        <i style="background: #74a9cf"></i><span>12.1% - 14.4%</span><br>
+        <i style="background: #a6bddb"></i><span>9.8% - 12.1%</span><br>
+        <i style="background: #d0d1e6"></i><span>6.9% - 9.8%</span><br>
+        <i style="background: #f1eef6"></i><span>2% - 6.9%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 2%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Obesity":
       legendContent = `
         <h4>Percent Obesity</h4>
-        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
-        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
-        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
-        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
-        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
-        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
-        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #034e7b"></i><span>> 48.8%</span><br>
+        <i style="background: #0570b0"></i><span>36.6% - 48.8%</span><br>
+        <i style="background: #3690c0"></i><span>32.2% - 36.6%</span><br>
+        <i style="background: #74a9cf"></i><span>27.9% - 32.2%</span><br>
+        <i style="background: #a6bddb"></i><span>23.6% - 27.9%</span><br>
+        <i style="background: #d0d1e6"></i><span>18.9% - 23.6%</span><br>
+        <i style="background: #f1eef6"></i><span>12.6% - 18.9%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 12.6%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Stroke":
       legendContent = `
         <h4>Percent Stroke</h4>
-        <i style="background: #034e7b"></i><span>35.8% - above</span><br>
-        <i style="background: #0570b0"></i><span>28.3% - 35.8%</span><br>
-        <i style="background: #3690c0"></i><span>23.4% - 28.3%</span><br>
-        <i style="background: #74a9cf"></i><span>19.1% - 23.4%</span><br>
-        <i style="background: #a6bddb"></i><span>15.6% - 19.1%</span><br>
-        <i style="background: #d0d1e6"></i><span>12.8% - 15.6%</span><br>
-        <i style="background: #f1eef6"></i><span>9.8% - 12.8%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 9.8%</span><br>
+        <i style="background: #034e7b"></i><span>> 17.4%</span><br>
+        <i style="background: #0570b0"></i><span>6.3% - 17.4%</span><br>
+        <i style="background: #3690c0"></i><span>4.3% - 6.3%</span><br>
+        <i style="background: #74a9cf"></i><span>3.4% - 4.3%</span><br>
+        <i style="background: #a6bddb"></i><span>2.7% - 3.4%</span><br>
+        <i style="background: #d0d1e6"></i><span>1.9% - 2.7%</span><br>
+        <i style="background: #f1eef6"></i><span>0.6% - 1.9%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 0.6%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
@@ -2007,19 +2006,19 @@ function screeningRatesStyle(propertyName, colorFunction) {
 }
 
 function getColorForAnnualCheckUp(percent) {
-  return percent > 70
+  return percent > 91.3
     ? "#034e7b"
-    : percent > 60
+    : percent > 81.5
     ? "#0570b0"
-    : percent > 50
+    : percent > 78.7
     ? "#3690c0"
-    : percent > 40
+    : percent > 76.5
     ? "#74a9cf"
-    : percent > 30
+    : percent > 74.4
     ? "#a6bddb"
-    : percent > 20
+    : percent > 71.7
     ? "#d0d1e6"
-    : percent > 10
+    : percent > 66.1
     ? "#f1eef6"
     : percent > 0
     ? "#f1eef6"
@@ -2027,19 +2026,19 @@ function getColorForAnnualCheckUp(percent) {
 }
 
 function getColorForDentalVisit(percent) {
-  return percent > 70
+  return percent > 82.9
     ? "#034e7b"
-    : percent > 60
+    : percent > 72.1
     ? "#0570b0"
-    : percent > 50
+    : percent > 64.8
     ? "#3690c0"
-    : percent > 40
+    : percent > 58.5
     ? "#74a9cf"
-    : percent > 30
+    : percent > 52.2
     ? "#a6bddb"
-    : percent > 20
+    : percent > 45
     ? "#d0d1e6"
-    : percent > 10
+    : percent > 23.3
     ? "#f1eef6"
     : percent > 0
     ? "#f1eef6"
@@ -2047,19 +2046,19 @@ function getColorForDentalVisit(percent) {
 }
 
 function getColorForCholesterolScreening(percent) {
-  return percent > 70
+  return percent > 97.3
     ? "#034e7b"
-    : percent > 60
+    : percent > 89.7
     ? "#0570b0"
-    : percent > 50
+    : percent > 87.2
     ? "#3690c0"
-    : percent > 40
+    : percent > 84.5
     ? "#74a9cf"
-    : percent > 30
+    : percent > 81.4
     ? "#a6bddb"
-    : percent > 20
+    : percent > 75.9
     ? "#d0d1e6"
-    : percent > 10
+    : percent > 62.5
     ? "#f1eef6"
     : percent > 0
     ? "#f1eef6"
@@ -2067,19 +2066,19 @@ function getColorForCholesterolScreening(percent) {
 }
 
 function getColorForMammographyScreening(percent) {
-  return percent > 70
+  return percent > 86.3
     ? "#034e7b"
-    : percent > 60
+    : percent > 83.1
     ? "#0570b0"
-    : percent > 50
+    : percent > 81.1
     ? "#3690c0"
-    : percent > 40
+    : percent > 79.4
     ? "#74a9cf"
-    : percent > 30
+    : percent > 77.8
     ? "#a6bddb"
-    : percent > 20
+    : percent > 75.2
     ? "#d0d1e6"
-    : percent > 10
+    : percent > 69.5
     ? "#f1eef6"
     : percent > 0
     ? "#f1eef6"
@@ -2087,19 +2086,19 @@ function getColorForMammographyScreening(percent) {
 }
 
 function getColorForCervicalScreening(percent) {
-  return percent > 70
+  return percent > 91.4
     ? "#034e7b"
-    : percent > 60
+    : percent > 86.2
     ? "#0570b0"
-    : percent > 50
+    : percent > 83
     ? "#3690c0"
-    : percent > 40
+    : percent > 79.7
     ? "#74a9cf"
-    : percent > 30
+    : percent > 75.8
     ? "#a6bddb"
-    : percent > 20
+    : percent > 69.4
     ? "#d0d1e6"
-    : percent > 10
+    : percent > 51.6
     ? "#f1eef6"
     : percent > 0
     ? "#f1eef6"
@@ -2107,19 +2106,19 @@ function getColorForCervicalScreening(percent) {
 }
 
 function getColorForColorectalScreening(percent) {
-  return percent > 70
+  return percent > 85.1
     ? "#034e7b"
-    : percent > 60
+    : percent > 79.4
     ? "#0570b0"
-    : percent > 50
+    : percent > 76
     ? "#3690c0"
-    : percent > 40
+    : percent > 72.7
     ? "#74a9cf"
-    : percent > 30
+    : percent > 69.2
     ? "#a6bddb"
-    : percent > 20
+    : percent > 64.8
     ? "#d0d1e6"
-    : percent > 10
+    : percent > 53.9
     ? "#f1eef6"
     : percent > 0
     ? "#f1eef6"
@@ -2260,14 +2259,14 @@ screeningRatesLegend.onAdd = function () {
   var div = L.DomUtil.create("div", "screeningRatesLegend");
   div.innerHTML = `
     <h4>Percent Annual Checkup</h4>
-    <i style="background: #034e7b"></i><span>70% - above</span><br>
-    <i style="background: #0570b0"></i><span>60% - 70%</span><br>
-    <i style="background: #3690c0"></i><span>50% - 60%</span><br>
-    <i style="background: #74a9cf"></i><span>40% - 50%</span><br>
-    <i style="background: #a6bddb"></i><span>30% - 40%</span><br>
-    <i style="background: #d0d1e6"></i><span>20% - 30%</span><br>
-    <i style="background: #f1eef6"></i><span>10% - 20%</span><br>
-    <i style="background: #f1eef6"></i><span>0% - 10%</span><br>
+    <i style="background: #034e7b"></i><span>> 91.3%</span><br>
+    <i style="background: #0570b0"></i><span>81.5% - 91.3%</span><br>
+    <i style="background: #3690c0"></i><span>78.7% - 81.5%</span><br>
+    <i style="background: #74a9cf"></i><span>76.5% - 78.7%</span><br>
+    <i style="background: #a6bddb"></i><span>74.4% - 76.5%</span><br>
+    <i style="background: #d0d1e6"></i><span>71.7% - 74.4%</span><br>
+    <i style="background: #f1eef6"></i><span>66.1% - 71.7%</span><br>
+    <i style="background: #f1eef6"></i><span>0% - 66.1%</span><br>
     <i style="background: #606060"></i><span>No Data</span><br>
   `;
   return div;
@@ -2281,84 +2280,84 @@ function updateLegendForScreeningRates(layerName) {
     case "Annual Checkup":
       legendContent = `
         <h4>Percent Annual Checkup</h4>
-        <i style="background: #034e7b"></i><span>70% - above</span><br>
-        <i style="background: #0570b0"></i><span>60% - 70%</span><br>
-        <i style="background: #3690c0"></i><span>50% - 60%</span><br>
-        <i style="background: #74a9cf"></i><span>40% - 50%</span><br>
-        <i style="background: #a6bddb"></i><span>30% - 40%</span><br>
-        <i style="background: #d0d1e6"></i><span>20% - 30%</span><br>
-        <i style="background: #f1eef6"></i><span>10% - 20%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 10%</span><br>
+        <i style="background: #034e7b"></i><span>> 91.3%</span><br>
+        <i style="background: #0570b0"></i><span>81.5% - 91.3%</span><br>
+        <i style="background: #3690c0"></i><span>78.7% - 81.5%</span><br>
+        <i style="background: #74a9cf"></i><span>76.5% - 78.7%</span><br>
+        <i style="background: #a6bddb"></i><span>74.4% - 76.5%</span><br>
+        <i style="background: #d0d1e6"></i><span>71.7% - 74.4%</span><br>
+        <i style="background: #f1eef6"></i><span>66.1% - 71.7%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 66.1%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Dental Visit":
       legendContent = `
         <h4>Percent Dental Visit</h4>
-        <i style="background: #034e7b"></i><span>70% - above</span><br>
-        <i style="background: #0570b0"></i><span>60% - 70%</span><br>
-        <i style="background: #3690c0"></i><span>50% - 60%</span><br>
-        <i style="background: #74a9cf"></i><span>40% - 50%</span><br>
-        <i style="background: #a6bddb"></i><span>30% - 40%</span><br>
-        <i style="background: #d0d1e6"></i><span>20% - 30%</span><br>
-        <i style="background: #f1eef6"></i><span>10% - 20%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 10%</span><br>
+        <i style="background: #034e7b"></i><span>> 82.9%</span><br>
+        <i style="background: #0570b0"></i><span>72.1% - 82.9%</span><br>
+        <i style="background: #3690c0"></i><span>64.8% - 72.1%</span><br>
+        <i style="background: #74a9cf"></i><span>58.5% - 64.8%</span><br>
+        <i style="background: #a6bddb"></i><span>52.2% - 58.5%</span><br>
+        <i style="background: #d0d1e6"></i><span>45% - 52.2%</span><br>
+        <i style="background: #f1eef6"></i><span>23.3% - 45%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 23.3%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Cholesterol Screening":
       legendContent = `
         <h4>Percent Cholesterol Screening</h4>
-        <i style="background: #034e7b"></i><span>70% - above</span><br>
-        <i style="background: #0570b0"></i><span>60% - 70%</span><br>
-        <i style="background: #3690c0"></i><span>50% - 60%</span><br>
-        <i style="background: #74a9cf"></i><span>40% - 50%</span><br>
-        <i style="background: #a6bddb"></i><span>30% - 40%</span><br>
-        <i style="background: #d0d1e6"></i><span>20% - 30%</span><br>
-        <i style="background: #f1eef6"></i><span>10% - 20%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 10%</span><br>
+        <i style="background: #034e7b"></i><span>> 97.3%</span><br>
+        <i style="background: #0570b0"></i><span>89.7% - 97.3%</span><br>
+        <i style="background: #3690c0"></i><span>87.2% - 89.7%</span><br>
+        <i style="background: #74a9cf"></i><span>84.5% - 87.2%</span><br>
+        <i style="background: #a6bddb"></i><span>81.4% - 84.5%</span><br>
+        <i style="background: #d0d1e6"></i><span>75.9% - 81.4%</span><br>
+        <i style="background: #f1eef6"></i><span>62.5% - 75.9%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 62.5%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Mammography Screening":
       legendContent = `
         <h4>Percent Mammography Screening</h4>
-        <i style="background: #034e7b"></i><span>70% - above</span><br>
-        <i style="background: #0570b0"></i><span>60% - 70%</span><br>
-        <i style="background: #3690c0"></i><span>50% - 60%</span><br>
-        <i style="background: #74a9cf"></i><span>40% - 50%</span><br>
-        <i style="background: #a6bddb"></i><span>30% - 40%</span><br>
-        <i style="background: #d0d1e6"></i><span>20% - 30%</span><br>
-        <i style="background: #f1eef6"></i><span>10% - 20%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 10%</span><br>
+        <i style="background: #034e7b"></i><span>> 86.3%</span><br>
+        <i style="background: #0570b0"></i><span>83.1% - 86.3%</span><br>
+        <i style="background: #3690c0"></i><span>81.1% - 83.1%</span><br>
+        <i style="background: #74a9cf"></i><span>79.4% - 81.1%</span><br>
+        <i style="background: #a6bddb"></i><span>77.8% - 79.4%</span><br>
+        <i style="background: #d0d1e6"></i><span>75.2% - 77.8%</span><br>
+        <i style="background: #f1eef6"></i><span>69.5% - 75.2%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 69.5%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Cervical Screening":
       legendContent = `
         <h4>Percent Cervical Screening</h4>
-        <i style="background: #034e7b"></i><span>70% - above</span><br>
-        <i style="background: #0570b0"></i><span>60% - 70%</span><br>
-        <i style="background: #3690c0"></i><span>50% - 60%</span><br>
-        <i style="background: #74a9cf"></i><span>40% - 50%</span><br>
-        <i style="background: #a6bddb"></i><span>30% - 40%</span><br>
-        <i style="background: #d0d1e6"></i><span>20% - 30%</span><br>
-        <i style="background: #f1eef6"></i><span>10% - 20%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 10%</span><br>
+        <i style="background: #034e7b"></i><span>> 91.4%</span><br>
+        <i style="background: #0570b0"></i><span>86.2% - 91.4%</span><br>
+        <i style="background: #3690c0"></i><span>83% - 86.2%</span><br>
+        <i style="background: #74a9cf"></i><span>79.7% - 83%</span><br>
+        <i style="background: #a6bddb"></i><span>75.8% - 79.7%</span><br>
+        <i style="background: #d0d1e6"></i><span>69.4% - 75.8%</span><br>
+        <i style="background: #f1eef6"></i><span>51.6% - 69.4%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 51.6%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Colorectal Screening":
       legendContent = `
         <h4>Percent Colorectal Screening</h4>
-        <i style="background: #034e7b"></i><span>70% - above</span><br>
-        <i style="background: #0570b0"></i><span>60% - 70%</span><br>
-        <i style="background: #3690c0"></i><span>50% - 60%</span><br>
-        <i style="background: #74a9cf"></i><span>40% - 50%</span><br>
-        <i style="background: #a6bddb"></i><span>30% - 40%</span><br>
-        <i style="background: #d0d1e6"></i><span>20% - 30%</span><br>
-        <i style="background: #f1eef6"></i><span>10% - 20%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 10%</span><br>
+        <i style="background: #034e7b"></i><span>> 85.1%</span><br>
+        <i style="background: #0570b0"></i><span>79.4% - 85.1%</span><br>
+        <i style="background: #3690c0"></i><span>76% - 79.4%</span><br>
+        <i style="background: #74a9cf"></i><span>72.7% - 76%</span><br>
+        <i style="background: #a6bddb"></i><span>69.2% - 72.7%</span><br>
+        <i style="background: #d0d1e6"></i><span>64.8% - 69.2%</span><br>
+        <i style="background: #f1eef6"></i><span>53.9% - 64.8%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 53.9%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
@@ -2441,77 +2440,104 @@ function healthStatusStyle(propertyName, colorFunction) {
   };
 }
 
-// ALL COLOR FUNCTIONS ARE TEMPORARY WILL CHANGE LATER
 function getColorForDepression(percent) {
-  return percent > 20
+  return percent > 32.4
     ? "#034e7b"
-    : percent > 15
+    : percent > 23.2
     ? "#0570b0"
-    : percent > 10
+    : percent > 20.6
     ? "#3690c0"
-    : percent > 5
+    : percent > 18.8
     ? "#74a9cf"
-    : percent > 0
+    : percent > 17.1
     ? "#a6bddb"
-    : "#d0d1e6";
+    : percent > 15.2
+    ? "#d0d1e6"
+    : percent > 11.8
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
 }
 
 function getColorForMentalHealthBad(percent) {
-  return percent > 20
+  return percent > 31
     ? "#034e7b"
-    : percent > 15
+    : percent > 22.1
     ? "#0570b0"
-    : percent > 10
+    : percent > 18.8
     ? "#3690c0"
-    : percent > 5
+    : percent > 16.5
     ? "#74a9cf"
-    : percent > 0
+    : percent > 14.6
     ? "#a6bddb"
-    : "#d0d1e6";
+    : percent > 12.7
+    ? "#d0d1e6"
+    : percent > 7.2
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
 }
 
 function getColorForPhysicalHealthBad(percent) {
-  return percent > 20
+  return percent > 31.3
     ? "#034e7b"
-    : percent > 15
+    : percent > 17
     ? "#0570b0"
-    : percent > 10
+    : percent > 13.9
     ? "#3690c0"
-    : percent > 5
+    : percent > 11.6
     ? "#74a9cf"
-    : percent > 0
+    : percent > 9.7
     ? "#a6bddb"
-    : "#d0d1e6";
+    : percent > 7.5
+    ? "#d0d1e6"
+    : percent > 3.8
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
 }
 
 function getColorForPoorSelfRatedHealth(percent) {
-  return percent > 20
+  return percent > 57.1
     ? "#034e7b"
-    : percent > 15
+    : percent > 29.7
     ? "#0570b0"
-    : percent > 10
+    : percent > 23.1
     ? "#3690c0"
-    : percent > 5
+    : percent > 18.3
     ? "#74a9cf"
-    : percent > 0
+    : percent > 14.3
     ? "#a6bddb"
-    : "#d0d1e6";
+    : percent > 10.1
+    ? "#d0d1e6"
+    : percent > 4.3
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
 }
 
 function getColorForDisability(percent) {
-  return percent > 30
+  return percent > 70.5
     ? "#034e7b"
-    : percent > 25
+    : percent > 40.8
     ? "#0570b0"
-    : percent > 20
+    : percent > 33.9
     ? "#3690c0"
-    : percent > 15
+    : percent > 28.8
     ? "#74a9cf"
-    : percent > 10
+    : percent > 24.5
     ? "#a6bddb"
-    : percent > 5
+    : percent > 19.5
     ? "#d0d1e6"
-    : "#f1eef6";
+    : percent > 11.3
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
 }
 
 function addHealthStatusData(data) {
@@ -2626,12 +2652,15 @@ healthStatusLegend.onAdd = function () {
   var div = L.DomUtil.create("div", "healthStatusLegend");
   div.innerHTML = `
     <h4>Percent Depression</h4>
-    <i style="background: #034e7b"></i><span>20% - above</span><br>
-    <i style="background: #0570b0"></i><span>15% - 20%</span><br>
-    <i style="background: #3690c0"></i><span>10% - 15%</span><br>
-    <i style="background: #74a9cf"></i><span>5% - 10%</span><br>
-    <i style="background: #a6bddb"></i><span>0% - 5%</span><br>
-    <i style="background: #d0d1e6"></i><span>No Data</span><br>
+    <i style="background: #034e7b"></i><span>> 32.4%</span><br>
+    <i style="background: #0570b0"></i><span>23.2% - 32.4%</span><br>
+    <i style="background: #3690c0"></i><span>20.6% - 23.2%</span><br>
+    <i style="background: #74a9cf"></i><span>18.8% - 20.6%</span><br>
+    <i style="background: #a6bddb"></i><span>17.1% - 18.8%</span><br>
+    <i style="background: #d0d1e6"></i><span>15.2% - 17.1%</span><br>
+    <i style="background: #f1eef6"></i><span>11.8% - 15.2%</span><br>
+    <i style="background: #f1eef6"></i><span>0% - 11.8%</span><br>
+    <i style="background: #606060"></i><span>No Data</span><br>
   `;
   return div;
 };
@@ -2644,58 +2673,71 @@ function updateLegendForHealthStatus(layerName) {
     case "Depression":
       legendContent = `
         <h4>Percent Depression</h4>
-        <i style="background: #034e7b"></i><span>20% - above</span><br>
-        <i style="background: #0570b0"></i><span>15% - 20%</span><br>
-        <i style="background: #3690c0"></i><span>10% - 15%</span><br>
-        <i style="background: #74a9cf"></i><span>5% - 10%</span><br>
-        <i style="background: #a6bddb"></i><span>0% - 5%</span><br>
-        <i style="background: #d0d1e6"></i><span>No Data</span><br>
+        <i style="background: #034e7b"></i><span>> 32.4%</span><br>
+        <i style="background: #0570b0"></i><span>23.2% - 32.4%</span><br>
+        <i style="background: #3690c0"></i><span>20.6% - 23.2%</span><br>
+        <i style="background: #74a9cf"></i><span>18.8% - 20.6%</span><br>
+        <i style="background: #a6bddb"></i><span>17.1% - 18.8%</span><br>
+        <i style="background: #d0d1e6"></i><span>15.2% - 17.1%</span><br>
+        <i style="background: #f1eef6"></i><span>11.8% - 15.2%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 11.8%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Frequent Mental Health Distress":
       legendContent = `
         <h4>Percent Frequent Mental Health Distress</h4>
-        <i style="background: #034e7b"></i><span>20% - above</span><br>
-        <i style="background: #0570b0"></i><span>15% - 20%</span><br>
-        <i style="background: #3690c0"></i><span>10% - 15%</span><br>
-        <i style="background: #74a9cf"></i><span>5% - 10%</span><br>
-        <i style="background: #a6bddb"></i><span>0% - 5%</span><br>
-        <i style="background: #d0d1e6"></i><span>No Data</span><br>
+        <i style="background: #034e7b"></i><span>> 31%</span><br>
+        <i style="background: #0570b0"></i><span>22.1% - 31%</span><br>
+        <i style="background: #3690c0"></i><span>18.8% - 22.1%</span><br>
+        <i style="background: #74a9cf"></i><span>16.5% - 18.8%</span><br>
+        <i style="background: #a6bddb"></i><span>14.6% - 16.5%</span><br>
+        <i style="background: #d0d1e6"></i><span>12.7% - 14.6%</span><br>
+        <i style="background: #f1eef6"></i><span>7.2% - 12.7%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 7.2%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Frequent Physical Health Distress":
       legendContent = `
         <h4>Percent Frequent Physical Health Distress</h4>
-        <i style="background: #034e7b"></i><span>20% - above</span><br>
-        <i style="background: #0570b0"></i><span>15% - 20%</span><br>
-        <i style="background: #3690c0"></i><span>10% - 15%</span><br>
-        <i style="background: #74a9cf"></i><span>5% - 10%</span><br>
-        <i style="background: #a6bddb"></i><span>0% - 5%</span><br>
-        <i style="background: #d0d1e6"></i><span>No Data</span><br>
+        <i style="background: #034e7b"></i><span>> 31.3%</span><br>
+        <i style="background: #0570b0"></i><span>17% - 31.3%</span><br>
+        <i style="background: #3690c0"></i><span>13.9% - 17%</span><br>
+        <i style="background: #74a9cf"></i><span>11.6% - 13.9%</span><br>
+        <i style="background: #a6bddb"></i><span>9.7% - 11.6%</span><br>
+        <i style="background: #d0d1e6"></i><span>7.5% - 9.7%</span><br>
+        <i style="background: #f1eef6"></i><span>3.8% - 7.5%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 3.8%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Fair or Poor Health":
       legendContent = `
         <h4>Percent Fair or Poor Health</h4>
-        <i style="background: #034e7b"></i><span>20% - above</span><br>
-        <i style="background: #0570b0"></i><span>15% - 20%</span><br>
-        <i style="background: #3690c0"></i><span>10% - 15%</span><br>
-        <i style="background: #74a9cf"></i><span>5% - 10%</span><br>
-        <i style="background: #a6bddb"></i><span>0% - 5%</span><br>
-        <i style="background: #d0d1e6"></i><span>No Data</span><br>
+        <i style="background: #034e7b"></i><span>> 57.1%</span><br>
+        <i style="background: #0570b0"></i><span>29.7% - 57.1%</span><br>
+        <i style="background: #3690c0"></i><span>23.1% - 29.7%</span><br>
+        <i style="background: #74a9cf"></i><span>18.3% - 23.1%</span><br>
+        <i style="background: #a6bddb"></i><span>14.3% - 18.3%</span><br>
+        <i style="background: #d0d1e6"></i><span>10.1% - 14.3%</span><br>
+        <i style="background: #f1eef6"></i><span>4.3% - 10.1%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 4.3%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Disability":
       legendContent = `
         <h4>Percent Disability</h4>
-        <i style="background: #034e7b"></i><span>30% - above</span><br>
-        <i style="background: #0570b0"></i><span>25% - 30%</span><br>
-        <i style="background: #3690c0"></i><span>20% - 25%</span><br>
-        <i style="background: #74a9cf"></i><span>15% - 20%</span><br>
-        <i style="background: #a6bddb"></i><span>10% - 15%</span><br>
-        <i style="background: #d0d1e6"></i><span>5% - 10%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 5%</span><br>
-        <i style="background: #f1eef6"></i><span>No Data</span><br>
+        <i style="background: #034e7b"></i><span>> 70.5%</span><br>
+        <i style="background: #0570b0"></i><span>40.8% - 70.5%</span><br>
+        <i style="background: #3690c0"></i><span>33.9% - 40.8%</span><br>
+        <i style="background: #74a9cf"></i><span>28.8% - 33.9%</span><br>
+        <i style="background: #a6bddb"></i><span>24.5% - 28.8%</span><br>
+        <i style="background: #d0d1e6"></i><span>19.5% - 24.5%</span><br>
+        <i style="background: #f1eef6"></i><span>11.3% - 19.5%</span><br>
+        <i style="background: #f1eef6"></i><span>0% - 11.3%</span><br>
+        <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Hearing disability crude prevalence (%)":

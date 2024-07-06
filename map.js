@@ -123,20 +123,219 @@ function getColorBasedOnLanguageLegend(language) {
     : "#606060";
 }
 
-// Function to get color based on the number of speakers of a selected language
-function colorScaleNumbersForLanguage(value) {
-  return value > 1000
+function getColorForArabic(value) {
+  return value > 965
     ? "#00441b"
-    : value > 800
+    : value > 508
     ? "#006d2c"
-    : value > 600
+    : value > 296
     ? "#238b45"
-    : value > 400
+    : value > 157
     ? "#41ae76"
-    : value > 200
+    : value > 73
     ? "#66c2a4"
-    : value > 0
+    : value > 23
     ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForChinese(value) {
+  return value > 6482
+    ? "#00441b"
+    : value > 2498
+    ? "#006d2c"
+    : value > 1562
+    ? "#238b45"
+    : value > 914
+    ? "#41ae76"
+    : value > 450
+    ? "#66c2a4"
+    : value > 145
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForFrench(value) {
+  return value > 1467
+    ? "#00441b"
+    : value > 663
+    ? "#006d2c"
+    : value > 434
+    ? "#238b45"
+    : value > 266
+    ? "#41ae76"
+    : value > 136
+    ? "#66c2a4"
+    : value > 47
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForGerman(value) {
+  return value > 6170
+    ? "#00441b"
+    : value > 3445
+    ? "#006d2c"
+    : value > 2318
+    ? "#238b45"
+    : value > 1486
+    ? "#41ae76"
+    : value > 625
+    ? "#66c2a4"
+    : value > 124
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForKorean(value) {
+  return value > 1307
+    ? "#00441b"
+    : value > 747
+    ? "#006d2c"
+    : value > 476
+    ? "#238b45"
+    : value > 246
+    ? "#41ae76"
+    : value > 114
+    ? "#66c2a4"
+    : value > 32
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForOther(value) {
+  return value > 1514
+    ? "#00441b"
+    : value > 824
+    ? "#006d2c"
+    : value > 457
+    ? "#238b45"
+    : value > 264
+    ? "#41ae76"
+    : value > 129
+    ? "#66c2a4"
+    : value > 43
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForOtherAsia(value) {
+  return value > 785
+    ? "#00441b"
+    : value > 427
+    ? "#006d2c"
+    : value > 283
+    ? "#238b45"
+    : value > 166
+    ? "#41ae76"
+    : value > 84
+    ? "#66c2a4"
+    : value > 26
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForOtherIndo(value) {
+  return value > 2653
+    ? "#00441b"
+    : value > 1357
+    ? "#006d2c"
+    : value > 777
+    ? "#238b45"
+    : value > 449
+    ? "#41ae76"
+    : value > 238
+    ? "#66c2a4"
+    : value > 87
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForRussian(value) {
+  return value > 3818
+    ? "#00441b"
+    : value > 2369
+    ? "#006d2c"
+    : value > 1409
+    ? "#238b45"
+    : value > 818
+    ? "#41ae76"
+    : value > 416
+    ? "#66c2a4"
+    : value > 128
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForSpanish(value) {
+  return value > 9883
+    ? "#00441b"
+    : value > 5570
+    ? "#006d2c"
+    : value > 3588
+    ? "#238b45"
+    : value > 2273
+    ? "#41ae76"
+    : value > 1269
+    ? "#66c2a4"
+    : value > 519
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForTagalog(value) {
+  return value > 962
+    ? "#00441b"
+    : value > 524
+    ? "#006d2c"
+    : value > 268
+    ? "#238b45"
+    : value > 132
+    ? "#41ae76"
+    : value > 62
+    ? "#66c2a4"
+    : value > 19
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForVietnamese(value) {
+  return value > 256
+    ? "#00441b"
+    : value > 131
+    ? "#006d2c"
+    : value > 74
+    ? "#238b45"
+    : value > 41
+    ? "#41ae76"
+    : value > 20
+    ? "#66c2a4"
+    : value > 6
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
     : "#606060";
 }
 
@@ -176,48 +375,125 @@ function updateMap() {
         switch (selectedLanguage) {
           case "Arabic":
             numberOfSpeakers = feature.properties.Arabic;
+            style = {
+              fillColor: getColorForArabic(numberOfSpeakers),
+              weight: 0.5,
+              opacity: 1,
+              color: "white",
+              fillOpacity: 0.8,
+            };
             break;
           case "Chinese":
             numberOfSpeakers = feature.properties.Chinese;
+            style = {
+              fillColor: getColorForChinese(numberOfSpeakers),
+              weight: 0.5,
+              opacity: 1,
+              color: "white",
+              fillOpacity: 0.8,
+            };
             break;
           case "French, Haitian Creole, or Cajun":
             numberOfSpeakers = feature.properties.French;
+            style = {
+              fillColor: getColorForFrench(numberOfSpeakers),
+              weight: 0.5,
+              opacity: 1,
+              color: "white",
+              fillOpacity: 0.8,
+            };
             break;
           case "German or other West Germanic languages":
             numberOfSpeakers = feature.properties.German;
+            style = {
+              fillColor: getColorForGerman(numberOfSpeakers),
+              weight: 0.5,
+              opacity: 1,
+              color: "white",
+              fillOpacity: 0.8,
+            };
             break;
           case "Korean":
             numberOfSpeakers = feature.properties.Korean;
+            style = {
+              fillColor: getColorForKorean(numberOfSpeakers),
+              weight: 0.5,
+              opacity: 1,
+              color: "white",
+              fillOpacity: 0.8,
+            };
             break;
           case "Other and unspecified languages":
             numberOfSpeakers = feature.properties.Other;
+            style = {
+              fillColor: getColorForOther(numberOfSpeakers),
+              weight: 0.5,
+              opacity: 1,
+              color: "white",
+              fillOpacity: 0.8,
+            };
             break;
           case "Other Asian and Pacific Island languages":
             numberOfSpeakers = feature.properties.Other_Asia;
+            style = {
+              fillColor: getColorForOtherAsia(numberOfSpeakers),
+              weight: 0.5,
+              opacity: 1,
+              color: "white",
+              fillOpacity: 0.8,
+            };
             break;
           case "Other Indo-European languages":
             numberOfSpeakers = feature.properties.Other_Indo;
+            style = {
+              fillColor: getColorForOtherIndo(numberOfSpeakers),
+              weight: 0.5,
+              opacity: 1,
+              color: "white",
+              fillOpacity: 0.8,
+            };
             break;
           case "Russian, Polish, or other Slavic languages":
             numberOfSpeakers = feature.properties.Russian;
+            style = {
+              fillColor: getColorForRussian(numberOfSpeakers),
+              weight: 0.5,
+              opacity: 1,
+              color: "white",
+              fillOpacity: 0.8,
+            };
             break;
           case "Spanish":
             numberOfSpeakers = feature.properties.Spanish;
+            style = {
+              fillColor: getColorForSpanish(numberOfSpeakers),
+              weight: 0.5,
+              opacity: 1,
+              color: "white",
+              fillOpacity: 0.8,
+            };
             break;
           case "Tagalog (incl. Filipino)":
             numberOfSpeakers = feature.properties.Tagalog;
+            style = {
+              fillColor: getColorForTagalog(numberOfSpeakers),
+              weight: 0.5,
+              opacity: 1,
+              color: "white",
+              fillOpacity: 0.8,
+            };
             break;
           case "Vietnamese":
             numberOfSpeakers = feature.properties.Vietnamese;
+            style = {
+              fillColor: getColorForVietnamese(numberOfSpeakers),
+              weight: 0.5,
+              opacity: 1,
+              color: "white",
+              fillOpacity: 0.8,
+            };
             break;
         }
-        style = {
-          fillColor: colorScaleNumbersForLanguage(numberOfSpeakers),
-          weight: 0.5,
-          opacity: 1,
-          color: "white",
-          fillOpacity: 0.8,
-        };
       }
       return style;
     },
@@ -804,20 +1080,225 @@ function updateLegend(selectedLayer, selectedLanguage) {
       legendContent +=
         '<i style="background: #ccb8cbff"></i><span>Vietnamese</span><br>';
     } else {
-      legendContent += "<h4>Language</h4>";
-      legendContent +=
-        '<i style="background: #00441b"></i><span>> 1000</span><br>';
-      legendContent +=
-        '<i style="background: #006d2c"></i><span>800 - 1000</span><br>';
-      legendContent +=
-        '<i style="background: #238b45"></i><span>600 - 800</span><br>';
-      legendContent +=
-        '<i style="background: #41ae76"></i><span>400 - 600</span><br>';
-      legendContent +=
-        '<i style="background: #66c2a4"></i><span>200 - 400</span><br>';
-      legendContent +=
-        '<i style="background: #99d8c9"></i><span>1 - 200</span><br>';
-      legendContent += '<i style="background: #ccece6"></i><span>0</span><br>';
+      legendContent += `<h4>${selectedLanguage} Speakers</h4>`;
+      switch (selectedLanguage) {
+        case "Arabic":
+          legendContent +=
+            '<i style="background: #00441b"></i><span>> 965</span><br>';
+          legendContent +=
+            '<i style="background: #006d2c"></i><span>508 - 965</span><br>';
+          legendContent +=
+            '<i style="background: #238b45"></i><span>296 - 508</span><br>';
+          legendContent +=
+            '<i style="background: #41ae76"></i><span>157 - 296</span><br>';
+          legendContent +=
+            '<i style="background: #66c2a4"></i><span>73 - 157</span><br>';
+          legendContent +=
+            '<i style="background: #99d8c9"></i><span>23 - 73</span><br>';
+          legendContent +=
+            '<i style="background: #ccece6"></i><span>0 - 23</span><br>';
+          legendContent +=
+            '<i style="background: #606060"></i><span>No Data</span><br>';
+          break;
+        case "Chinese":
+          legendContent +=
+            '<i style="background: #00441b"></i><span>> 6482</span><br>';
+          legendContent +=
+            '<i style="background: #006d2c"></i><span>2498 - 6482</span><br>';
+          legendContent +=
+            '<i style="background: #238b45"></i><span>1562 - 2498</span><br>';
+          legendContent +=
+            '<i style="background: #41ae76"></i><span>914 - 1562</span><br>';
+          legendContent +=
+            '<i style="background: #66c2a4"></i><span>450 - 914</span><br>';
+          legendContent +=
+            '<i style="background: #99d8c9"></i><span>145 - 450</span><br>';
+          legendContent +=
+            '<i style="background: #ccece6"></i><span>0 - 145</span><br>';
+          legendContent +=
+            '<i style="background: #606060"></i><span>No Data</span><br>';
+          break;
+        case "French, Haitian Creole, or Cajun":
+          legendContent +=
+            '<i style="background: #00441b"></i><span>> 1467</span><br>';
+          legendContent +=
+            '<i style="background: #006d2c"></i><span>663 - 1467</span><br>';
+          legendContent +=
+            '<i style="background: #238b45"></i><span>434 - 663</span><br>';
+          legendContent +=
+            '<i style="background: #41ae76"></i><span>266 - 434</span><br>';
+          legendContent +=
+            '<i style="background: #66c2a4"></i><span>136 - 266</span><br>';
+          legendContent +=
+            '<i style="background: #99d8c9"></i><span>47 - 136</span><br>';
+          legendContent +=
+            '<i style="background: #ccece6"></i><span>0 - 47</span><br>';
+          legendContent +=
+            '<i style="background: #606060"></i><span>No Data</span><br>';
+          break;
+        case "German or other West Germanic languages":
+          legendContent +=
+            '<i style="background: #00441b"></i><span>> 6170</span><br>';
+          legendContent +=
+            '<i style="background: #006d2c"></i><span>3445 - 6170</span><br>';
+          legendContent +=
+            '<i style="background: #238b45"></i><span>2318 - 3445</span><br>';
+          legendContent +=
+            '<i style="background: #41ae76"></i><span>1486 - 2318</span><br>';
+          legendContent +=
+            '<i style="background: #66c2a4"></i><span>625 - 1486</span><br>';
+          legendContent +=
+            '<i style="background: #99d8c9"></i><span>124 - 625</span><br>';
+          legendContent +=
+            '<i style="background: #ccece6"></i><span>0 - 124</span><br>';
+          legendContent +=
+            '<i style="background: #606060"></i><span>No Data</span><br>';
+          break;
+        case "Korean":
+          legendContent +=
+            '<i style="background: #00441b"></i><span>> 1307</span><br>';
+          legendContent +=
+            '<i style="background: #006d2c"></i><span>747 - 1307</span><br>';
+          legendContent +=
+            '<i style="background: #238b45"></i><span>476 - 747</span><br>';
+          legendContent +=
+            '<i style="background: #41ae76"></i><span>246 - 476</span><br>';
+          legendContent +=
+            '<i style="background: #66c2a4"></i><span>114 - 246</span><br>';
+          legendContent +=
+            '<i style="background: #99d8c9"></i><span>32 - 114</span><br>';
+          legendContent +=
+            '<i style="background: #ccece6"></i><span>0 - 32</span><br>';
+          legendContent +=
+            '<i style="background: #606060"></i><span>No Data</span><br>';
+          break;
+        case "Other and unspecified languages":
+          legendContent +=
+            '<i style="background: #00441b"></i><span>> 1514</span><br>';
+          legendContent +=
+            '<i style="background: #006d2c"></i><span>824 - 1514</span><br>';
+          legendContent +=
+            '<i style="background: #238b45"></i><span>457 - 824</span><br>';
+          legendContent +=
+            '<i style="background: #41ae76"></i><span>264 - 457</span><br>';
+          legendContent +=
+            '<i style="background: #66c2a4"></i><span>129 - 264</span><br>';
+          legendContent +=
+            '<i style="background: #99d8c9"></i><span>43 - 129</span><br>';
+          legendContent +=
+            '<i style="background: #ccece6"></i><span>0 - 43</span><br>';
+          legendContent +=
+            '<i style="background: #606060"></i><span>No Data</span><br>';
+          break;
+        case "Other Asian and Pacific Island languages":
+          legendContent +=
+            '<i style="background: #00441b"></i><span>> 785</span><br>';
+          legendContent +=
+            '<i style="background: #006d2c"></i><span>427 - 785</span><br>';
+          legendContent +=
+            '<i style="background: #238b45"></i><span>283 - 427</span><br>';
+          legendContent +=
+            '<i style="background: #41ae76"></i><span>166 - 283</span><br>';
+          legendContent +=
+            '<i style="background: #66c2a4"></i><span>84 - 166</span><br>';
+          legendContent +=
+            '<i style="background: #99d8c9"></i><span>26 - 84</span><br>';
+          legendContent +=
+            '<i style="background: #ccece6"></i><span>0 - 26</span><br>';
+          legendContent +=
+            '<i style="background: #606060"></i><span>No Data</span><br>';
+          break;
+        case "Other Indo-European languages":
+          legendContent +=
+            '<i style="background: #00441b"></i><span>> 2653</span><br>';
+          legendContent +=
+            '<i style="background: #006d2c"></i><span>1357 - 2653</span><br>';
+          legendContent +=
+            '<i style="background: #238b45"></i><span>777 - 1357</span><br>';
+          legendContent +=
+            '<i style="background: #41ae76"></i><span>449 - 777</span><br>';
+          legendContent +=
+            '<i style="background: #66c2a4"></i><span>238 - 449</span><br>';
+          legendContent +=
+            '<i style="background: #99d8c9"></i><span>87 - 238</span><br>';
+          legendContent +=
+            '<i style="background: #ccece6"></i><span>0 - 87</span><br>';
+          legendContent +=
+            '<i style="background: #606060"></i><span>No Data</span><br>';
+          break;
+        case "Russian, Polish, or other Slavic languages":
+          legendContent +=
+            '<i style="background: #00441b"></i><span>> 3818</span><br>';
+          legendContent +=
+            '<i style="background: #006d2c"></i><span>2369 - 3818</span><br>';
+          legendContent +=
+            '<i style="background: #238b45"></i><span>1409 - 2369</span><br>';
+          legendContent +=
+            '<i style="background: #41ae76"></i><span>818 - 1409</span><br>';
+          legendContent +=
+            '<i style="background: #66c2a4"></i><span>416 - 818</span><br>';
+          legendContent +=
+            '<i style="background: #99d8c9"></i><span>128 - 416</span><br>';
+          legendContent +=
+            '<i style="background: #ccece6"></i><span>0 - 128</span><br>';
+          legendContent +=
+            '<i style="background: #606060"></i><span>No Data</span><br>';
+          break;
+        case "Spanish":
+          legendContent +=
+            '<i style="background: #00441b"></i><span>> 9883</span><br>';
+          legendContent +=
+            '<i style="background: #006d2c"></i><span>5570 - 9883</span><br>';
+          legendContent +=
+            '<i style="background: #238b45"></i><span>3588 - 5570</span><br>';
+          legendContent +=
+            '<i style="background: #41ae76"></i><span>2273 - 3588</span><br>';
+          legendContent +=
+            '<i style="background: #66c2a4"></i><span>1269 - 2273</span><br>';
+          legendContent +=
+            '<i style="background: #99d8c9"></i><span>519 - 1269</span><br>';
+          legendContent +=
+            '<i style="background: #ccece6"></i><span>0 - 519</span><br>';
+          legendContent +=
+            '<i style="background: #606060"></i><span>No Data</span><br>';
+          break;
+        case "Tagalog (incl. Filipino)":
+          legendContent +=
+            '<i style="background: #00441b"></i><span>> 962</span><br>';
+          legendContent +=
+            '<i style="background: #006d2c"></i><span>524 - 962</span><br>';
+          legendContent +=
+            '<i style="background: #238b45"></i><span>268 - 524</span><br>';
+          legendContent +=
+            '<i style="background: #41ae76"></i><span>132 - 268</span><br>';
+          legendContent +=
+            '<i style="background: #66c2a4"></i><span>62 - 132</span><br>';
+          legendContent +=
+            '<i style="background: #99d8c9"></i><span>19 - 62</span><br>';
+          legendContent +=
+            '<i style="background: #ccece6"></i><span>0 - 19</span><br>';
+          legendContent +=
+            '<i style="background: #606060"></i><span>No Data</span><br>';
+          break;
+        case "Vietnamese":
+          legendContent +=
+            '<i style="background: #00441b"></i><span>> 256</span><br>';
+          legendContent +=
+            '<i style="background: #006d2c"></i><span>131 - 256</span><br>';
+          legendContent +=
+            '<i style="background: #238b45"></i><span>74 - 131</span><br>';
+          legendContent +=
+            '<i style="background: #41ae76"></i><span>41 - 74</span><br>';
+          legendContent +=
+            '<i style="background: #66c2a4"></i><span>20 - 41</span><br>';
+          legendContent +=
+            '<i style="background: #99d8c9"></i><span>6 - 20</span><br>';
+          legendContent +=
+            '<i style="background: #ccece6"></i><span>0 - 6</span><br>';
+          legendContent +=
+            '<i style="background: #606060"></i><span>No Data</span><br>';
+          break;
+      }
     }
   } else if ((selectedLayer = "demographics")) {
     legendContent += "<h4>Population Density</h4>";
@@ -2540,6 +3021,126 @@ function getColorForDisability(percent) {
     : "#606060";
 }
 
+function getColorForHearingDisability(percent) {
+  return percent > 29.7
+    ? "#034e7b"
+    : percent > 11.6
+    ? "#0570b0"
+    : percent > 7.9
+    ? "#3690c0"
+    : percent > 6.2
+    ? "#74a9cf"
+    : percent > 5.1
+    ? "#a6bddb"
+    : percent > 4
+    ? "#d0d1e6"
+    : percent > 1.7
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForVisionDisability(percent) {
+  return percent > 33.9
+    ? "#034e7b"
+    : percent > 14.2
+    ? "#0570b0"
+    : percent > 10.4
+    ? "#3690c0"
+    : percent > 7.8
+    ? "#74a9cf"
+    : percent > 5.7
+    ? "#a6bddb"
+    : percent > 3.8
+    ? "#d0d1e6"
+    : percent > 1.4
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForCognitiveDisability(percent) {
+  return percent > 30.7
+    ? "#034e7b"
+    : percent > 21.5
+    ? "#0570b0"
+    : percent > 17.5
+    ? "#3690c0"
+    : percent > 14.2
+    ? "#74a9cf"
+    : percent > 11.6
+    ? "#a6bddb"
+    : percent > 9
+    ? "#d0d1e6"
+    : percent > 5.5
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForMobilityDisability(percent) {
+  return percent > 56.9
+    ? "#034e7b"
+    : percent > 24
+    ? "#0570b0"
+    : percent > 18.6
+    ? "#3690c0"
+    : percent > 15.1
+    ? "#74a9cf"
+    : percent > 12.1
+    ? "#a6bddb"
+    : percent > 8.5
+    ? "#d0d1e6"
+    : percent > 2.5
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForSelfCareDisability(percent) {
+  return percent > 28.2
+    ? "#034e7b"
+    : percent > 9.9
+    ? "#0570b0"
+    : percent > 7.1
+    ? "#3690c0"
+    : percent > 5.2
+    ? "#74a9cf"
+    : percent > 3.8
+    ? "#a6bddb"
+    : percent > 2.5
+    ? "#d0d1e6"
+    : percent > 0.8
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForIndependentLivingDisability(percent) {
+  return percent > 31.8
+    ? "#034e7b"
+    : percent > 16.6
+    ? "#0570b0"
+    : percent > 12.6
+    ? "#3690c0"
+    : percent > 9.8
+    ? "#74a9cf"
+    : percent > 7.6
+    ? "#a6bddb"
+    : percent > 5.5
+    ? "#d0d1e6"
+    : percent > 2.8
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
 function addHealthStatusData(data) {
   data.features.forEach(function (feature) {
     var p = feature.properties;
@@ -2742,81 +3343,87 @@ function updateLegendForHealthStatus(layerName) {
       break;
     case "Hearing disability crude prevalence (%)":
       legendContent = `
-        <h4>Percent Hearing Disability</h4>
-        <i style="background: #034e7b"></i><span>30% - above</span><br>
-        <i style="background: #0570b0"></i><span>25% - 30%</span><br>
-        <i style="background: #3690c0"></i><span>20% - 25%</span><br>
-        <i style="background: #74a9cf"></i><span>15% - 20%</span><br>
-        <i style="background: #a6bddb"></i><span>10% - 15%</span><br>
-        <i style="background: #d0d1e6"></i><span>5% - 10%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 5%</span><br>
-        <i style="background: #f1eef6"></i><span>No Data</span><br>
+          <h4>Percent Hearing Disability</h4>
+          <i style="background: #034e7b"></i><span>> 29.7%</span><br>
+          <i style="background: #0570b0"></i><span>11.6% - 29.7%</span><br>
+          <i style="background: #3690c0"></i><span>7.9% - 11.6%</span><br>
+          <i style="background: #74a9cf"></i><span>6.2% - 7.9%</span><br>
+          <i style="background: #a6bddb"></i><span>5.1% - 6.2%</span><br>
+          <i style="background: #d0d1e6"></i><span>4% - 5.1%</span><br>
+          <i style="background: #f1eef6"></i><span>1.7% - 4%</span><br>
+          <i style="background: #f1eef6"></i><span>0% - 1.7%</span><br>
+          <i style="background: #606060"></i><span>No Data</span><br>
         `;
       break;
     case "Vision disability crude prevalence (%)":
       legendContent = `
-        <h4>Percent Vision Disability</h4>
-        <i style="background: #034e7b"></i><span>30% - above</span><br>
-        <i style="background: #0570b0"></i><span>25% - 30%</span><br>
-        <i style="background: #3690c0"></i><span>20% - 25%</span><br>
-        <i style="background: #74a9cf"></i><span>15% - 20%</span><br>
-        <i style="background: #a6bddb"></i><span>10% - 15%</span><br>
-        <i style="background: #d0d1e6"></i><span>5% - 10%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 5%</span><br>
-        <i style="background: #f1eef6"></i><span>No Data</span><br>
-          `;
+          <h4>Percent Vision Disability</h4>
+          <i style="background: #034e7b"></i><span>> 33.9%</span><br>
+          <i style="background: #0570b0"></i><span>14.2% - 33.9%</span><br>
+          <i style="background: #3690c0"></i><span>10.4% - 14.2%</span><br>
+          <i style="background: #74a9cf"></i><span>7.8% - 10.4%</span><br>
+          <i style="background: #a6bddb"></i><span>5.7% - 7.8%</span><br>
+          <i style="background: #d0d1e6"></i><span>3.8% - 5.7%</span><br>
+          <i style="background: #f1eef6"></i><span>1.4% - 3.8%</span><br>
+          <i style="background: #f1eef6"></i><span>0% - 1.4%</span><br>
+          <i style="background: #606060"></i><span>No Data</span><br>
+        `;
       break;
     case "Cognitive disability crude prevalence (%)":
       legendContent = `
-        <h4>Percent Cognitive Disability</h4>
-        <i style="background: #034e7b"></i><span>30% - above</span><br>
-        <i style="background: #0570b0"></i><span>25% - 30%</span><br>
-        <i style="background: #3690c0"></i><span>20% - 25%</span><br>
-        <i style="background: #74a9cf"></i><span>15% - 20%</span><br>
-        <i style="background: #a6bddb"></i><span>10% - 15%</span><br>
-        <i style="background: #d0d1e6"></i><span>5% - 10%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 5%</span><br>
-        <i style="background: #f1eef6"></i><span>No Data</span><br>
-            `;
+          <h4>Percent Cognitive Disability</h4>
+          <i style="background: #034e7b"></i><span>> 30.7%</span><br>
+          <i style="background: #0570b0"></i><span>21.5% - 30.7%</span><br>
+          <i style="background: #3690c0"></i><span>17.5% - 21.5%</span><br>
+          <i style="background: #74a9cf"></i><span>14.2% - 17.5%</span><br>
+          <i style="background: #a6bddb"></i><span>11.6% - 14.2%</span><br>
+          <i style="background: #d0d1e6"></i><span>9% - 11.6%</span><br>
+          <i style="background: #f1eef6"></i><span>5.5% - 9%</span><br>
+          <i style="background: #f1eef6"></i><span>0% - 5.5%</span><br>
+          <i style="background: #606060"></i><span>No Data</span><br>
+        `;
       break;
     case "Mobility disability crude prevalence (%)":
       legendContent = `
-        <h4>Percent Mobility Disability</h4>
-        <i style="background: #034e7b"></i><span>30% - above</span><br>
-        <i style="background: #0570b0"></i><span>25% - 30%</span><br>
-        <i style="background: #3690c0"></i><span>20% - 25%</span><br>
-        <i style="background: #74a9cf"></i><span>15% - 20%</span><br>
-        <i style="background: #a6bddb"></i><span>10% - 15%</span><br>
-        <i style="background: #d0d1e6"></i><span>5% - 10%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 5%</span><br>
-        <i style="background: #f1eef6"></i><span>No Data</span><br>
-              `;
+          <h4>Percent Mobility Disability</h4>
+          <i style="background: #034e7b"></i><span>> 56.9%</span><br>
+          <i style="background: #0570b0"></i><span>24% - 56.9%</span><br>
+          <i style="background: #3690c0"></i><span>18.6% - 24%</span><br>
+          <i style="background: #74a9cf"></i><span>15.1% - 18.6%</span><br>
+          <i style="background: #a6bddb"></i><span>12.1% - 15.1%</span><br>
+          <i style="background: #d0d1e6"></i><span>8.5% - 12.1%</span><br>
+          <i style="background: #f1eef6"></i><span>2.5% - 8.5%</span><br>
+          <i style="background: #f1eef6"></i><span>0% - 2.5%</span><br>
+          <i style="background: #606060"></i><span>No Data</span><br>
+        `;
       break;
     case "Self-care disability crude prevalence (%)":
       legendContent = `
-        <h4>Percent Self-care Disability</h4>
-        <i style="background: #034e7b"></i><span>30% - above</span><br>
-        <i style="background: #0570b0"></i><span>25% - 30%</span><br>
-        <i style="background: #3690c0"></i><span>20% - 25%</span><br>
-        <i style="background: #74a9cf"></i><span>15% - 20%</span><br>
-        <i style="background: #a6bddb"></i><span>10% - 15%</span><br>
-        <i style="background: #d0d1e6"></i><span>5% - 10%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 5%</span><br>
-        <i style="background: #f1eef6"></i><span>No Data</span><br>
-              `;
+          <h4>Percent Self-care Disability</h4>
+          <i style="background: #034e7b"></i><span>> 28.2%</span><br>
+          <i style="background: #0570b0"></i><span>9.9% - 28.2%</span><br>
+          <i style="background: #3690c0"></i><span>7.1% - 9.9%</span><br>
+          <i style="background: #74a9cf"></i><span>5.2% - 7.1%</span><br>
+          <i style="background: #a6bddb"></i><span>3.8% - 5.2%</span><br>
+          <i style="background: #d0d1e6"></i><span>2.5% - 3.8%</span><br>
+          <i style="background: #f1eef6"></i><span>0.8% - 2.5%</span><br>
+          <i style="background: #f1eef6"></i><span>0% - 0.8%</span><br>
+          <i style="background: #606060"></i><span>No Data</span><br>
+        `;
       break;
     case "Independent living disability crude prevalence (%)":
       legendContent = `
-        <h4>Percent Independent Living Disability</h4>
-        <i style="background: #034e7b"></i><span>30% - above</span><br>
-        <i style="background: #0570b0"></i><span>25% - 30%</span><br>
-        <i style="background: #3690c0"></i><span>20% - 25%</span><br>
-        <i style="background: #74a9cf"></i><span>15% - 20%</span><br>
-        <i style="background: #a6bddb"></i><span>10% - 15%</span><br>
-        <i style="background: #d0d1e6"></i><span>5% - 10%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 5%</span><br>
-        <i style="background: #f1eef6"></i><span>No Data</span><br>
-                `;
+          <h4>Percent Independent Living Disability</h4>
+          <i style="background: #034e7b"></i><span>> 31.8%</span><br>
+          <i style="background: #0570b0"></i><span>16.6% - 31.8%</span><br>
+          <i style="background: #3690c0"></i><span>12.6% - 16.6%</span><br>
+          <i style="background: #74a9cf"></i><span>9.8% - 12.6%</span><br>
+          <i style="background: #a6bddb"></i><span>7.6% - 9.8%</span><br>
+          <i style="background: #d0d1e6"></i><span>5.5% - 7.6%</span><br>
+          <i style="background: #f1eef6"></i><span>2.8% - 5.5%</span><br>
+          <i style="background: #f1eef6"></i><span>0% - 2.8%</span><br>
+          <i style="background: #606060"></i><span>No Data</span><br>
+        `;
       break;
   }
   document.querySelector(".healthStatusLegend").innerHTML = legendContent;
@@ -2911,11 +3518,71 @@ function updateHealthStatusMap() {
   var selectedDisabilityGeojson = L.geoJson(healthDataGeojson, {
     style: function (feature) {
       var style;
-      if (selectedDisability === "") {
-        // Default style for any disability (if no specific disability is selected)
+      if (selectedDisability == "Hearing disability crude prevalence (%)") {
         style = {
-          fillColor: getColorForDisability(
-            feature.properties["Any disability crude prevalence (%)"]
+          fillColor: getColorForHearingDisability(
+            feature.properties[selectedDisability]
+          ),
+          weight: 0.5,
+          opacity: 1,
+          color: "white",
+          fillOpacity: 0.8,
+        };
+      } else if (
+        selectedDisability == "Vision disability crude prevalence (%)"
+      ) {
+        style = {
+          fillColor: getColorForVisionDisability(
+            feature.properties[selectedDisability]
+          ),
+          weight: 0.5,
+          opacity: 1,
+          color: "white",
+          fillOpacity: 0.8,
+        };
+      } else if (
+        selectedDisability == "Cognitive disability crude prevalence (%)"
+      ) {
+        style = {
+          fillColor: getColorForCognitiveDisability(
+            feature.properties[selectedDisability]
+          ),
+          weight: 0.5,
+          opacity: 1,
+          color: "white",
+          fillOpacity: 0.8,
+        };
+      } else if (
+        selectedDisability == "Mobility disability crude prevalence (%)"
+      ) {
+        style = {
+          fillColor: getColorForMobilityDisability(
+            feature.properties[selectedDisability]
+          ),
+          weight: 0.5,
+          opacity: 1,
+          color: "white",
+          fillOpacity: 0.8,
+        };
+      } else if (
+        selectedDisability == "Self-care disability crude prevalence (%)"
+      ) {
+        style = {
+          fillColor: getColorForSelfCareDisability(
+            feature.properties[selectedDisability]
+          ),
+          weight: 0.5,
+          opacity: 1,
+          color: "white",
+          fillOpacity: 0.8,
+        };
+      } else if (
+        selectedDisability ==
+        "Independent living disability crude prevalence (%)"
+      ) {
+        style = {
+          fillColor: getColorForIndependentLivingDisability(
+            feature.properties[selectedDisability]
           ),
           weight: 0.5,
           opacity: 1,
@@ -2923,9 +3590,11 @@ function updateHealthStatusMap() {
           fillOpacity: 0.8,
         };
       } else {
-        var percentage = feature.properties[selectedDisability];
+        // Default style for any disability (if no specific disability is selected)
         style = {
-          fillColor: getColorForDisability(percentage),
+          fillColor: getColorForDisability(
+            feature.properties["Any disability crude prevalence (%)"]
+          ),
           weight: 0.5,
           opacity: 1,
           color: "white",

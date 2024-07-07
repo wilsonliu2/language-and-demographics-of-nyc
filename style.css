@@ -66,3 +66,7 @@
   display: block;
   margin-bottom: 3px;
 }
+
+.leaflet-control-layers-list {
+  overflow: hidden;
+}

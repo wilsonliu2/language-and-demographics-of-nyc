@@ -28,6 +28,37 @@ var baseLayer = L.tileLayer(
   }
 ).addTo(maps["demographicLanguageMap"]);
 
+//=========================================================== SETTINGS =================================================================
+
+// Work In Progress
+// Update the values to change the layer and legend names
+const healthStatusLayerNames = {
+  DEPRESSION: "Depression Prevalence",
+  MENTAL_HEALTH_BAD: "Mental Health Distress Prevalence",
+  PHYSICAL_HEALTH_BAD: "Physical Health Distress Prevalence",
+  POOR_SELF_RATED_HEALTH: "Fair or Poor Health",
+  DISABILITY: "Disability Prevalence",
+  HEARING_DISABILITY: "Hearing Disability Prevalence",
+  VISION_DISABILITY: "Vision Disability prevalence",
+  COGNITIVE_DISABILITY: "Cognitive Disability prevalence",
+  MOBILITY_DISABILITY: "Mobility Disability prevalence",
+  SELF_CARE_DISABILITY: "Self-care Disability prevalence",
+  INDEPENDENT_LIVING_DISABILITY: "Independent Living Disability Prevalence",
+};
+
+// Update the values to change the color scale
+const healthStatusColors = [
+  "#662506",
+  "#993404",
+  "#cc4c02",
+  "#ec7014",
+  "#fe9929",
+  "#fec44f",
+  "#fee391",
+  "#fff7bc",
+  "#606060",
+];
+
 //=========================================================== VARIABLES =================================================================
 
 var selectedLayer = "language";
@@ -796,15 +827,15 @@ demographicGeoJson = L.geoJson(languageGeoJsonData, {
         
         <button onclick='updatePieChart(${id}, "gender", ${JSON.stringify(
         p
-      )})'>Gender Distribution</button>
+      )})'>Gender</button>
 
        <button onclick='updatePieChart(${id}, "age", ${JSON.stringify(
         p
-      )})'>Age Distribution</button>
+      )})'>Age</button>
       
        <button onclick='updateBarPlotForRace(${id}, ${JSON.stringify(
         p
-      )})'>Race Distribution</button>
+      )})'>Race</button>
 
         <div id="chart-container-${id}" style="width: 150px; height: 200px;"></div>
       `;
@@ -1532,29 +1563,39 @@ function addHealthRiskData(data) {
     var p = feature.properties;
 
     var uninsuredPopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Uninsured: ${p["Lack of health insurance crude prevalence (%)"]}%
+      <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+      Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated lack of health insurance crude prevalence is 
+      <b>${p["Lack of health insurance crude prevalence (%)"]}%</b>
+      ${p["Lack of health insurance crude prevalence 95% CI"]}.
     `;
 
     var frequentDrinkersPopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Frequent Drinkers: ${p["Binge drinking crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated binge drinking crude prevalence is 
+    <b>${p["Binge drinking crude prevalence (%)"]}%</b> 
+    ${p["Binge drinking crude prevalence 95% CI"]}.
+  `;
 
     var currentSmokersPopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Current Smokers: ${p["Current smoking crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated current smoking crude prevalence is 
+    <b>${p["Current smoking crude prevalence (%)"]}%</b> 
+    ${p["Current smoking crude prevalence 95% CI"]}.
+  `;
 
     var sedentaryLifestylePopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Sedentary Lifestyle: ${p["Physical inactivity crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated physical inactivity crude prevalence is 
+    <b>${p["Physical inactivity crude prevalence (%)"]}%</b> 
+    ${p["Physical inactivity crude prevalence 95% CI"]}.
+  `;
 
     var sleepLessThan7HoursPopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Sleep < 7 Hours: ${p["Sleep <7 hours crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated prevalence of sleep less than 7 hours is 
+    <b>${p["Sleep <7 hours crude prevalence (%)"]}%</b> 
+    ${p["Sleep <7 hours crude prevalence 95% CI"]}.
+  `;
 
     var uninsuredLayer = L.geoJson(feature, {
       style: healthRiskStyle(
@@ -1630,7 +1671,7 @@ var baseLayers = {
   "Frequent Drinkers": healthRiskLayers.frequentDrinkers,
   "Current Smokers": healthRiskLayers.currentSmokers,
   "Sedentary Lifestyle": healthRiskLayers.sedentaryLifestyle,
-  "Sleep < 7 Hours": healthRiskLayers.sleepLessThan7Hours,
+  "<7 Hours Sleep": healthRiskLayers.sleepLessThan7Hours,
 };
 
 L.control
@@ -1678,7 +1719,7 @@ function updateLegendForHealthRisk(layerName) {
       break;
     case "Frequent Drinkers":
       legendContent = `
-        <h4>Percent Frequent Drinkers</h4>
+        <h4>Frequent Drinkers</h4>
         <i style="background: #034e7b"></i><span> > 29.4%</span><br>
         <i style="background: #0570b0"></i><span>23.1% - 29.4%</span><br>
         <i style="background: #3690c0"></i><span>20.1% - 23.1%</span><br>
@@ -1692,7 +1733,7 @@ function updateLegendForHealthRisk(layerName) {
       break;
     case "Current Smokers":
       legendContent = `
-        <h4>Percent Current Smokers</h4>
+        <h4>Adult Smokers</h4>
         <i style="background: #034e7b"></i><span> > 45.4%</span><br>
         <i style="background: #0570b0"></i><span>23.1% - 45.4%</span><br>
         <i style="background: #3690c0"></i><span>18.7% - 23.1%</span><br>
@@ -1706,7 +1747,7 @@ function updateLegendForHealthRisk(layerName) {
       break;
     case "Sedentary Lifestyle":
       legendContent = `
-        <h4>Percent Sedentary Lifestyle</h4>
+        <h4>Phyiscally Inactive</h4>
         <i style="background: #034e7b"></i><span> > 63.9%</span><br>
         <i style="background: #0570b0"></i><span>40.5% - 63.9%</span><br>
         <i style="background: #3690c0"></i><span>34.2% - 40.5%</span><br>
@@ -1720,7 +1761,7 @@ function updateLegendForHealthRisk(layerName) {
       break;
     case "Sleep < 7 Hours":
       legendContent = `
-        <h4>Percent Sleeping Less Than 7 Hours</h4>
+        <h4>Sleep <7 Hours</h4>
         <i style="background: #034e7b"></i><span> > 49.1%</span><br>
         <i style="background: #0570b0"></i><span>41.5% - 49.1%</span><br>
         <i style="background: #3690c0"></i><span>38.5% - 41.5%</span><br>
@@ -1745,6 +1786,18 @@ updateLegendForHealthRisk("Uninsured");
 healthRiskLayers.uninsured.addTo(maps["healthRiskBehaviorsMap"]);
 
 //=========================================================== Health Outcomes Map =================================================================
+
+// Define layer names
+var asthmaPrevalence = "Asthma Prevalence";
+var highBloodPressure = "High Blood Pressure";
+var cancerPrevalence = "Cancer Prevalence (except skin)";
+var highCholesterol = "High Cholesterol";
+var chronicKidneyDisease = "Chronic Kidney Disease";
+var pulmonaryDisease = "Pulmonary Disease";
+var heartDisease = "Heart Disease";
+var diabetesPrevalence = "Diabetes Prevalence";
+var obesityPrevalence = "Obesity Prevalence";
+var strokePrevalence = "Stroke Prevalence";
 
 maps["healthOutcomesMap"] = L.map("healthOutcomesMap", {
   maxBounds: bounds,
@@ -1843,201 +1896,201 @@ function healthOutcomesStyle(propertyName, colorFunction) {
 
 function getColorForCurrentAsthma(percent) {
   return percent > 16.5
-    ? "#034e7b"
+    ? "#91003f"
     : percent > 13.5
-    ? "#0570b0"
+    ? "#ce1256"
     : percent > 12.2
-    ? "#3690c0"
+    ? "#e7298a"
     : percent > 11
-    ? "#74a9cf"
+    ? "#df65b0"
     : percent > 9.9
-    ? "#a6bddb"
+    ? "#c994c7"
     : percent > 8.9
-    ? "#d0d1e6"
+    ? "#d4b9da"
     : percent > 7.4
-    ? "#f1eef6"
+    ? "#e7e1ef"
     : percent > 0
-    ? "#f1eef6"
+    ? "#e7e1ef"
     : "#606060";
 }
 
 function getColorForHighBlood(percent) {
   return percent > 73.3
-    ? "#034e7b"
+    ? "#91003f"
     : percent > 37.6
-    ? "#0570b0"
+    ? "#ce1256"
     : percent > 32.7
-    ? "#3690c0"
+    ? "#e7298a"
     : percent > 28.5
-    ? "#74a9cf"
+    ? "#df65b0"
     : percent > 24.4
-    ? "#a6bddb"
+    ? "#c994c7"
     : percent > 19.3
-    ? "#d0d1e6"
+    ? "#d4b9da"
     : percent > 9
-    ? "#f1eef6"
+    ? "#e7e1ef"
     : percent > 0
-    ? "#f1eef6"
+    ? "#e7e1ef"
     : "#606060";
 }
 
 function getColorForCancerAdults(percent) {
   return percent > 19.4
-    ? "#034e7b"
+    ? "#91003f"
     : percent > 9.4
-    ? "#0570b0"
+    ? "#ce1256"
     : percent > 7.2
-    ? "#3690c0"
+    ? "#e7298a"
     : percent > 5.9
-    ? "#74a9cf"
+    ? "#df65b0"
     : percent > 4.9
-    ? "#a6bddb"
+    ? "#c994c7"
     : percent > 3.9
-    ? "#d0d1e6"
+    ? "#d4b9da"
     : percent > 1.5
-    ? "#f1eef6"
+    ? "#e7e1ef"
     : percent > 0
-    ? "#f1eef6"
+    ? "#e7e1ef"
     : "#606060";
 }
 
 function getColorForHighCholesterol(percent) {
   return percent > 97.3
-    ? "#034e7b"
+    ? "#91003f"
     : percent > 89.7
-    ? "#0570b0"
+    ? "#ce1256"
     : percent > 87.2
-    ? "#3690c0"
+    ? "#e7298a"
     : percent > 84.5
-    ? "#74a9cf"
+    ? "#df65b0"
     : percent > 81.4
-    ? "#a6bddb"
+    ? "#c994c7"
     : percent > 75.9
-    ? "#d0d1e6"
+    ? "#d4b9da"
     : percent > 62.5
-    ? "#f1eef6"
+    ? "#e7e1ef"
     : percent > 0
-    ? "#f1eef6"
+    ? "#e7e1ef"
     : "#606060";
 }
 
 function getColorForKidneyDisease(percent) {
   return percent > 11.9
-    ? "#034e7b"
+    ? "#91003f"
     : percent > 5.1
-    ? "#0570b0"
+    ? "#ce1256"
     : percent > 3.8
-    ? "#3690c0"
+    ? "#e7298a"
     : percent > 3.2
-    ? "#74a9cf"
+    ? "#df65b0"
     : percent > 2.7
-    ? "#a6bddb"
+    ? "#c994c7"
     : percent > 2.1
-    ? "#d0d1e6"
+    ? "#d4b9da"
     : percent > 0.8
-    ? "#f1eef6"
+    ? "#e7e1ef"
     : percent > 0
-    ? "#f1eef6"
+    ? "#e7e1ef"
     : "#606060";
 }
 
 function getColorForPulmonaryDisease(percent) {
   return percent > 49.4
-    ? "#034e7b"
+    ? "#91003f"
     : percent > 27.9
-    ? "#0570b0"
+    ? "#ce1256"
     : percent > 22.8
-    ? "#3690c0"
+    ? "#e7298a"
     : percent > 20
-    ? "#74a9cf"
+    ? "#df65b0"
     : percent > 17.3
-    ? "#a6bddb"
+    ? "#c994c7"
     : percent > 14
-    ? "#d0d1e6"
+    ? "#d4b9da"
     : percent > 6.1
-    ? "#f1eef6"
+    ? "#e7e1ef"
     : percent > 0
-    ? "#f1eef6"
+    ? "#e7e1ef"
     : "#606060";
 }
 
 function getColorForHeartDisease(percent) {
   return percent > 34
-    ? "#034e7b"
+    ? "#91003f"
     : percent > 11.5
-    ? "#0570b0"
+    ? "#ce1256"
     : percent > 7.5
-    ? "#3690c0"
+    ? "#e7298a"
     : percent > 5.8
-    ? "#74a9cf"
+    ? "#df65b0"
     : percent > 4.7
-    ? "#a6bddb"
+    ? "#c994c7"
     : percent > 3.5
-    ? "#d0d1e6"
+    ? "#d4b9da"
     : percent > 1
-    ? "#f1eef6"
+    ? "#e7e1ef"
     : percent > 0
-    ? "#f1eef6"
+    ? "#e7e1ef"
     : "#606060";
 }
 
 function getColorForDiabetes(percent) {
   return percent > 46.1
-    ? "#034e7b"
+    ? "#91003f"
     : percent > 17.7
-    ? "#0570b0"
+    ? "#ce1256"
     : percent > 14.4
-    ? "#3690c0"
+    ? "#e7298a"
     : percent > 12.1
-    ? "#74a9cf"
+    ? "#df65b0"
     : percent > 9.8
-    ? "#a6bddb"
+    ? "#c994c7"
     : percent > 6.9
-    ? "#d0d1e6"
+    ? "#d4b9da"
     : percent > 2
-    ? "#f1eef6"
+    ? "#e7e1ef"
     : percent > 0
-    ? "#f1eef6"
+    ? "#e7e1ef"
     : "#606060";
 }
 
 function getColorForObesity(percent) {
   return percent > 48.8
-    ? "#034e7b"
+    ? "#91003f"
     : percent > 36.6
-    ? "#0570b0"
+    ? "#ce1256"
     : percent > 32.2
-    ? "#3690c0"
+    ? "#e7298a"
     : percent > 27.9
-    ? "#74a9cf"
+    ? "#df65b0"
     : percent > 23.6
-    ? "#a6bddb"
+    ? "#c994c7"
     : percent > 18.9
-    ? "#d0d1e6"
+    ? "#d4b9da"
     : percent > 12.6
-    ? "#f1eef6"
+    ? "#e7e1ef"
     : percent > 0
-    ? "#f1eef6"
+    ? "#e7e1ef"
     : "#606060";
 }
 
 function getColorForStroke(percent) {
   return percent > 17.4
-    ? "#034e7b"
+    ? "#91003f"
     : percent > 6.3
-    ? "#0570b0"
+    ? "#ce1256"
     : percent > 4.3
-    ? "#3690c0"
+    ? "#e7298a"
     : percent > 3.4
-    ? "#74a9cf"
+    ? "#df65b0"
     : percent > 2.7
-    ? "#a6bddb"
+    ? "#c994c7"
     : percent > 1.9
-    ? "#d0d1e6"
+    ? "#d4b9da"
     : percent > 0.6
-    ? "#f1eef6"
+    ? "#e7e1ef"
     : percent > 0
-    ? "#f1eef6"
+    ? "#e7e1ef"
     : "#606060";
 }
 
@@ -2046,54 +2099,74 @@ function addHealthOutcomesData(data) {
     var p = feature.properties;
 
     var currentAsthmaPopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Current Asthma: ${p["Current asthma crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated current asthma crude prevalence is 
+    <b>${p["Current asthma crude prevalence (%)"]}%</b> 
+    ${p["Current asthma crude prevalence 95% CI"]}.
+  `;
 
     var highBloodPopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      High Blood Pressure: ${p["High blood pressure crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated high blood pressure crude prevalence is 
+    <b>${p["High blood pressure crude prevalence (%)"]}%</b> 
+    ${p["High blood pressure crude prevalence 95% CI"]}.
+  `;
 
     var cancerAdultsPopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Cancer (except skin): ${p["Cancer (except skin) crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated cancer (except skin) crude prevalence is 
+    <b>${p["Cancer (except skin) crude prevalence (%)"]}%</b> 
+    ${p["Cancer (except skin) crude prevalence 95% CI"]}.
+  `;
 
     var highCholesterolPopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      High Cholesterol: ${p["Cholesterol screening crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated high cholesterol crude prevalence is 
+    <b>${p["High cholesterol crude prevalence (%)"]}%</b> 
+    ${p["High cholesterol crude prevalence 95% CI"]}.
+  `;
 
     var kidneyDiseasePopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Chronic Kidney Disease: ${p["Chronic kidney disease crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated chronic kidney disease crude prevalence is 
+    <b>${p["Chronic kidney disease crude prevalence (%)"]}%</b> 
+    ${p["Chronic kidney disease crude prevalence 95% CI"]}.
+  `;
 
     var pulmonaryDiseasePopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Pulmonary Disease: ${p["Arthritis crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated pulmonary disease crude prevalence is 
+    <b>${p["Arthritis crude prevalence (%)"]}%</b> 
+    ${p["Arthritis crude prevalence 95% CI"]}.
+  `;
 
     var heartDiseasePopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Heart Disease: ${p["Coronary heart disease crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated heart disease crude prevalence is 
+    <b>${p["Coronary heart disease crude prevalence (%)"]}%</b> 
+    ${p["Coronary heart disease crude prevalence 95% CI"]}.
+  `;
 
     var diabetesPopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Diabetes: ${p["Diabetes crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated diabetes crude prevalence is 
+    <b>${p["Diabetes crude prevalence (%)"]}%</b> 
+    ${p["Diabetes crude prevalence 95% CI"]}.
+  `;
 
     var obesityPopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Obesity: ${p["Obesity crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated obesity crude prevalence is 
+    <b>${p["Obesity crude prevalence (%)"]}%</b> 
+    ${p["Obesity crude prevalence 95% CI"]}.
+  `;
 
     var strokePopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Stroke: ${p["Stroke crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated stroke crude prevalence is 
+    <b>${p["Stroke crude prevalence (%)"]}%</b> 
+    ${p["Stroke crude prevalence 95% CI"]}.
+  `;
 
     var currentAsthmaLayer = L.geoJson(feature, {
       style: healthOutcomesStyle(
@@ -2219,38 +2292,38 @@ function addHealthOutcomesData(data) {
 
 addHealthOutcomesData(healthDataGeojson);
 
-var outcomeBaseLayers = {
-  "Current Asthma": healthOutcomesLayers.currentAsthma,
-  "High Blood Pressure": healthOutcomesLayers.highBlood,
-  "Cancer (except skin)": healthOutcomesLayers.cancerAdults,
-  "High Cholesterol": healthOutcomesLayers.highCholesterol,
-  "Chronic Kidney Disease": healthOutcomesLayers.kidneyDisease,
-  "Pulmonary Disease": healthOutcomesLayers.pulmonaryDisease,
-  "Heart Disease": healthOutcomesLayers.heartDisease,
-  Diabetes: healthOutcomesLayers.diabetes,
-  Obesity: healthOutcomesLayers.obesity,
-  Stroke: healthOutcomesLayers.stroke,
-};
+var outcomeBaseLayers = {};
+outcomeBaseLayers[asthmaPrevalence] = healthOutcomesLayers.currentAsthma;
+outcomeBaseLayers[highBloodPressure] = healthOutcomesLayers.highBlood;
+outcomeBaseLayers[cancerPrevalence] = healthOutcomesLayers.cancerAdults;
+outcomeBaseLayers[highCholesterol] = healthOutcomesLayers.highCholesterol;
+outcomeBaseLayers[chronicKidneyDisease] = healthOutcomesLayers.kidneyDisease;
+outcomeBaseLayers[pulmonaryDisease] = healthOutcomesLayers.pulmonaryDisease;
+outcomeBaseLayers[heartDisease] = healthOutcomesLayers.heartDisease;
+outcomeBaseLayers[diabetesPrevalence] = healthOutcomesLayers.diabetes;
+outcomeBaseLayers[obesityPrevalence] = healthOutcomesLayers.obesity;
+outcomeBaseLayers[strokePrevalence] = healthOutcomesLayers.stroke;
 
 L.control
   .layers(outcomeBaseLayers, null, { collapsed: false })
   .addTo(maps["healthOutcomesMap"]);
 
 // HEALTH RISK LEGEND CONTROL
+// HEALTH RISK LEGEND CONTROL
 var healthOutcomesLegend = L.control({ position: "bottomleft" });
 
 healthOutcomesLegend.onAdd = function () {
   var div = L.DomUtil.create("div", "healthOutcomesLegend");
   div.innerHTML = `
-    <h4>Percent Current Asthma</h4>
-    <i style="background: #034e7b"></i><span>> 16.5%</span><br>
-    <i style="background: #0570b0"></i><span>13.5% - 16.5%</span><br>
-    <i style="background: #3690c0"></i><span>12.2% - 13.5%</span><br>
-    <i style="background: #74a9cf"></i><span>11% - 12.2%</span><br>
-    <i style="background: #a6bddb"></i><span>9.9% - 11%</span><br>
-    <i style="background: #d0d1e6"></i><span>8.9% - 9.9%</span><br>
-    <i style="background: #f1eef6"></i><span>7.4% - 8.9%</span><br>
-    <i style="background: #f1eef6"></i><span>0% - 7.4%</span><br>
+    <h4>Asthma Prevalence</h4>
+    <i style="background: #91003f"></i><span>> 16.5%</span><br>
+    <i style="background: #ce1256"></i><span>13.5% - 16.5%</span><br>
+    <i style="background: #e7298a"></i><span>12.2% - 13.5%</span><br>
+    <i style="background: #df65b0"></i><span>11% - 12.2%</span><br>
+    <i style="background: #c994c7"></i><span>9.9% - 11%</span><br>
+    <i style="background: #d4b9da"></i><span>8.9% - 9.9%</span><br>
+    <i style="background: #e7e1ef"></i><span>7.4% - 8.9%</span><br>
+    <i style="background: #e7e1ef"></i><span>0% - 7.4%</span><br>
     <i style="background: #606060"></i><span>No Data</span><br>
   `;
   return div;
@@ -2261,143 +2334,143 @@ healthOutcomesLegend.addTo(maps["healthOutcomesMap"]);
 function updateLegendForHealthOutcomes(layerName) {
   var legendContent = "";
   switch (layerName) {
-    case "Current Asthma":
+    case asthmaPrevalence:
       legendContent = `
-        <h4>Percent Current Asthma</h4>
-        <i style="background: #034e7b"></i><span>> 16.5%</span><br>
-        <i style="background: #0570b0"></i><span>13.5% - 16.5%</span><br>
-        <i style="background: #3690c0"></i><span>12.2% - 13.5%</span><br>
-        <i style="background: #74a9cf"></i><span>11% - 12.2%</span><br>
-        <i style="background: #a6bddb"></i><span>9.9% - 11%</span><br>
-        <i style="background: #d0d1e6"></i><span>8.9% - 9.9%</span><br>
-        <i style="background: #f1eef6"></i><span>7.4% - 8.9%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 7.4%</span><br>
+        <h4>Asthma Prevalence</h4>
+        <i style="background: #91003f"></i><span>> 16.5%</span><br>
+        <i style="background: #ce1256"></i><span>13.5% - 16.5%</span><br>
+        <i style="background: #e7298a"></i><span>12.2% - 13.5%</span><br>
+        <i style="background: #df65b0"></i><span>11% - 12.2%</span><br>
+        <i style="background: #c994c7"></i><span>9.9% - 11%</span><br>
+        <i style="background: #d4b9da"></i><span>8.9% - 9.9%</span><br>
+        <i style="background: #e7e1ef"></i><span>7.4% - 8.9%</span><br>
+        <i style="background: #e7e1ef"></i><span>0% - 7.4%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
-    case "High Blood Pressure":
+    case highBloodPressure:
       legendContent = `
-        <h4>Percent High Blood Pressure</h4>
-        <i style="background: #034e7b"></i><span>> 73.3%</span><br>
-        <i style="background: #0570b0"></i><span>37.6% - 73.3%</span><br>
-        <i style="background: #3690c0"></i><span>32.7% - 37.6%</span><br>
-        <i style="background: #74a9cf"></i><span>28.5% - 32.7%</span><br>
-        <i style="background: #a6bddb"></i><span>24.4% - 28.5%</span><br>
-        <i style="background: #d0d1e6"></i><span>19.3% - 24.4%</span><br>
-        <i style="background: #f1eef6"></i><span>9% - 19.3%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 9%</span><br>
+        <h4>High Blood Pressure</h4>
+        <i style="background: #91003f"></i><span>> 73.3%</span><br>
+        <i style="background: #ce1256"></i><span>37.6% - 73.3%</span><br>
+        <i style="background: #e7298a"></i><span>32.7% - 37.6%</span><br>
+        <i style="background: #df65b0"></i><span>28.5% - 32.7%</span><br>
+        <i style="background: #c994c7"></i><span>24.4% - 28.5%</span><br>
+        <i style="background: #d4b9da"></i><span>19.3% - 24.4%</span><br>
+        <i style="background: #e7e1ef"></i><span>9% - 19.3%</span><br>
+        <i style="background: #e7e1ef"></i><span>0% - 9%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
-    case "Cancer (except skin)":
+    case cancerPrevalence:
       legendContent = `
-        <h4>Percent Cancer (except skin)</h4>
-        <i style="background: #034e7b"></i><span>> 19.4%</span><br>
-        <i style="background: #0570b0"></i><span>9.4% - 19.4%</span><br>
-        <i style="background: #3690c0"></i><span>7.2% - 9.4%</span><br>
-        <i style="background: #74a9cf"></i><span>5.9% - 7.2%</span><br>
-        <i style="background: #a6bddb"></i><span>4.9% - 5.9%</span><br>
-        <i style="background: #d0d1e6"></i><span>3.9% - 4.9%</span><br>
-        <i style="background: #f1eef6"></i><span>1.5% - 3.9%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 1.5%</span><br>
+        <h4>Cancer Prevalence (except skin)</h4>
+        <i style="background: #91003f"></i><span>> 19.4%</span><br>
+        <i style="background: #ce1256"></i><span>9.4% - 19.4%</span><br>
+        <i style="background: #e7298a"></i><span>7.2% - 9.4%</span><br>
+        <i style="background: #df65b0"></i><span>5.9% - 7.2%</span><br>
+        <i style="background: #c994c7"></i><span>4.9% - 5.9%</span><br>
+        <i style="background: #d4b9da"></i><span>3.9% - 4.9%</span><br>
+        <i style="background: #e7e1ef"></i><span>1.5% - 3.9%</span><br>
+        <i style="background: #e7e1ef"></i><span>0% - 1.5%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
-    case "High Cholesterol":
+    case highCholesterol:
       legendContent = `
-        <h4>Percent High Cholesterol</h4>
-        <i style="background: #034e7b"></i><span>> 97.3%</span><br>
-        <i style="background: #0570b0"></i><span>89.7% - 97.3%</span><br>
-        <i style="background: #3690c0"></i><span>87.2% - 89.7%</span><br>
-        <i style="background: #74a9cf"></i><span>84.5% - 87.2%</span><br>
-        <i style="background: #a6bddb"></i><span>81.4% - 84.5%</span><br>
-        <i style="background: #d0d1e6"></i><span>75.9% - 81.4%</span><br>
-        <i style="background: #f1eef6"></i><span>62.5% - 75.9%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 62.5%</span><br>
+        <h4>High Cholesterol</h4>
+        <i style="background: #91003f"></i><span>> 97.3%</span><br>
+        <i style="background: #ce1256"></i><span>89.7% - 97.3%</span><br>
+        <i style="background: #e7298a"></i><span>87.2% - 89.7%</span><br>
+        <i style="background: #df65b0"></i><span>84.5% - 87.2%</span><br>
+        <i style="background: #c994c7"></i><span>81.4% - 84.5%</span><br>
+        <i style="background: #d4b9da"></i><span>75.9% - 81.4%</span><br>
+        <i style="background: #e7e1ef"></i><span>62.5% - 75.9%</span><br>
+        <i style="background: #e7e1ef"></i><span>0% - 62.5%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
-    case "Chronic Kidney Disease":
+    case chronicKidneyDisease:
       legendContent = `
-        <h4>Percent Chronic Kidney Disease</h4>
-        <i style="background: #034e7b"></i><span>> 11.9%</span><br>
-        <i style="background: #0570b0"></i><span>5.1% - 11.9%</span><br>
-        <i style="background: #3690c0"></i><span>3.8% - 5.1%</span><br>
-        <i style="background: #74a9cf"></i><span>3.2% - 3.8%</span><br>
-        <i style="background: #a6bddb"></i><span>2.7% - 3.2%</span><br>
-        <i style="background: #d0d1e6"></i><span>2.1% - 2.7%</span><br>
-        <i style="background: #f1eef6"></i><span>0.8% - 2.1%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 0.8%</span><br>
+        <h4>Chronic Kidney Disease</h4>
+        <i style="background: #91003f"></i><span>> 11.9%</span><br>
+        <i style="background: #ce1256"></i><span>5.1% - 11.9%</span><br>
+        <i style="background: #e7298a"></i><span>3.8% - 5.1%</span><br>
+        <i style="background: #df65b0"></i><span>3.2% - 3.8%</span><br>
+        <i style="background: #c994c7"></i><span>2.7% - 3.2%</span><br>
+        <i style="background: #d4b9da"></i><span>2.1% - 2.7%</span><br>
+        <i style="background: #e7e1ef"></i><span>0.8% - 2.1%</span><br>
+        <i style="background: #e7e1ef"></i><span>0% - 0.8%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
-    case "Pulmonary Disease":
+    case pulmonaryDisease:
       legendContent = `
-        <h4>Percent Pulmonary Disease</h4>
-        <i style="background: #034e7b"></i><span>> 49.4%</span><br>
-        <i style="background: #0570b0"></i><span>27.9% - 49.4%</span><br>
-        <i style="background: #3690c0"></i><span>22.8% - 27.9%</span><br>
-        <i style="background: #74a9cf"></i><span>20% - 22.8%</span><br>
-        <i style="background: #a6bddb"></i><span>17.3% - 20%</span><br>
-        <i style="background: #d0d1e6"></i><span>14% - 17.3%</span><br>
-        <i style="background: #f1eef6"></i><span>6.1% - 14%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 6.1%</span><br>
+        <h4>Pulmonary Disease</h4>
+        <i style="background: #91003f"></i><span>> 49.4%</span><br>
+        <i style="background: #ce1256"></i><span>27.9% - 49.4%</span><br>
+        <i style="background: #e7298a"></i><span>22.8% - 27.9%</span><br>
+        <i style="background: #df65b0"></i><span>20% - 22.8%</span><br>
+        <i style="background: #c994c7"></i><span>17.3% - 20%</span><br>
+        <i style="background: #d4b9da"></i><span>14% - 17.3%</span><br>
+        <i style="background: #e7e1ef"></i><span>6.1% - 14%</span><br>
+        <i style="background: #e7e1ef"></i><span>0% - 6.1%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
-    case "Heart Disease":
+    case heartDisease:
       legendContent = `
-        <h4>Percent Heart Disease</h4>
-        <i style="background: #034e7b"></i><span>> 34%</span><br>
-        <i style="background: #0570b0"></i><span>11.5% - 34%</span><br>
-        <i style="background: #3690c0"></i><span>7.5% - 11.5%</span><br>
-        <i style="background: #74a9cf"></i><span>5.8% - 7.5%</span><br>
-        <i style="background: #a6bddb"></i><span>4.7% - 5.8%</span><br>
-        <i style="background: #d0d1e6"></i><span>3.5% - 4.7%</span><br>
-        <i style="background: #f1eef6"></i><span>1% - 3.5%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 1%</span><br>
+        <h4>Heart Disease</h4>
+        <i style="background: #91003f"></i><span>> 34%</span><br>
+        <i style="background: #ce1256"></i><span>11.5% - 34%</span><br>
+        <i style="background: #e7298a"></i><span>7.5% - 11.5%</span><br>
+        <i style="background: #df65b0"></i><span>5.8% - 7.5%</span><br>
+        <i style="background: #c994c7"></i><span>4.7% - 5.8%</span><br>
+        <i style="background: #d4b9da"></i><span>3.5% - 4.7%</span><br>
+        <i style="background: #e7e1ef"></i><span>1% - 3.5%</span><br>
+        <i style="background: #e7e1ef"></i><span>0% - 1%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
-    case "Diabetes":
+    case diabetesPrevalence:
       legendContent = `
-        <h4>Percent Diabetes</h4>
-        <i style="background: #034e7b"></i><span>> 46.1%</span><br>
-        <i style="background: #0570b0"></i><span>17.7% - 46.1%</span><br>
-        <i style="background: #3690c0"></i><span>14.4% - 17.7%</span><br>
-        <i style="background: #74a9cf"></i><span>12.1% - 14.4%</span><br>
-        <i style="background: #a6bddb"></i><span>9.8% - 12.1%</span><br>
-        <i style="background: #d0d1e6"></i><span>6.9% - 9.8%</span><br>
-        <i style="background: #f1eef6"></i><span>2% - 6.9%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 2%</span><br>
+        <h4>Diabetes Prevalence</h4>
+        <i style="background: #91003f"></i><span>> 46.1%</span><br>
+        <i style="background: #ce1256"></i><span>17.7% - 46.1%</span><br>
+        <i style="background: #e7298a"></i><span>14.4% - 17.7%</span><br>
+        <i style="background: #df65b0"></i><span>12.1% - 14.4%</span><br>
+        <i style="background: #c994c7"></i><span>9.8% - 12.1%</span><br>
+        <i style="background: #d4b9da"></i><span>6.9% - 9.8%</span><br>
+        <i style="background: #e7e1ef"></i><span>2% - 6.9%</span><br>
+        <i style="background: #e7e1ef"></i><span>0% - 2%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
-    case "Obesity":
+    case obesityPrevalence:
       legendContent = `
-        <h4>Percent Obesity</h4>
-        <i style="background: #034e7b"></i><span>> 48.8%</span><br>
-        <i style="background: #0570b0"></i><span>36.6% - 48.8%</span><br>
-        <i style="background: #3690c0"></i><span>32.2% - 36.6%</span><br>
-        <i style="background: #74a9cf"></i><span>27.9% - 32.2%</span><br>
-        <i style="background: #a6bddb"></i><span>23.6% - 27.9%</span><br>
-        <i style="background: #d0d1e6"></i><span>18.9% - 23.6%</span><br>
-        <i style="background: #f1eef6"></i><span>12.6% - 18.9%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 12.6%</span><br>
+        <h4>Obesity Prevalence</h4>
+        <i style="background: #91003f"></i><span>> 48.8%</span><br>
+        <i style="background: #ce1256"></i><span>36.6% - 48.8%</span><br>
+        <i style="background: #e7298a"></i><span>32.2% - 36.6%</span><br>
+        <i style="background: #df65b0"></i><span>27.9% - 32.2%</span><br>
+        <i style="background: #c994c7"></i><span>23.6% - 27.9%</span><br>
+        <i style="background: #d4b9da"></i><span>18.9% - 23.6%</span><br>
+        <i style="background: #e7e1ef"></i><span>12.6% - 18.9%</span><br>
+        <i style="background: #e7e1ef"></i><span>0% - 12.6%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
-    case "Stroke":
+    case strokePrevalence:
       legendContent = `
-        <h4>Percent Stroke</h4>
-        <i style="background: #034e7b"></i><span>> 17.4%</span><br>
-        <i style="background: #0570b0"></i><span>6.3% - 17.4%</span><br>
-        <i style="background: #3690c0"></i><span>4.3% - 6.3%</span><br>
-        <i style="background: #74a9cf"></i><span>3.4% - 4.3%</span><br>
-        <i style="background: #a6bddb"></i><span>2.7% - 3.4%</span><br>
-        <i style="background: #d0d1e6"></i><span>1.9% - 2.7%</span><br>
-        <i style="background: #f1eef6"></i><span>0.6% - 1.9%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 0.6%</span><br>
+        <h4>Stroke Prevalence</h4>
+        <i style="background: #91003f"></i><span>> 17.4%</span><br>
+        <i style="background: #ce1256"></i><span>6.3% - 17.4%</span><br>
+        <i style="background: #e7298a"></i><span>4.3% - 6.3%</span><br>
+        <i style="background: #df65b0"></i><span>3.4% - 4.3%</span><br>
+        <i style="background: #c994c7"></i><span>2.7% - 3.4%</span><br>
+        <i style="background: #d4b9da"></i><span>1.9% - 2.7%</span><br>
+        <i style="background: #e7e1ef"></i><span>0.6% - 1.9%</span><br>
+        <i style="background: #e7e1ef"></i><span>0% - 0.6%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
@@ -2410,7 +2483,7 @@ maps["healthOutcomesMap"].on("baselayerchange", function (e) {
 });
 
 // Set currentAsthma layer as the default
-updateLegendForHealthOutcomes("Current Asthma");
+updateLegendForHealthOutcomes(asthmaPrevalence);
 healthOutcomesLayers.currentAsthma.addTo(maps["healthOutcomesMap"]);
 
 //=========================================================== Screening Rates Map =================================================================
@@ -2488,121 +2561,121 @@ function screeningRatesStyle(propertyName, colorFunction) {
 
 function getColorForAnnualCheckUp(percent) {
   return percent > 91.3
-    ? "#034e7b"
+    ? "#6e016b"
     : percent > 81.5
-    ? "#0570b0"
+    ? "#88419d"
     : percent > 78.7
-    ? "#3690c0"
+    ? "#8c6bb1"
     : percent > 76.5
-    ? "#74a9cf"
+    ? "#8c96c6"
     : percent > 74.4
-    ? "#a6bddb"
+    ? "#9ebcda"
     : percent > 71.7
-    ? "#d0d1e6"
+    ? "#bfd3e6"
     : percent > 66.1
-    ? "#f1eef6"
+    ? "#edf8fb"
     : percent > 0
-    ? "#f1eef6"
+    ? "#edf8fb"
     : "#606060";
 }
 
 function getColorForDentalVisit(percent) {
   return percent > 82.9
-    ? "#034e7b"
+    ? "#6e016b"
     : percent > 72.1
-    ? "#0570b0"
+    ? "#88419d"
     : percent > 64.8
-    ? "#3690c0"
+    ? "#8c6bb1"
     : percent > 58.5
-    ? "#74a9cf"
+    ? "#8c96c6"
     : percent > 52.2
-    ? "#a6bddb"
+    ? "#9ebcda"
     : percent > 45
-    ? "#d0d1e6"
+    ? "#bfd3e6"
     : percent > 23.3
-    ? "#f1eef6"
+    ? "#edf8fb"
     : percent > 0
-    ? "#f1eef6"
+    ? "#edf8fb"
     : "#606060";
 }
 
 function getColorForCholesterolScreening(percent) {
   return percent > 97.3
-    ? "#034e7b"
+    ? "#6e016b"
     : percent > 89.7
-    ? "#0570b0"
+    ? "#88419d"
     : percent > 87.2
-    ? "#3690c0"
+    ? "#8c6bb1"
     : percent > 84.5
-    ? "#74a9cf"
+    ? "#8c96c6"
     : percent > 81.4
-    ? "#a6bddb"
+    ? "#9ebcda"
     : percent > 75.9
-    ? "#d0d1e6"
+    ? "#bfd3e6"
     : percent > 62.5
-    ? "#f1eef6"
+    ? "#edf8fb"
     : percent > 0
-    ? "#f1eef6"
+    ? "#edf8fb"
     : "#606060";
 }
 
 function getColorForMammographyScreening(percent) {
   return percent > 86.3
-    ? "#034e7b"
+    ? "#6e016b"
     : percent > 83.1
-    ? "#0570b0"
+    ? "#88419d"
     : percent > 81.1
-    ? "#3690c0"
+    ? "#8c6bb1"
     : percent > 79.4
-    ? "#74a9cf"
+    ? "#8c96c6"
     : percent > 77.8
-    ? "#a6bddb"
+    ? "#9ebcda"
     : percent > 75.2
-    ? "#d0d1e6"
+    ? "#bfd3e6"
     : percent > 69.5
-    ? "#f1eef6"
+    ? "#edf8fb"
     : percent > 0
-    ? "#f1eef6"
+    ? "#edf8fb"
     : "#606060";
 }
 
 function getColorForCervicalScreening(percent) {
   return percent > 91.4
-    ? "#034e7b"
+    ? "#6e016b"
     : percent > 86.2
-    ? "#0570b0"
+    ? "#88419d"
     : percent > 83
-    ? "#3690c0"
+    ? "#8c6bb1"
     : percent > 79.7
-    ? "#74a9cf"
+    ? "#8c96c6"
     : percent > 75.8
-    ? "#a6bddb"
+    ? "#9ebcda"
     : percent > 69.4
-    ? "#d0d1e6"
+    ? "#bfd3e6"
     : percent > 51.6
-    ? "#f1eef6"
+    ? "#edf8fb"
     : percent > 0
-    ? "#f1eef6"
+    ? "#edf8fb"
     : "#606060";
 }
 
 function getColorForColorectalScreening(percent) {
   return percent > 85.1
-    ? "#034e7b"
+    ? "#6e016b"
     : percent > 79.4
-    ? "#0570b0"
+    ? "#88419d"
     : percent > 76
-    ? "#3690c0"
+    ? "#8c6bb1"
     : percent > 72.7
-    ? "#74a9cf"
+    ? "#8c96c6"
     : percent > 69.2
-    ? "#a6bddb"
+    ? "#9ebcda"
     : percent > 64.8
-    ? "#d0d1e6"
+    ? "#bfd3e6"
     : percent > 53.9
-    ? "#f1eef6"
+    ? "#edf8fb"
     : percent > 0
-    ? "#f1eef6"
+    ? "#edf8fb"
     : "#606060";
 }
 
@@ -2611,34 +2684,46 @@ function addScreeningRatesData(data) {
     var p = feature.properties;
 
     var annualCheckUpPopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Annual Checkup: ${p["Annual checkup crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated annual checkup crude prevalence is 
+    <b>${p["Annual checkup crude prevalence (%)"]}%</b> 
+    ${p["Annual checkup crude prevalence 95% CI"]}.
+  `;
 
     var dentalVisitPopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Dental Visit: ${p["Dental visit crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated dental visit crude prevalence is 
+    <b>${p["Dental visit crude prevalence (%)"]}%</b> 
+    ${p["Dental visit crude prevalence 95% CI"]}.
+  `;
 
     var cholesterolScreeningPopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Cholesterol Screening: ${p["Cholesterol screening crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated cholesterol screening crude prevalence is 
+    <b>${p["Cholesterol screening crude prevalence (%)"]}%</b> 
+    ${p["Cholesterol screening crude prevalence 95% CI"]}.
+  `;
 
     var mammographyScreeningPopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Mammography Screening: ${p["Mammography use crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated mammography screening crude prevalence is 
+    <b>${p["Mammography use crude prevalence (%)"]}%</b> 
+    ${p["Mammography use crude prevalence 95% CI"]}.
+  `;
 
     var cervicalScreeningPopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Cervical Screening: ${p["Cervical cancer screening crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated cervical screening crude prevalence is 
+    <b>${p["Cervical cancer screening crude prevalence (%)"]}%</b> 
+    ${p["Cervical cancer screening crude prevalence 95% CI"]}.
+  `;
 
     var colorectalScreeningPopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Colorectal Screening: ${p["Colorectal cancer screening crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated colorectal screening crude prevalence is 
+    <b>${p["Colorectal cancer screening crude prevalence (%)"]}%</b> 
+    ${p["Colorectal cancer screening crude prevalence 95% CI"]}.
+  `;
 
     var annualCheckUpLayer = L.geoJson(feature, {
       style: screeningRatesStyle(
@@ -2740,14 +2825,14 @@ screeningRatesLegend.onAdd = function () {
   var div = L.DomUtil.create("div", "screeningRatesLegend");
   div.innerHTML = `
     <h4>Percent Annual Checkup</h4>
-    <i style="background: #034e7b"></i><span>> 91.3%</span><br>
-    <i style="background: #0570b0"></i><span>81.5% - 91.3%</span><br>
-    <i style="background: #3690c0"></i><span>78.7% - 81.5%</span><br>
-    <i style="background: #74a9cf"></i><span>76.5% - 78.7%</span><br>
-    <i style="background: #a6bddb"></i><span>74.4% - 76.5%</span><br>
-    <i style="background: #d0d1e6"></i><span>71.7% - 74.4%</span><br>
-    <i style="background: #f1eef6"></i><span>66.1% - 71.7%</span><br>
-    <i style="background: #f1eef6"></i><span>0% - 66.1%</span><br>
+    <i style="background: #6e016b"></i><span>> 91.3%</span><br>
+    <i style="background: #88419d"></i><span>81.5% - 91.3%</span><br>
+    <i style="background: #8c6bb1"></i><span>78.7% - 81.5%</span><br>
+    <i style="background: #8c96c6"></i><span>76.5% - 78.7%</span><br>
+    <i style="background: #9ebcda"></i><span>74.4% - 76.5%</span><br>
+    <i style="background: #bfd3e6"></i><span>71.7% - 74.4%</span><br>
+    <i style="background: #edf8fb"></i><span>66.1% - 71.7%</span><br>
+    <i style="background: #edf8fb"></i><span>0% - 66.1%</span><br>
     <i style="background: #606060"></i><span>No Data</span><br>
   `;
   return div;
@@ -2761,84 +2846,84 @@ function updateLegendForScreeningRates(layerName) {
     case "Annual Checkup":
       legendContent = `
         <h4>Percent Annual Checkup</h4>
-        <i style="background: #034e7b"></i><span>> 91.3%</span><br>
-        <i style="background: #0570b0"></i><span>81.5% - 91.3%</span><br>
-        <i style="background: #3690c0"></i><span>78.7% - 81.5%</span><br>
-        <i style="background: #74a9cf"></i><span>76.5% - 78.7%</span><br>
-        <i style="background: #a6bddb"></i><span>74.4% - 76.5%</span><br>
-        <i style="background: #d0d1e6"></i><span>71.7% - 74.4%</span><br>
-        <i style="background: #f1eef6"></i><span>66.1% - 71.7%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 66.1%</span><br>
+        <i style="background: #6e016b"></i><span>> 91.3%</span><br>
+        <i style="background: #88419d"></i><span>81.5% - 91.3%</span><br>
+        <i style="background: #8c6bb1"></i><span>78.7% - 81.5%</span><br>
+        <i style="background: #8c96c6"></i><span>76.5% - 78.7%</span><br>
+        <i style="background: #9ebcda"></i><span>74.4% - 76.5%</span><br>
+        <i style="background: #bfd3e6"></i><span>71.7% - 74.4%</span><br>
+        <i style="background: #edf8fb"></i><span>66.1% - 71.7%</span><br>
+        <i style="background: #edf8fb"></i><span>0% - 66.1%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Dental Visit":
       legendContent = `
         <h4>Percent Dental Visit</h4>
-        <i style="background: #034e7b"></i><span>> 82.9%</span><br>
-        <i style="background: #0570b0"></i><span>72.1% - 82.9%</span><br>
-        <i style="background: #3690c0"></i><span>64.8% - 72.1%</span><br>
-        <i style="background: #74a9cf"></i><span>58.5% - 64.8%</span><br>
-        <i style="background: #a6bddb"></i><span>52.2% - 58.5%</span><br>
-        <i style="background: #d0d1e6"></i><span>45% - 52.2%</span><br>
-        <i style="background: #f1eef6"></i><span>23.3% - 45%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 23.3%</span><br>
+        <i style="background: #6e016b"></i><span>> 82.9%</span><br>
+        <i style="background: #88419d"></i><span>72.1% - 82.9%</span><br>
+        <i style="background: #8c6bb1"></i><span>64.8% - 72.1%</span><br>
+        <i style="background: #8c96c6"></i><span>58.5% - 64.8%</span><br>
+        <i style="background: #9ebcda"></i><span>52.2% - 58.5%</span><br>
+        <i style="background: #bfd3e6"></i><span>45% - 52.2%</span><br>
+        <i style="background: #edf8fb"></i><span>23.3% - 45%</span><br>
+        <i style="background: #edf8fb"></i><span>0% - 23.3%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Cholesterol Screening":
       legendContent = `
         <h4>Percent Cholesterol Screening</h4>
-        <i style="background: #034e7b"></i><span>> 97.3%</span><br>
-        <i style="background: #0570b0"></i><span>89.7% - 97.3%</span><br>
-        <i style="background: #3690c0"></i><span>87.2% - 89.7%</span><br>
-        <i style="background: #74a9cf"></i><span>84.5% - 87.2%</span><br>
-        <i style="background: #a6bddb"></i><span>81.4% - 84.5%</span><br>
-        <i style="background: #d0d1e6"></i><span>75.9% - 81.4%</span><br>
-        <i style="background: #f1eef6"></i><span>62.5% - 75.9%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 62.5%</span><br>
+        <i style="background: #6e016b"></i><span>> 97.3%</span><br>
+        <i style="background: #88419d"></i><span>89.7% - 97.3%</span><br>
+        <i style="background: #8c6bb1"></i><span>87.2% - 89.7%</span><br>
+        <i style="background: #8c96c6"></i><span>84.5% - 87.2%</span><br>
+        <i style="background: #9ebcda"></i><span>81.4% - 84.5%</span><br>
+        <i style="background: #bfd3e6"></i><span>75.9% - 81.4%</span><br>
+        <i style="background: #edf8fb"></i><span>62.5% - 75.9%</span><br>
+        <i style="background: #edf8fb"></i><span>0% - 62.5%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Mammography Screening":
       legendContent = `
         <h4>Percent Mammography Screening</h4>
-        <i style="background: #034e7b"></i><span>> 86.3%</span><br>
-        <i style="background: #0570b0"></i><span>83.1% - 86.3%</span><br>
-        <i style="background: #3690c0"></i><span>81.1% - 83.1%</span><br>
-        <i style="background: #74a9cf"></i><span>79.4% - 81.1%</span><br>
-        <i style="background: #a6bddb"></i><span>77.8% - 79.4%</span><br>
-        <i style="background: #d0d1e6"></i><span>75.2% - 77.8%</span><br>
-        <i style="background: #f1eef6"></i><span>69.5% - 75.2%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 69.5%</span><br>
+        <i style="background: #6e016b"></i><span>> 86.3%</span><br>
+        <i style="background: #88419d"></i><span>83.1% - 86.3%</span><br>
+        <i style="background: #8c6bb1"></i><span>81.1% - 83.1%</span><br>
+        <i style="background: #8c96c6"></i><span>79.4% - 81.1%</span><br>
+        <i style="background: #9ebcda"></i><span>77.8% - 79.4%</span><br>
+        <i style="background: #bfd3e6"></i><span>75.2% - 77.8%</span><br>
+        <i style="background: #edf8fb"></i><span>69.5% - 75.2%</span><br>
+        <i style="background: #edf8fb"></i><span>0% - 69.5%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Cervical Screening":
       legendContent = `
         <h4>Percent Cervical Screening</h4>
-        <i style="background: #034e7b"></i><span>> 91.4%</span><br>
-        <i style="background: #0570b0"></i><span>86.2% - 91.4%</span><br>
-        <i style="background: #3690c0"></i><span>83% - 86.2%</span><br>
-        <i style="background: #74a9cf"></i><span>79.7% - 83%</span><br>
-        <i style="background: #a6bddb"></i><span>75.8% - 79.7%</span><br>
-        <i style="background: #d0d1e6"></i><span>69.4% - 75.8%</span><br>
-        <i style="background: #f1eef6"></i><span>51.6% - 69.4%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 51.6%</span><br>
+        <i style="background: #6e016b"></i><span>> 91.4%</span><br>
+        <i style="background: #88419d"></i><span>86.2% - 91.4%</span><br>
+        <i style="background: #8c6bb1"></i><span>83% - 86.2%</span><br>
+        <i style="background: #8c96c6"></i><span>79.7% - 83%</span><br>
+        <i style="background: #9ebcda"></i><span>75.8% - 79.7%</span><br>
+        <i style="background: #bfd3e6"></i><span>69.4% - 75.8%</span><br>
+        <i style="background: #edf8fb"></i><span>51.6% - 69.4%</span><br>
+        <i style="background: #edf8fb"></i><span>0% - 51.6%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
     case "Colorectal Screening":
       legendContent = `
         <h4>Percent Colorectal Screening</h4>
-        <i style="background: #034e7b"></i><span>> 85.1%</span><br>
-        <i style="background: #0570b0"></i><span>79.4% - 85.1%</span><br>
-        <i style="background: #3690c0"></i><span>76% - 79.4%</span><br>
-        <i style="background: #74a9cf"></i><span>72.7% - 76%</span><br>
-        <i style="background: #a6bddb"></i><span>69.2% - 72.7%</span><br>
-        <i style="background: #d0d1e6"></i><span>64.8% - 69.2%</span><br>
-        <i style="background: #f1eef6"></i><span>53.9% - 64.8%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 53.9%</span><br>
+        <i style="background: #6e016b"></i><span>> 85.1%</span><br>
+        <i style="background: #88419d"></i><span>79.4% - 85.1%</span><br>
+        <i style="background: #8c6bb1"></i><span>76% - 79.4%</span><br>
+        <i style="background: #8c96c6"></i><span>72.7% - 76%</span><br>
+        <i style="background: #9ebcda"></i><span>69.2% - 72.7%</span><br>
+        <i style="background: #bfd3e6"></i><span>64.8% - 69.2%</span><br>
+        <i style="background: #edf8fb"></i><span>53.9% - 64.8%</span><br>
+        <i style="background: #edf8fb"></i><span>0% - 53.9%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
       break;
@@ -2856,6 +2941,7 @@ screeningRatesLayers.annualCheckUp.addTo(maps["screeningRatesMap"]);
 
 //=========================================================== Health Status Map =================================================================
 
+// Map setup
 maps["healthStatusMap"] = L.map("healthStatusMap", {
   maxBounds: bounds,
   maxZoom: 18,
@@ -2876,38 +2962,13 @@ var baseLayer5 = L.tileLayer(
   }
 ).addTo(maps["healthStatusMap"]);
 
-var healthStatusLayers = {
-  depression: L.geoJson(null, {
-    style: healthStatusStyle(
-      "Depression crude prevalence (%)",
-      getColorForDepression
-    ),
-  }),
-  mentalHealthBad: L.geoJson(null, {
-    style: healthStatusStyle(
-      "Frequent mental health distress crude prevalence (%)",
-      getColorForMentalHealthBad
-    ),
-  }),
-  physicalHealthBad: L.geoJson(null, {
-    style: healthStatusStyle(
-      "Frequent physical health distress crude prevalence (%)",
-      getColorForPhysicalHealthBad
-    ),
-  }),
-  poorSelfRatedHealth: L.geoJson(null, {
-    style: healthStatusStyle(
-      "Fair or poor health crude prevalence (%)",
-      getColorForPoorSelfRatedHealth
-    ),
-  }),
-  disability: L.geoJson(null, {
-    style: healthStatusStyle(
-      "Any disability crude prevalence (%)",
-      getColorForDisability
-    ),
-  }),
-};
+// Define health status layers
+var healthStatusLayers = {};
+Object.values(healthStatusLayerNames).forEach((layerName) => {
+  healthStatusLayers[layerName] = L.geoJson(null, {
+    style: healthStatusStyle(layerName, getColorHealthStatus(layerName)),
+  });
+});
 
 function healthStatusStyle(propertyName, colorFunction) {
   return function (feature) {
@@ -2921,224 +2982,255 @@ function healthStatusStyle(propertyName, colorFunction) {
   };
 }
 
+// Color functions
+function getColorHealthStatus(layerName) {
+  switch (layerName) {
+    case healthStatusLayerNames.DEPRESSION:
+      return getColorForDepression;
+    case healthStatusLayerNames.MENTAL_HEALTH_BAD:
+      return getColorForMentalHealthBad;
+    case healthStatusLayerNames.PHYSICAL_HEALTH_BAD:
+      return getColorForPhysicalHealthBad;
+    case healthStatusLayerNames.POOR_SELF_RATED_HEALTH:
+      return getColorForPoorSelfRatedHealth;
+    case healthStatusLayerNames.DISABILITY:
+      return getColorForDisability;
+    case healthStatusLayerNames.HEARING_DISABILITY:
+      return getColorForHearingDisability;
+    case healthStatusLayerNames.VISION_DISABILITY:
+      return getColorForVisionDisability;
+    case healthStatusLayerNames.COGNITIVE_DISABILITY:
+      return getColorForCognitiveDisability;
+    case healthStatusLayerNames.MOBILITY_DISABILITY:
+      return getColorForMobilityDisability;
+    case healthStatusLayerNames.SELF_CARE_DISABILITY:
+      return getColorForSelfCareDisability;
+    case healthStatusLayerNames.INDEPENDENT_LIVING_DISABILITY:
+      return getColorForIndependentLivingDisability;
+    default:
+      return () => "#606060"; // Default color if no match found
+  }
+}
+
+// Color functions implementations
 function getColorForDepression(percent) {
   return percent > 32.4
-    ? "#034e7b"
+    ? healthStatusColors[0]
     : percent > 23.2
-    ? "#0570b0"
+    ? healthStatusColors[1]
     : percent > 20.6
-    ? "#3690c0"
+    ? healthStatusColors[2]
     : percent > 18.8
-    ? "#74a9cf"
+    ? healthStatusColors[3]
     : percent > 17.1
-    ? "#a6bddb"
+    ? healthStatusColors[4]
     : percent > 15.2
-    ? "#d0d1e6"
+    ? healthStatusColors[5]
     : percent > 11.8
-    ? "#f1eef6"
+    ? healthStatusColors[6]
     : percent > 0
-    ? "#f1eef6"
-    : "#606060";
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
 }
 
 function getColorForMentalHealthBad(percent) {
   return percent > 31
-    ? "#034e7b"
+    ? healthStatusColors[0]
     : percent > 22.1
-    ? "#0570b0"
+    ? healthStatusColors[1]
     : percent > 18.8
-    ? "#3690c0"
+    ? healthStatusColors[2]
     : percent > 16.5
-    ? "#74a9cf"
+    ? healthStatusColors[3]
     : percent > 14.6
-    ? "#a6bddb"
+    ? healthStatusColors[4]
     : percent > 12.7
-    ? "#d0d1e6"
+    ? healthStatusColors[5]
     : percent > 7.2
-    ? "#f1eef6"
+    ? healthStatusColors[6]
     : percent > 0
-    ? "#f1eef6"
-    : "#606060";
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
 }
 
 function getColorForPhysicalHealthBad(percent) {
   return percent > 31.3
-    ? "#034e7b"
+    ? healthStatusColors[0]
     : percent > 17
-    ? "#0570b0"
+    ? healthStatusColors[1]
     : percent > 13.9
-    ? "#3690c0"
+    ? healthStatusColors[2]
     : percent > 11.6
-    ? "#74a9cf"
+    ? healthStatusColors[3]
     : percent > 9.7
-    ? "#a6bddb"
+    ? healthStatusColors[4]
     : percent > 7.5
-    ? "#d0d1e6"
+    ? healthStatusColors[5]
     : percent > 3.8
-    ? "#f1eef6"
+    ? healthStatusColors[6]
     : percent > 0
-    ? "#f1eef6"
-    : "#606060";
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
 }
 
 function getColorForPoorSelfRatedHealth(percent) {
   return percent > 57.1
-    ? "#034e7b"
+    ? healthStatusColors[0]
     : percent > 29.7
-    ? "#0570b0"
+    ? healthStatusColors[1]
     : percent > 23.1
-    ? "#3690c0"
+    ? healthStatusColors[2]
     : percent > 18.3
-    ? "#74a9cf"
+    ? healthStatusColors[3]
     : percent > 14.3
-    ? "#a6bddb"
+    ? healthStatusColors[4]
     : percent > 10.1
-    ? "#d0d1e6"
+    ? healthStatusColors[5]
     : percent > 4.3
-    ? "#f1eef6"
+    ? healthStatusColors[6]
     : percent > 0
-    ? "#f1eef6"
-    : "#606060";
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
 }
 
 function getColorForDisability(percent) {
   return percent > 70.5
-    ? "#034e7b"
+    ? healthStatusColors[0]
     : percent > 40.8
-    ? "#0570b0"
+    ? healthStatusColors[1]
     : percent > 33.9
-    ? "#3690c0"
+    ? healthStatusColors[2]
     : percent > 28.8
-    ? "#74a9cf"
+    ? healthStatusColors[3]
     : percent > 24.5
-    ? "#a6bddb"
+    ? healthStatusColors[4]
     : percent > 19.5
-    ? "#d0d1e6"
+    ? healthStatusColors[5]
     : percent > 11.3
-    ? "#f1eef6"
+    ? healthStatusColors[6]
     : percent > 0
-    ? "#f1eef6"
-    : "#606060";
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
 }
 
 function getColorForHearingDisability(percent) {
   return percent > 29.7
-    ? "#034e7b"
+    ? healthStatusColors[0]
     : percent > 11.6
-    ? "#0570b0"
+    ? healthStatusColors[1]
     : percent > 7.9
-    ? "#3690c0"
+    ? healthStatusColors[2]
     : percent > 6.2
-    ? "#74a9cf"
+    ? healthStatusColors[3]
     : percent > 5.1
-    ? "#a6bddb"
+    ? healthStatusColors[4]
     : percent > 4
-    ? "#d0d1e6"
+    ? healthStatusColors[5]
     : percent > 1.7
-    ? "#f1eef6"
+    ? healthStatusColors[6]
     : percent > 0
-    ? "#f1eef6"
-    : "#606060";
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
 }
 
 function getColorForVisionDisability(percent) {
   return percent > 33.9
-    ? "#034e7b"
+    ? healthStatusColors[0]
     : percent > 14.2
-    ? "#0570b0"
+    ? healthStatusColors[1]
     : percent > 10.4
-    ? "#3690c0"
+    ? healthStatusColors[2]
     : percent > 7.8
-    ? "#74a9cf"
+    ? healthStatusColors[3]
     : percent > 5.7
-    ? "#a6bddb"
+    ? healthStatusColors[4]
     : percent > 3.8
-    ? "#d0d1e6"
+    ? healthStatusColors[5]
     : percent > 1.4
-    ? "#f1eef6"
+    ? healthStatusColors[6]
     : percent > 0
-    ? "#f1eef6"
-    : "#606060";
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
 }
 
 function getColorForCognitiveDisability(percent) {
   return percent > 30.7
-    ? "#034e7b"
+    ? healthStatusColors[0]
     : percent > 21.5
-    ? "#0570b0"
+    ? healthStatusColors[1]
     : percent > 17.5
-    ? "#3690c0"
+    ? healthStatusColors[2]
     : percent > 14.2
-    ? "#74a9cf"
+    ? healthStatusColors[3]
     : percent > 11.6
-    ? "#a6bddb"
+    ? healthStatusColors[4]
     : percent > 9
-    ? "#d0d1e6"
+    ? healthStatusColors[5]
     : percent > 5.5
-    ? "#f1eef6"
+    ? healthStatusColors[6]
     : percent > 0
-    ? "#f1eef6"
-    : "#606060";
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
 }
 
 function getColorForMobilityDisability(percent) {
   return percent > 56.9
-    ? "#034e7b"
+    ? healthStatusColors[0]
     : percent > 24
-    ? "#0570b0"
+    ? healthStatusColors[1]
     : percent > 18.6
-    ? "#3690c0"
+    ? healthStatusColors[2]
     : percent > 15.1
-    ? "#74a9cf"
+    ? healthStatusColors[3]
     : percent > 12.1
-    ? "#a6bddb"
+    ? healthStatusColors[4]
     : percent > 8.5
-    ? "#d0d1e6"
+    ? healthStatusColors[5]
     : percent > 2.5
-    ? "#f1eef6"
+    ? healthStatusColors[6]
     : percent > 0
-    ? "#f1eef6"
-    : "#606060";
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
 }
 
 function getColorForSelfCareDisability(percent) {
   return percent > 28.2
-    ? "#034e7b"
+    ? healthStatusColors[0]
     : percent > 9.9
-    ? "#0570b0"
+    ? healthStatusColors[1]
     : percent > 7.1
-    ? "#3690c0"
+    ? healthStatusColors[2]
     : percent > 5.2
-    ? "#74a9cf"
+    ? healthStatusColors[3]
     : percent > 3.8
-    ? "#a6bddb"
+    ? healthStatusColors[4]
     : percent > 2.5
-    ? "#d0d1e6"
+    ? healthStatusColors[5]
     : percent > 0.8
-    ? "#f1eef6"
+    ? healthStatusColors[6]
     : percent > 0
-    ? "#f1eef6"
-    : "#606060";
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
 }
 
 function getColorForIndependentLivingDisability(percent) {
   return percent > 31.8
-    ? "#034e7b"
+    ? healthStatusColors[0]
     : percent > 16.6
-    ? "#0570b0"
+    ? healthStatusColors[1]
     : percent > 12.6
-    ? "#3690c0"
+    ? healthStatusColors[2]
     : percent > 9.8
-    ? "#74a9cf"
+    ? healthStatusColors[3]
     : percent > 7.6
-    ? "#a6bddb"
+    ? healthStatusColors[4]
     : percent > 5.5
-    ? "#d0d1e6"
+    ? healthStatusColors[5]
     : percent > 2.8
-    ? "#f1eef6"
+    ? healthStatusColors[6]
     : percent > 0
-    ? "#f1eef6"
-    : "#606060";
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
 }
 
 function addHealthStatusData(data) {
@@ -3146,29 +3238,39 @@ function addHealthStatusData(data) {
     var p = feature.properties;
 
     var depressionPopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Depression: ${p["Depression crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated depression crude prevalence is 
+    <b>${p["Depression crude prevalence (%)"]}%</b> 
+    ${p["Depression crude prevalence 95% CI"]}.
+  `;
 
     var mentalHealthBadPopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Frequent Mental Health Distress: ${p["Frequent mental health distress crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated frequent mental health distress crude prevalence is 
+    <b>${p["Frequent mental health distress crude prevalence (%)"]}%</b> 
+    ${p["Frequent mental health distress crude prevalence 95% CI"]}.
+  `;
 
     var physicalHealthBadPopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Frequent Physical Health Distress: ${p["Frequent physical health distress crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated frequent physical health distress crude prevalence is 
+    <b>${p["Frequent physical health distress crude prevalence (%)"]}%</b> 
+    ${p["Frequent physical health distress crude prevalence 95% CI"]}.
+  `;
 
     var poorSelfRatedHealthPopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Fair or Poor Health: ${p["Fair or poor health crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated fair or poor health crude prevalence is 
+    <b>${p["Fair or poor health crude prevalence (%)"]}%</b> 
+    ${p["Fair or poor health crude prevalence 95% CI"]}.
+  `;
 
     var disabilityPopup = `
-      Census tract: ${p["Census tract FIPS"]}<br>
-      Any Disability: ${p["Any disability crude prevalence (%)"]}%
-    `;
+    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated any disability crude prevalence is 
+    <b>${p["Any disability crude prevalence (%)"]}%</b> 
+    ${p["Any disability crude prevalence 95% CI"]}.
+  `;
 
     var depressionLayer = L.geoJson(feature, {
       style: healthStatusStyle(
@@ -3180,7 +3282,9 @@ function addHealthStatusData(data) {
         layer.bindPopup(popup);
       },
     });
-    healthStatusLayers.depression.addLayer(depressionLayer);
+    healthStatusLayers[healthStatusLayerNames.DEPRESSION].addLayer(
+      depressionLayer
+    );
 
     var mentalHealthBadLayer = L.geoJson(feature, {
       style: healthStatusStyle(
@@ -3192,7 +3296,9 @@ function addHealthStatusData(data) {
         layer.bindPopup(popup);
       },
     });
-    healthStatusLayers.mentalHealthBad.addLayer(mentalHealthBadLayer);
+    healthStatusLayers[healthStatusLayerNames.MENTAL_HEALTH_BAD].addLayer(
+      mentalHealthBadLayer
+    );
 
     var physicalHealthBadLayer = L.geoJson(feature, {
       style: healthStatusStyle(
@@ -3204,7 +3310,9 @@ function addHealthStatusData(data) {
         layer.bindPopup(popup);
       },
     });
-    healthStatusLayers.physicalHealthBad.addLayer(physicalHealthBadLayer);
+    healthStatusLayers[healthStatusLayerNames.PHYSICAL_HEALTH_BAD].addLayer(
+      physicalHealthBadLayer
+    );
 
     var poorSelfRatedHealthLayer = L.geoJson(feature, {
       style: healthStatusStyle(
@@ -3216,7 +3324,9 @@ function addHealthStatusData(data) {
         layer.bindPopup(popup);
       },
     });
-    healthStatusLayers.poorSelfRatedHealth.addLayer(poorSelfRatedHealthLayer);
+    healthStatusLayers[healthStatusLayerNames.POOR_SELF_RATED_HEALTH].addLayer(
+      poorSelfRatedHealthLayer
+    );
 
     var disabilityLayer = L.geoJson(feature, {
       style: healthStatusStyle(
@@ -3228,18 +3338,25 @@ function addHealthStatusData(data) {
         layer.bindPopup(popup);
       },
     });
-    healthStatusLayers.disability.addLayer(disabilityLayer);
+    healthStatusLayers[healthStatusLayerNames.DISABILITY].addLayer(
+      disabilityLayer
+    );
   });
 }
 
 addHealthStatusData(healthDataGeojson);
 
 var healthStatusBaseLayers = {
-  Depression: healthStatusLayers.depression,
-  "Frequent Mental Health Distress": healthStatusLayers.mentalHealthBad,
-  "Frequent Physical Health Distress": healthStatusLayers.physicalHealthBad,
-  "Fair or Poor Health": healthStatusLayers.poorSelfRatedHealth,
-  Disability: healthStatusLayers.disability,
+  [healthStatusLayerNames.DEPRESSION]:
+    healthStatusLayers[healthStatusLayerNames.DEPRESSION],
+  [healthStatusLayerNames.MENTAL_HEALTH_BAD]:
+    healthStatusLayers[healthStatusLayerNames.MENTAL_HEALTH_BAD],
+  [healthStatusLayerNames.PHYSICAL_HEALTH_BAD]:
+    healthStatusLayers[healthStatusLayerNames.PHYSICAL_HEALTH_BAD],
+  [healthStatusLayerNames.POOR_SELF_RATED_HEALTH]:
+    healthStatusLayers[healthStatusLayerNames.POOR_SELF_RATED_HEALTH],
+  [healthStatusLayerNames.DISABILITY]:
+    healthStatusLayers[healthStatusLayerNames.DISABILITY],
 };
 
 L.control
@@ -3252,16 +3369,16 @@ var healthStatusLegend = L.control({ position: "bottomleft" });
 healthStatusLegend.onAdd = function () {
   var div = L.DomUtil.create("div", "healthStatusLegend");
   div.innerHTML = `
-    <h4>Percent Depression</h4>
-    <i style="background: #034e7b"></i><span>> 32.4%</span><br>
-    <i style="background: #0570b0"></i><span>23.2% - 32.4%</span><br>
-    <i style="background: #3690c0"></i><span>20.6% - 23.2%</span><br>
-    <i style="background: #74a9cf"></i><span>18.8% - 20.6%</span><br>
-    <i style="background: #a6bddb"></i><span>17.1% - 18.8%</span><br>
-    <i style="background: #d0d1e6"></i><span>15.2% - 17.1%</span><br>
-    <i style="background: #f1eef6"></i><span>11.8% - 15.2%</span><br>
-    <i style="background: #f1eef6"></i><span>0% - 11.8%</span><br>
-    <i style="background: #606060"></i><span>No Data</span><br>
+    <h4>${healthStatusLayerNames.DEPRESSION}</h4>
+    <i style="background: ${healthStatusColors[0]}"></i><span>> 32.4%</span><br>
+    <i style="background: ${healthStatusColors[1]}"></i><span>23.2% - 32.4%</span><br>
+    <i style="background: ${healthStatusColors[2]}"></i><span>20.6% - 23.2%</span><br>
+    <i style="background: ${healthStatusColors[3]}"></i><span>18.8% - 20.6%</span><br>
+    <i style="background: ${healthStatusColors[4]}"></i><span>17.1% - 18.8%</span><br>
+    <i style="background: ${healthStatusColors[5]}"></i><span>15.2% - 17.1%</span><br>
+    <i style="background: ${healthStatusColors[6]}"></i><span>11.8% - 15.2%</span><br>
+    <i style="background: ${healthStatusColors[7]}"></i><span>0% - 11.8%</span><br>
+    <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
   `;
   return div;
 };
@@ -3271,158 +3388,158 @@ healthStatusLegend.addTo(maps["healthStatusMap"]);
 function updateLegendForHealthStatus(layerName) {
   var legendContent = "";
   switch (layerName) {
-    case "Depression":
+    case healthStatusLayerNames.DEPRESSION:
       legendContent = `
-        <h4>Percent Depression</h4>
-        <i style="background: #034e7b"></i><span>> 32.4%</span><br>
-        <i style="background: #0570b0"></i><span>23.2% - 32.4%</span><br>
-        <i style="background: #3690c0"></i><span>20.6% - 23.2%</span><br>
-        <i style="background: #74a9cf"></i><span>18.8% - 20.6%</span><br>
-        <i style="background: #a6bddb"></i><span>17.1% - 18.8%</span><br>
-        <i style="background: #d0d1e6"></i><span>15.2% - 17.1%</span><br>
-        <i style="background: #f1eef6"></i><span>11.8% - 15.2%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 11.8%</span><br>
-        <i style="background: #606060"></i><span>No Data</span><br>
+        <h4>${healthStatusLayerNames.DEPRESSION}</h4>
+        <i style="background: ${healthStatusColors[0]}"></i><span>> 32.4%</span><br>
+        <i style="background: ${healthStatusColors[1]}"></i><span>23.2% - 32.4%</span><br>
+        <i style="background: ${healthStatusColors[2]}"></i><span>20.6% - 23.2%</span><br>
+        <i style="background: ${healthStatusColors[3]}"></i><span>18.8% - 20.6%</span><br>
+        <i style="background: ${healthStatusColors[4]}"></i><span>17.1% - 18.8%</span><br>
+        <i style="background: ${healthStatusColors[5]}"></i><span>15.2% - 17.1%</span><br>
+        <i style="background: ${healthStatusColors[6]}"></i><span>11.8% - 15.2%</span><br>
+        <i style="background: ${healthStatusColors[7]}"></i><span>0% - 11.8%</span><br>
+        <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
       `;
       break;
-    case "Frequent Mental Health Distress":
+    case healthStatusLayerNames.MENTAL_HEALTH_BAD:
       legendContent = `
-        <h4>Percent Frequent Mental Health Distress</h4>
-        <i style="background: #034e7b"></i><span>> 31%</span><br>
-        <i style="background: #0570b0"></i><span>22.1% - 31%</span><br>
-        <i style="background: #3690c0"></i><span>18.8% - 22.1%</span><br>
-        <i style="background: #74a9cf"></i><span>16.5% - 18.8%</span><br>
-        <i style="background: #a6bddb"></i><span>14.6% - 16.5%</span><br>
-        <i style="background: #d0d1e6"></i><span>12.7% - 14.6%</span><br>
-        <i style="background: #f1eef6"></i><span>7.2% - 12.7%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 7.2%</span><br>
-        <i style="background: #606060"></i><span>No Data</span><br>
+        <h4>${healthStatusLayerNames.MENTAL_HEALTH_BAD}</h4>
+        <i style="background: ${healthStatusColors[0]}"></i><span>> 31%</span><br>
+        <i style="background: ${healthStatusColors[1]}"></i><span>22.1% - 31%</span><br>
+        <i style="background: ${healthStatusColors[2]}"></i><span>18.8% - 22.1%</span><br>
+        <i style="background: ${healthStatusColors[3]}"></i><span>16.5% - 18.8%</span><br>
+        <i style="background: ${healthStatusColors[4]}"></i><span>14.6% - 16.5%</span><br>
+        <i style="background: ${healthStatusColors[5]}"></i><span>12.7% - 14.6%</span><br>
+        <i style="background: ${healthStatusColors[6]}"></i><span>7.2% - 12.7%</span><br>
+        <i style="background: ${healthStatusColors[7]}"></i><span>0% - 7.2%</span><br>
+        <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
       `;
       break;
-    case "Frequent Physical Health Distress":
+    case healthStatusLayerNames.PHYSICAL_HEALTH_BAD:
       legendContent = `
-        <h4>Percent Frequent Physical Health Distress</h4>
-        <i style="background: #034e7b"></i><span>> 31.3%</span><br>
-        <i style="background: #0570b0"></i><span>17% - 31.3%</span><br>
-        <i style="background: #3690c0"></i><span>13.9% - 17%</span><br>
-        <i style="background: #74a9cf"></i><span>11.6% - 13.9%</span><br>
-        <i style="background: #a6bddb"></i><span>9.7% - 11.6%</span><br>
-        <i style="background: #d0d1e6"></i><span>7.5% - 9.7%</span><br>
-        <i style="background: #f1eef6"></i><span>3.8% - 7.5%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 3.8%</span><br>
-        <i style="background: #606060"></i><span>No Data</span><br>
+        <h4>${healthStatusLayerNames.PHYSICAL_HEALTH_BAD}</h4>
+        <i style="background: ${healthStatusColors[0]}"></i><span>> 31.3%</span><br>
+        <i style="background: ${healthStatusColors[1]}"></i><span>17% - 31.3%</span><br>
+        <i style="background: ${healthStatusColors[2]}"></i><span>13.9% - 17%</span><br>
+        <i style="background: ${healthStatusColors[3]}"></i><span>11.6% - 13.9%</span><br>
+        <i style="background: ${healthStatusColors[4]}"></i><span>9.7% - 11.6%</span><br>
+        <i style="background: ${healthStatusColors[5]}"></i><span>7.5% - 9.7%</span><br>
+        <i style="background: ${healthStatusColors[6]}"></i><span>3.8% - 7.5%</span><br>
+        <i style="background: ${healthStatusColors[7]}"></i><span>0% - 3.8%</span><br>
+        <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
       `;
       break;
-    case "Fair or Poor Health":
+    case healthStatusLayerNames.POOR_SELF_RATED_HEALTH:
       legendContent = `
-        <h4>Percent Fair or Poor Health</h4>
-        <i style="background: #034e7b"></i><span>> 57.1%</span><br>
-        <i style="background: #0570b0"></i><span>29.7% - 57.1%</span><br>
-        <i style="background: #3690c0"></i><span>23.1% - 29.7%</span><br>
-        <i style="background: #74a9cf"></i><span>18.3% - 23.1%</span><br>
-        <i style="background: #a6bddb"></i><span>14.3% - 18.3%</span><br>
-        <i style="background: #d0d1e6"></i><span>10.1% - 14.3%</span><br>
-        <i style="background: #f1eef6"></i><span>4.3% - 10.1%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 4.3%</span><br>
-        <i style="background: #606060"></i><span>No Data</span><br>
+        <h4>${healthStatusLayerNames.POOR_SELF_RATED_HEALTH}</h4>
+        <i style="background: ${healthStatusColors[0]}"></i><span>> 57.1%</span><br>
+        <i style="background: ${healthStatusColors[1]}"></i><span>29.7% - 57.1%</span><br>
+        <i style="background: ${healthStatusColors[2]}"></i><span>23.1% - 29.7%</span><br>
+        <i style="background: ${healthStatusColors[3]}"></i><span>18.3% - 23.1%</span><br>
+        <i style="background: ${healthStatusColors[4]}"></i><span>14.3% - 18.3%</span><br>
+        <i style="background: ${healthStatusColors[5]}"></i><span>10.1% - 14.3%</span><br>
+        <i style="background: ${healthStatusColors[6]}"></i><span>4.3% - 10.1%</span><br>
+        <i style="background: ${healthStatusColors[7]}"></i><span>0% - 4.3%</span><br>
+        <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
       `;
       break;
-    case "Disability":
+    case healthStatusLayerNames.DISABILITY:
       legendContent = `
-        <h4>Percent Disability</h4>
-        <i style="background: #034e7b"></i><span>> 70.5%</span><br>
-        <i style="background: #0570b0"></i><span>40.8% - 70.5%</span><br>
-        <i style="background: #3690c0"></i><span>33.9% - 40.8%</span><br>
-        <i style="background: #74a9cf"></i><span>28.8% - 33.9%</span><br>
-        <i style="background: #a6bddb"></i><span>24.5% - 28.8%</span><br>
-        <i style="background: #d0d1e6"></i><span>19.5% - 24.5%</span><br>
-        <i style="background: #f1eef6"></i><span>11.3% - 19.5%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 11.3%</span><br>
-        <i style="background: #606060"></i><span>No Data</span><br>
+        <h4>${healthStatusLayerNames.DISABILITY}</h4>
+        <i style="background: ${healthStatusColors[0]}"></i><span>> 70.5%</span><br>
+        <i style="background: ${healthStatusColors[1]}"></i><span>40.8% - 70.5%</span><br>
+        <i style="background: ${healthStatusColors[2]}"></i><span>33.9% - 40.8%</span><br>
+        <i style="background: ${healthStatusColors[3]}"></i><span>28.8% - 33.9%</span><br>
+        <i style="background: ${healthStatusColors[4]}"></i><span>24.5% - 28.8%</span><br>
+        <i style="background: ${healthStatusColors[5]}"></i><span>19.5% - 24.5%</span><br>
+        <i style="background: ${healthStatusColors[6]}"></i><span>11.3% - 19.5%</span><br>
+        <i style="background: ${healthStatusColors[7]}"></i><span>0% - 11.3%</span><br>
+        <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
       `;
       break;
-    case "Hearing disability crude prevalence (%)":
+    case healthStatusLayerNames.HEARING_DISABILITY:
       legendContent = `
-          <h4>Percent Hearing Disability</h4>
-          <i style="background: #034e7b"></i><span>> 29.7%</span><br>
-          <i style="background: #0570b0"></i><span>11.6% - 29.7%</span><br>
-          <i style="background: #3690c0"></i><span>7.9% - 11.6%</span><br>
-          <i style="background: #74a9cf"></i><span>6.2% - 7.9%</span><br>
-          <i style="background: #a6bddb"></i><span>5.1% - 6.2%</span><br>
-          <i style="background: #d0d1e6"></i><span>4% - 5.1%</span><br>
-          <i style="background: #f1eef6"></i><span>1.7% - 4%</span><br>
-          <i style="background: #f1eef6"></i><span>0% - 1.7%</span><br>
-          <i style="background: #606060"></i><span>No Data</span><br>
+          <h4>${healthStatusLayerNames.HEARING_DISABILITY}</h4>
+          <i style="background: ${healthStatusColors[0]}"></i><span>> 29.7%</span><br>
+          <i style="background: ${healthStatusColors[1]}"></i><span>11.6% - 29.7%</span><br>
+          <i style="background: ${healthStatusColors[2]}"></i><span>7.9% - 11.6%</span><br>
+          <i style="background: ${healthStatusColors[3]}"></i><span>6.2% - 7.9%</span><br>
+          <i style="background: ${healthStatusColors[4]}"></i><span>5.1% - 6.2%</span><br>
+          <i style="background: ${healthStatusColors[5]}"></i><span>4% - 5.1%</span><br>
+          <i style="background: ${healthStatusColors[6]}"></i><span>1.7% - 4%</span><br>
+          <i style="background: ${healthStatusColors[7]}"></i><span>0% - 1.7%</span><br>
+          <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
         `;
       break;
-    case "Vision disability crude prevalence (%)":
+    case healthStatusLayerNames.VISION_DISABILITY:
       legendContent = `
-          <h4>Percent Vision Disability</h4>
-          <i style="background: #034e7b"></i><span>> 33.9%</span><br>
-          <i style="background: #0570b0"></i><span>14.2% - 33.9%</span><br>
-          <i style="background: #3690c0"></i><span>10.4% - 14.2%</span><br>
-          <i style="background: #74a9cf"></i><span>7.8% - 10.4%</span><br>
-          <i style="background: #a6bddb"></i><span>5.7% - 7.8%</span><br>
-          <i style="background: #d0d1e6"></i><span>3.8% - 5.7%</span><br>
-          <i style="background: #f1eef6"></i><span>1.4% - 3.8%</span><br>
-          <i style="background: #f1eef6"></i><span>0% - 1.4%</span><br>
-          <i style="background: #606060"></i><span>No Data</span><br>
+          <h4>${healthStatusLayerNames.VISION_DISABILITY}</h4>
+          <i style="background: ${healthStatusColors[0]}"></i><span>> 33.9%</span><br>
+          <i style="background: ${healthStatusColors[1]}"></i><span>14.2% - 33.9%</span><br>
+          <i style="background: ${healthStatusColors[2]}"></i><span>10.4% - 14.2%</span><br>
+          <i style="background: ${healthStatusColors[3]}"></i><span>7.8% - 10.4%</span><br>
+          <i style="background: ${healthStatusColors[4]}"></i><span>5.7% - 7.8%</span><br>
+          <i style="background: ${healthStatusColors[5]}"></i><span>3.8% - 5.7%</span><br>
+          <i style="background: ${healthStatusColors[6]}"></i><span>1.4% - 3.8%</span><br>
+          <i style="background: ${healthStatusColors[7]}"></i><span>0% - 1.4%</span><br>
+          <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
         `;
       break;
-    case "Cognitive disability crude prevalence (%)":
+    case healthStatusLayerNames.COGNITIVE_DISABILITY:
       legendContent = `
-          <h4>Percent Cognitive Disability</h4>
-          <i style="background: #034e7b"></i><span>> 30.7%</span><br>
-          <i style="background: #0570b0"></i><span>21.5% - 30.7%</span><br>
-          <i style="background: #3690c0"></i><span>17.5% - 21.5%</span><br>
-          <i style="background: #74a9cf"></i><span>14.2% - 17.5%</span><br>
-          <i style="background: #a6bddb"></i><span>11.6% - 14.2%</span><br>
-          <i style="background: #d0d1e6"></i><span>9% - 11.6%</span><br>
-          <i style="background: #f1eef6"></i><span>5.5% - 9%</span><br>
-          <i style="background: #f1eef6"></i><span>0% - 5.5%</span><br>
-          <i style="background: #606060"></i><span>No Data</span><br>
+          <h4>${healthStatusLayerNames.COGNITIVE_DISABILITY}</h4>
+          <i style="background: ${healthStatusColors[0]}"></i><span>> 30.7%</span><br>
+          <i style="background: ${healthStatusColors[1]}"></i><span>21.5% - 30.7%</span><br>
+          <i style="background: ${healthStatusColors[2]}"></i><span>17.5% - 21.5%</span><br>
+          <i style="background: ${healthStatusColors[3]}"></i><span>14.2% - 17.5%</span><br>
+          <i style="background: ${healthStatusColors[4]}"></i><span>11.6% - 14.2%</span><br>
+          <i style="background: ${healthStatusColors[5]}"></i><span>9% - 11.6%</span><br>
+          <i style="background: ${healthStatusColors[6]}"></i><span>5.5% - 9%</span><br>
+          <i style="background: ${healthStatusColors[7]}"></i><span>0% - 5.5%</span><br>
+          <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
         `;
       break;
-    case "Mobility disability crude prevalence (%)":
+    case healthStatusLayerNames.MOBILITY_DISABILITY:
       legendContent = `
-          <h4>Percent Mobility Disability</h4>
-          <i style="background: #034e7b"></i><span>> 56.9%</span><br>
-          <i style="background: #0570b0"></i><span>24% - 56.9%</span><br>
-          <i style="background: #3690c0"></i><span>18.6% - 24%</span><br>
-          <i style="background: #74a9cf"></i><span>15.1% - 18.6%</span><br>
-          <i style="background: #a6bddb"></i><span>12.1% - 15.1%</span><br>
-          <i style="background: #d0d1e6"></i><span>8.5% - 12.1%</span><br>
-          <i style="background: #f1eef6"></i><span>2.5% - 8.5%</span><br>
-          <i style="background: #f1eef6"></i><span>0% - 2.5%</span><br>
-          <i style="background: #606060"></i><span>No Data</span><br>
+          <h4>${healthStatusLayerNames.MOBILITY_DISABILITY}</h4>
+          <i style="background: ${healthStatusColors[0]}"></i><span>> 56.9%</span><br>
+          <i style="background: ${healthStatusColors[1]}"></i><span>24% - 56.9%</span><br>
+          <i style="background: ${healthStatusColors[2]}"></i><span>18.6% - 24%</span><br>
+          <i style="background: ${healthStatusColors[3]}"></i><span>15.1% - 18.6%</span><br>
+          <i style="background: ${healthStatusColors[4]}"></i><span>12.1% - 15.1%</span><br>
+          <i style="background: ${healthStatusColors[5]}"></i><span>8.5% - 12.1%</span><br>
+          <i style="background: ${healthStatusColors[6]}"></i><span>2.5% - 8.5%</span><br>
+          <i style="background: ${healthStatusColors[7]}"></i><span>0% - 2.5%</span><br>
+          <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
         `;
       break;
-    case "Self-care disability crude prevalence (%)":
+    case healthStatusLayerNames.SELF_CARE_DISABILITY:
       legendContent = `
-          <h4>Percent Self-care Disability</h4>
-          <i style="background: #034e7b"></i><span>> 28.2%</span><br>
-          <i style="background: #0570b0"></i><span>9.9% - 28.2%</span><br>
-          <i style="background: #3690c0"></i><span>7.1% - 9.9%</span><br>
-          <i style="background: #74a9cf"></i><span>5.2% - 7.1%</span><br>
-          <i style="background: #a6bddb"></i><span>3.8% - 5.2%</span><br>
-          <i style="background: #d0d1e6"></i><span>2.5% - 3.8%</span><br>
-          <i style="background: #f1eef6"></i><span>0.8% - 2.5%</span><br>
-          <i style="background: #f1eef6"></i><span>0% - 0.8%</span><br>
-          <i style="background: #606060"></i><span>No Data</span><br>
+          <h4>${healthStatusLayerNames.SELF_CARE_DISABILITY}</h4>
+          <i style="background: ${healthStatusColors[0]}"></i><span>> 28.2%</span><br>
+          <i style="background: ${healthStatusColors[1]}"></i><span>9.9% - 28.2%</span><br>
+          <i style="background: ${healthStatusColors[2]}"></i><span>7.1% - 9.9%</span><br>
+          <i style="background: ${healthStatusColors[3]}"></i><span>5.2% - 7.1%</span><br>
+          <i style="background: ${healthStatusColors[4]}"></i><span>3.8% - 5.2%</span><br>
+          <i style="background: ${healthStatusColors[5]}"></i><span>2.5% - 3.8%</span><br>
+          <i style="background: ${healthStatusColors[6]}"></i><span>0.8% - 2.5%</span><br>
+          <i style="background: ${healthStatusColors[7]}"></i><span>0% - 0.8%</span><br>
+          <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
         `;
       break;
-    case "Independent living disability crude prevalence (%)":
+    case healthStatusLayerNames.INDEPENDENT_LIVING_DISABILITY:
       legendContent = `
-          <h4>Percent Independent Living Disability</h4>
-          <i style="background: #034e7b"></i><span>> 31.8%</span><br>
-          <i style="background: #0570b0"></i><span>16.6% - 31.8%</span><br>
-          <i style="background: #3690c0"></i><span>12.6% - 16.6%</span><br>
-          <i style="background: #74a9cf"></i><span>9.8% - 12.6%</span><br>
-          <i style="background: #a6bddb"></i><span>7.6% - 9.8%</span><br>
-          <i style="background: #d0d1e6"></i><span>5.5% - 7.6%</span><br>
-          <i style="background: #f1eef6"></i><span>2.8% - 5.5%</span><br>
-          <i style="background: #f1eef6"></i><span>0% - 2.8%</span><br>
-          <i style="background: #606060"></i><span>No Data</span><br>
+          <h4>${healthStatusLayerNames.INDEPENDENT_LIVING_DISABILITY}</h4>
+          <i style="background: ${healthStatusColors[0]}"></i><span>> 31.8%</span><br>
+          <i style="background: ${healthStatusColors[1]}"></i><span>16.6% - 31.8%</span><br>
+          <i style="background: ${healthStatusColors[2]}"></i><span>12.6% - 16.6%</span><br>
+          <i style="background: ${healthStatusColors[3]}"></i><span>9.8% - 12.6%</span><br>
+          <i style="background: ${healthStatusColors[4]}"></i><span>7.6% - 9.8%</span><br>
+          <i style="background: ${healthStatusColors[5]}"></i><span>5.5% - 7.6%</span><br>
+          <i style="background: ${healthStatusColors[6]}"></i><span>2.8% - 5.5%</span><br>
+          <i style="background: ${healthStatusColors[7]}"></i><span>0% - 2.8%</span><br>
+          <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
         `;
       break;
   }
@@ -3434,8 +3551,10 @@ maps["healthStatusMap"].on("baselayerchange", function (e) {
 });
 
 // Set depression layer as the default
-updateLegendForHealthStatus("Depression");
-healthStatusLayers.depression.addTo(maps["healthStatusMap"]);
+updateLegendForHealthStatus(healthStatusLayerNames.DEPRESSION);
+healthStatusLayers[healthStatusLayerNames.DEPRESSION].addTo(
+  maps["healthStatusMap"]
+);
 
 //=========================================================== Health Status DROPDOWN =================================================================
 
@@ -3455,30 +3574,33 @@ var DisabilityControl = L.Control.extend({
     select.onchange = updateHealthStatusMap;
 
     var disabilities = [
-      { value: "", text: "Any Disability Among Adults Aged ≥ 18 Years" },
       {
-        value: "Hearing disability crude prevalence (%)",
-        text: "Hearing Disability Among Adults Aged ≥18 Years",
+        value: healthStatusLayerNames.DISABILITY,
+        text: healthStatusLayerNames.DISABILITY,
       },
       {
-        value: "Vision disability crude prevalence (%)",
-        text: "Vision Disability Among Adults Aged ≥18 Years",
+        value: healthStatusLayerNames.HEARING_DISABILITY,
+        text: healthStatusLayerNames.HEARING_DISABILITY,
       },
       {
-        value: "Cognitive disability crude prevalence (%)",
-        text: "Cognitive Disability Among Adults Aged ≥18 Years",
+        value: healthStatusLayerNames.VISION_DISABILITY,
+        text: healthStatusLayerNames.VISION_DISABILITY,
       },
       {
-        value: "Mobility disability crude prevalence (%)",
-        text: "Mobility Disability Among Adults Aged ≥18 Years",
+        value: healthStatusLayerNames.COGNITIVE_DISABILITY,
+        text: healthStatusLayerNames.COGNITIVE_DISABILITY,
       },
       {
-        value: "Self-care disability crude prevalence (%)",
-        text: "Self-care Disability Among Adults Aged ≥18 Years",
+        value: healthStatusLayerNames.MOBILITY_DISABILITY,
+        text: healthStatusLayerNames.MOBILITY_DISABILITY,
       },
       {
-        value: "Independent living disability crude prevalence (%)",
-        text: "Independent Living Disability Among Adults Aged ≥18 Years",
+        value: healthStatusLayerNames.SELF_CARE_DISABILITY,
+        text: healthStatusLayerNames.SELF_CARE_DISABILITY,
+      },
+      {
+        value: healthStatusLayerNames.INDEPENDENT_LIVING_DISABILITY,
+        text: healthStatusLayerNames.INDEPENDENT_LIVING_DISABILITY,
       },
     ];
 
@@ -3512,16 +3634,16 @@ function updateHealthStatusMap() {
   var selectedDisability = document.getElementById("disabilitySelect").value;
 
   // Clear existing layer
-  healthStatusLayers.disability.clearLayers();
+  healthStatusLayers[healthStatusLayerNames.DISABILITY].clearLayers();
 
   // Add new layer based on the selected disability
   var selectedDisabilityGeojson = L.geoJson(healthDataGeojson, {
     style: function (feature) {
       var style;
-      if (selectedDisability == "Hearing disability crude prevalence (%)") {
+      if (selectedDisability == healthStatusLayerNames.HEARING_DISABILITY) {
         style = {
           fillColor: getColorForHearingDisability(
-            feature.properties[selectedDisability]
+            feature.properties["Hearing disability crude prevalence (%)"]
           ),
           weight: 0.5,
           opacity: 1,
@@ -3529,11 +3651,11 @@ function updateHealthStatusMap() {
           fillOpacity: 0.8,
         };
       } else if (
-        selectedDisability == "Vision disability crude prevalence (%)"
+        selectedDisability == healthStatusLayerNames.VISION_DISABILITY
       ) {
         style = {
           fillColor: getColorForVisionDisability(
-            feature.properties[selectedDisability]
+            feature.properties["Vision disability crude prevalence (%)"]
           ),
           weight: 0.5,
           opacity: 1,
@@ -3541,11 +3663,11 @@ function updateHealthStatusMap() {
           fillOpacity: 0.8,
         };
       } else if (
-        selectedDisability == "Cognitive disability crude prevalence (%)"
+        selectedDisability == healthStatusLayerNames.COGNITIVE_DISABILITY
       ) {
         style = {
           fillColor: getColorForCognitiveDisability(
-            feature.properties[selectedDisability]
+            feature.properties["Cognitive disability crude prevalence (%)"]
           ),
           weight: 0.5,
           opacity: 1,
@@ -3553,11 +3675,11 @@ function updateHealthStatusMap() {
           fillOpacity: 0.8,
         };
       } else if (
-        selectedDisability == "Mobility disability crude prevalence (%)"
+        selectedDisability == healthStatusLayerNames.MOBILITY_DISABILITY
       ) {
         style = {
           fillColor: getColorForMobilityDisability(
-            feature.properties[selectedDisability]
+            feature.properties["Mobility disability crude prevalence (%)"]
           ),
           weight: 0.5,
           opacity: 1,
@@ -3565,11 +3687,11 @@ function updateHealthStatusMap() {
           fillOpacity: 0.8,
         };
       } else if (
-        selectedDisability == "Self-care disability crude prevalence (%)"
+        selectedDisability == healthStatusLayerNames.SELF_CARE_DISABILITY
       ) {
         style = {
           fillColor: getColorForSelfCareDisability(
-            feature.properties[selectedDisability]
+            feature.properties["Self-care disability crude prevalence (%)"]
           ),
           weight: 0.5,
           opacity: 1,
@@ -3578,11 +3700,13 @@ function updateHealthStatusMap() {
         };
       } else if (
         selectedDisability ==
-        "Independent living disability crude prevalence (%)"
+        healthStatusLayerNames.INDEPENDENT_LIVING_DISABILITY
       ) {
         style = {
           fillColor: getColorForIndependentLivingDisability(
-            feature.properties[selectedDisability]
+            feature.properties[
+              "Independent living disability crude prevalence (%)"
+            ]
           ),
           weight: 0.5,
           opacity: 1,
@@ -3609,13 +3733,67 @@ function updateHealthStatusMap() {
       var p = feature.properties;
 
       var popupContent;
-      if (selectedDisability === "") {
+      if (selectedDisability == healthStatusLayerNames.DISABILITY) {
         popupContent = `
-          <p>Any Disability Among Adults Aged ≥ 18 Years: ${p["Any disability crude prevalence (%)"]}%</p>
+          <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+          Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated any disability crude prevalence is 
+          <b>${p["Any disability crude prevalence (%)"]}%</b> 
+          ${p["Any disability crude prevalence 95% CI"]}.
         `;
-      } else {
+      } else if (
+        selectedDisability == healthStatusLayerNames.HEARING_DISABILITY
+      ) {
         popupContent = `
-          <p>${selectedDisability}: ${p[selectedDisability]}%</p>
+          <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+          Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated hearing disability crude prevalence is 
+          <b>${p["Hearing disability crude prevalence (%)"]}%</b> 
+          ${p["Hearing disability crude prevalence 95% CI"]}.
+        `;
+      } else if (
+        selectedDisability == healthStatusLayerNames.VISION_DISABILITY
+      ) {
+        popupContent = `
+          <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+          Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated vision disability crude prevalence is 
+          <b>${p["Vision disability crude prevalence (%)"]}%</b> 
+          ${p["Vision disability crude prevalence 95% CI"]}.
+        `;
+      } else if (
+        selectedDisability == healthStatusLayerNames.COGNITIVE_DISABILITY
+      ) {
+        popupContent = `
+          <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+          Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated cognitive disability crude prevalence is 
+          <b>${p["Cognitive disability crude prevalence (%)"]}%</b> 
+          ${p["Cognitive disability crude prevalence 95% CI"]}.
+        `;
+      } else if (
+        selectedDisability == healthStatusLayerNames.MOBILITY_DISABILITY
+      ) {
+        popupContent = `
+          <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+          Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated mobility disability crude prevalence is 
+          <b>${p["Mobility disability crude prevalence (%)"]}%</b> 
+          ${p["Mobility disability crude prevalence 95% CI"]}.
+        `;
+      } else if (
+        selectedDisability == healthStatusLayerNames.SELF_CARE_DISABILITY
+      ) {
+        popupContent = `
+          <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+          Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated self-care disability crude prevalence is 
+          <b>${p["Self-care disability crude prevalence (%)"]}%</b> 
+          ${p["Self-care disability crude prevalence 95% CI"]}.
+        `;
+      } else if (
+        selectedDisability ==
+        healthStatusLayerNames.INDEPENDENT_LIVING_DISABILITY
+      ) {
+        popupContent = `
+          <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+          Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated independent living disability crude prevalence is 
+          <b>${p["Independent living disability crude prevalence (%)"]}%</b> 
+          ${p["Independent living disability crude prevalence 95% CI"]}.
         `;
       }
 
@@ -3635,18 +3813,28 @@ function updateHealthStatusMap() {
         });
       });
     },
-  }).addTo(healthStatusLayers.disability);
+  }).addTo(healthStatusLayers[healthStatusLayerNames.DISABILITY]);
 
   // Update the legend based on selected layer and disability
-  selectedLayer = "disability";
+  selectedLayer = healthStatusLayerNames.DISABILITY;
   updateLegendForHealthStatus(selectedDisability);
 }
 
 // Eventlistener for baselayer change to toggle disability dropdown
 maps["healthStatusMap"].on("baselayerchange", function (e) {
-  if (e.name == "Disability") {
+  if (e.name === healthStatusLayerNames.DISABILITY) {
     addDisabilityControl();
+    // Default back to "Any Disability"
+    document.getElementById("disabilitySelect").value =
+      healthStatusLayerNames.DISABILITY;
+    updateHealthStatusMap();
   } else {
     removeDisabilityControl();
   }
 });
+
+// Set depression layer as the default
+updateLegendForHealthStatus(healthStatusLayerNames.DEPRESSION);
+healthStatusLayers[healthStatusLayerNames.DEPRESSION].addTo(
+  maps["healthStatusMap"]
+);

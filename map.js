@@ -813,8 +813,7 @@ demographicGeoJson = L.geoJson(languageGeoJsonData, {
     var cdtanameClean = formatNeighborhoodName(p.cdtaname);
 
     // Create popup content with demographic details
-    var popUpContent =
-      "<h3>" + p.Geographic + "</h3>" + "<h5>(" + cdtanameClean + ")</h5>";
+    var popUpContent = `<h3>${p.Geographic}</h3><h5>(${cdtanameClean})</h5>`;
 
     if (p.Estimate == "no data") {
       popUpContent += `No data available for this Census Tract`;
@@ -890,9 +889,9 @@ function createPieChartForDemographic(id, data) {
   // Clear any existing element from the container
   d3.select(id).selectAll("*").remove();
 
-  var width = 150,
-    height = 150,
-    radius = Math.min(width, height) / 2;
+  var width = 300,
+    height = 200,
+    radius = Math.min(width, height) / 2 - 25;
 
   var color = d3
     .scaleOrdinal()
@@ -912,7 +911,10 @@ function createPieChartForDemographic(id, data) {
     .attr("width", width)
     .attr("height", height)
     .append("g")
-    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+    .attr(
+      "transform",
+      "translate(" + (width / 2 - radius / 2) + "," + height / 2 + ")"
+    );
 
   var g = svg
     .selectAll(".arc")
@@ -921,24 +923,73 @@ function createPieChartForDemographic(id, data) {
     .append("g")
     .attr("class", "arc");
 
+  var div = d3
+    .select("body")
+    .append("div")
+    .attr("class", "tooltip-donut")
+    .style("opacity", 0);
+
+  var tooltip = d3
+    .select(id)
+    .append("div")
+    .attr("class", "tooltip")
+    .style("border", "1px solid #000")
+    .style("padding", "5px")
+    .style("border-radius", "5px")
+    .style("display", "none");
+
   g.append("path")
     .attr("d", arc)
-    .style("fill", (d) => color(d.data.label));
+    .style("fill", (d) => color(d.data.label))
+    .attr("transform", "translate(0, 0)")
+    // Hover effects
+    .on("mouseover", function (event, d) {
+      d3.select(this).transition().duration(50).attr("opacity", ".85");
+      div.transition().duration(50).style("opacity", 1);
+      tooltip
+        .style("display", "block")
+        .html(`${d.data.label}: ${d.data.value}`);
+    })
+    .on("mouseout", function (event, d) {
+      d3.select(this).transition().duration(50).attr("opacity", "1");
+      div.transition().duration(50).style("opacity", 0);
+      tooltip.style("display", "none");
+    });
 
-  g.append("text")
-    .attr("transform", (d) => "translate(" + arc.centroid(d) + ")")
-    .attr("dy", "0.35em")
-    .style("text-anchor", "middle")
-    .text((d) => d.data.label);
-
-  g.append("text")
-    .attr("transform", (d) => "translate(" + arc.centroid(d) + ")")
-    .attr("dy", "1.35em")
-    .style("text-anchor", "middle")
-    .text(
-      (d) =>
-        Math.round((d.data.value / d3.sum(data, (d) => d.value)) * 100) + "%"
+  // Pie chart legend
+  var legend = svg
+    .append("g")
+    .attr("class", "legend")
+    .attr(
+      "transform",
+      "translate(" + (radius + 20) + ",-" + (radius - 30) + ")"
     );
+
+  var legendRect = 18;
+  var legendSpacing = 4;
+
+  var legendItem = legend
+    .selectAll(".legend-item")
+    .data(color.domain())
+    .enter()
+    .append("g")
+    .attr("class", "legend-item")
+    .attr(
+      "transform",
+      (d, i) => "translate(0," + i * (legendRect + legendSpacing) + ")"
+    );
+
+  legendItem
+    .append("rect")
+    .attr("width", legendRect)
+    .attr("height", legendRect)
+    .style("fill", color);
+
+  legendItem
+    .append("text")
+    .attr("x", legendRect + legendSpacing)
+    .attr("y", legendRect - legendSpacing)
+    .text((d) => d);
 }
 
 // Create pie chart based on selected type (gender or age)

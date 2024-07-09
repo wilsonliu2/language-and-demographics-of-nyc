@@ -1100,36 +1100,22 @@ function createBarPlotForDemographics(id, data) {
 // Update bar plot value base on race data
 function updateBarPlotForRace(id, properties) {
   var barData = [
-    { label: "Arabic", value: parseInt(properties.Arabic) },
-    { label: "Chinese", value: parseInt(properties.Chinese) },
+    { label: "White", value: parseInt(properties.White) },
+    { label: "Black or African American", value: parseInt(properties.Black) },
     {
-      label: "French, Haitian Creole, or Cajun",
-      value: parseInt(properties.French),
+      label: "American Indian or Alaska Native",
+      value: parseInt(properties.AIAN),
     },
+    { label: "Asian", value: parseInt(properties.Asian) },
     {
-      label: "German or other West Germanic languages",
-      value: parseInt(properties.German),
+      label: "Native Hawaiian or Other Pacific Islander",
+      value: parseInt(properties.NHOPI),
     },
-    { label: "Korean", value: parseInt(properties.Korean) },
+    { label: "Hispanic or Latino", value: parseInt(properties.Hispanic) },
     {
-      label: "Other and unspecified languages",
-      value: parseInt(properties.Other),
+      label: "Not Hispanic or Latino",
+      value: parseInt(properties.Not_Hispanic),
     },
-    {
-      label: "Other Asian and Pacific Island languages",
-      value: parseInt(properties.Other_Asia),
-    },
-    {
-      label: "Other Indo-European languages",
-      value: parseInt(properties.Other_Indo),
-    },
-    {
-      label: "Russian, Polish, or other Slavic languages",
-      value: parseInt(properties.Russian),
-    },
-    { label: "Spanish", value: parseInt(properties.Spanish) },
-    { label: "Tagalog (incl. Filipino)", value: parseInt(properties.Tagalog) },
-    { label: "Vietnamese", value: parseInt(properties.Vietnamese) },
   ];
 
   createBarPlotForDemographics(`#chart-container-${id}`, barData);
@@ -1185,17 +1171,17 @@ function updateLegend(selectedLayer, selectedLanguage) {
       switch (selectedLanguage) {
         case "Arabic":
           legendContent +=
-            '<i style="background: #00441b"></i><span>> 965</span><br>';
+            '<i style="background: #00441b"></i><span>> 966</span><br>';
           legendContent +=
-            '<i style="background: #006d2c"></i><span>508 - 965</span><br>';
+            '<i style="background: #006d2c"></i><span>509 - 965</span><br>';
           legendContent +=
-            '<i style="background: #238b45"></i><span>296 - 508</span><br>';
+            '<i style="background: #238b45"></i><span>297 - 508</span><br>';
           legendContent +=
-            '<i style="background: #41ae76"></i><span>157 - 296</span><br>';
+            '<i style="background: #41ae76"></i><span>158 - 296</span><br>';
           legendContent +=
-            '<i style="background: #66c2a4"></i><span>73 - 157</span><br>';
+            '<i style="background: #66c2a4"></i><span>74 - 157</span><br>';
           legendContent +=
-            '<i style="background: #99d8c9"></i><span>23 - 73</span><br>';
+            '<i style="background: #99d8c9"></i><span>24 - 73</span><br>';
           legendContent +=
             '<i style="background: #ccece6"></i><span>0 - 23</span><br>';
           legendContent +=
@@ -1205,17 +1191,17 @@ function updateLegend(selectedLayer, selectedLanguage) {
           legendContent +=
             '<i style="background: #00441b"></i><span>> 6482</span><br>';
           legendContent +=
-            '<i style="background: #006d2c"></i><span>2498 - 6482</span><br>';
+            '<i style="background: #006d2c"></i><span>2498 - 6481</span><br>';
           legendContent +=
-            '<i style="background: #238b45"></i><span>1562 - 2498</span><br>';
+            '<i style="background: #238b45"></i><span>1562 - 2497</span><br>';
           legendContent +=
-            '<i style="background: #41ae76"></i><span>914 - 1562</span><br>';
+            '<i style="background: #41ae76"></i><span>914 - 1561</span><br>';
           legendContent +=
-            '<i style="background: #66c2a4"></i><span>450 - 914</span><br>';
+            '<i style="background: #66c2a4"></i><span>450 - 913</span><br>';
           legendContent +=
-            '<i style="background: #99d8c9"></i><span>145 - 450</span><br>';
+            '<i style="background: #99d8c9"></i><span>145 - 449</span><br>';
           legendContent +=
-            '<i style="background: #ccece6"></i><span>0 - 145</span><br>';
+            '<i style="background: #ccece6"></i><span>0 - 144</span><br>';
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
@@ -1223,17 +1209,17 @@ function updateLegend(selectedLayer, selectedLanguage) {
           legendContent +=
             '<i style="background: #00441b"></i><span>> 1467</span><br>';
           legendContent +=
-            '<i style="background: #006d2c"></i><span>663 - 1467</span><br>';
+            '<i style="background: #006d2c"></i><span>663 - 1466</span><br>';
           legendContent +=
-            '<i style="background: #238b45"></i><span>434 - 663</span><br>';
+            '<i style="background: #238b45"></i><span>434 - 662</span><br>';
           legendContent +=
-            '<i style="background: #41ae76"></i><span>266 - 434</span><br>';
+            '<i style="background: #41ae76"></i><span>266 - 433</span><br>';
           legendContent +=
-            '<i style="background: #66c2a4"></i><span>136 - 266</span><br>';
+            '<i style="background: #66c2a4"></i><span>136 - 265</span><br>';
           legendContent +=
-            '<i style="background: #99d8c9"></i><span>47 - 136</span><br>';
+            '<i style="background: #99d8c9"></i><span>47 - 135</span><br>';
           legendContent +=
-            '<i style="background: #ccece6"></i><span>0 - 47</span><br>';
+            '<i style="background: #ccece6"></i><span>0 - 46</span><br>';
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
@@ -1241,17 +1227,17 @@ function updateLegend(selectedLayer, selectedLanguage) {
           legendContent +=
             '<i style="background: #00441b"></i><span>> 6170</span><br>';
           legendContent +=
-            '<i style="background: #006d2c"></i><span>3445 - 6170</span><br>';
+            '<i style="background: #006d2c"></i><span>3445 - 6169</span><br>';
           legendContent +=
-            '<i style="background: #238b45"></i><span>2318 - 3445</span><br>';
+            '<i style="background: #238b45"></i><span>2318 - 3444</span><br>';
           legendContent +=
-            '<i style="background: #41ae76"></i><span>1486 - 2318</span><br>';
+            '<i style="background: #41ae76"></i><span>1486 - 2317</span><br>';
           legendContent +=
-            '<i style="background: #66c2a4"></i><span>625 - 1486</span><br>';
+            '<i style="background: #66c2a4"></i><span>625 - 1485</span><br>';
           legendContent +=
-            '<i style="background: #99d8c9"></i><span>124 - 625</span><br>';
+            '<i style="background: #99d8c9"></i><span>124 - 624</span><br>';
           legendContent +=
-            '<i style="background: #ccece6"></i><span>0 - 124</span><br>';
+            '<i style="background: #ccece6"></i><span>0 - 123</span><br>';
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
@@ -1259,17 +1245,17 @@ function updateLegend(selectedLayer, selectedLanguage) {
           legendContent +=
             '<i style="background: #00441b"></i><span>> 1307</span><br>';
           legendContent +=
-            '<i style="background: #006d2c"></i><span>747 - 1307</span><br>';
+            '<i style="background: #006d2c"></i><span>747 - 1306</span><br>';
           legendContent +=
-            '<i style="background: #238b45"></i><span>476 - 747</span><br>';
+            '<i style="background: #238b45"></i><span>476 - 746</span><br>';
           legendContent +=
-            '<i style="background: #41ae76"></i><span>246 - 476</span><br>';
+            '<i style="background: #41ae76"></i><span>246 - 475</span><br>';
           legendContent +=
-            '<i style="background: #66c2a4"></i><span>114 - 246</span><br>';
+            '<i style="background: #66c2a4"></i><span>114 - 245</span><br>';
           legendContent +=
-            '<i style="background: #99d8c9"></i><span>32 - 114</span><br>';
+            '<i style="background: #99d8c9"></i><span>32 - 113</span><br>';
           legendContent +=
-            '<i style="background: #ccece6"></i><span>0 - 32</span><br>';
+            '<i style="background: #ccece6"></i><span>0 - 31</span><br>';
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
@@ -1277,17 +1263,17 @@ function updateLegend(selectedLayer, selectedLanguage) {
           legendContent +=
             '<i style="background: #00441b"></i><span>> 1514</span><br>';
           legendContent +=
-            '<i style="background: #006d2c"></i><span>824 - 1514</span><br>';
+            '<i style="background: #006d2c"></i><span>824 - 1513</span><br>';
           legendContent +=
-            '<i style="background: #238b45"></i><span>457 - 824</span><br>';
+            '<i style="background: #238b45"></i><span>457 - 823</span><br>';
           legendContent +=
-            '<i style="background: #41ae76"></i><span>264 - 457</span><br>';
+            '<i style="background: #41ae76"></i><span>264 - 456</span><br>';
           legendContent +=
-            '<i style="background: #66c2a4"></i><span>129 - 264</span><br>';
+            '<i style="background: #66c2a4"></i><span>129 - 263</span><br>';
           legendContent +=
-            '<i style="background: #99d8c9"></i><span>43 - 129</span><br>';
+            '<i style="background: #99d8c9"></i><span>43 - 128</span><br>';
           legendContent +=
-            '<i style="background: #ccece6"></i><span>0 - 43</span><br>';
+            '<i style="background: #ccece6"></i><span>0 - 42</span><br>';
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
@@ -1295,17 +1281,17 @@ function updateLegend(selectedLayer, selectedLanguage) {
           legendContent +=
             '<i style="background: #00441b"></i><span>> 785</span><br>';
           legendContent +=
-            '<i style="background: #006d2c"></i><span>427 - 785</span><br>';
+            '<i style="background: #006d2c"></i><span>427 - 784</span><br>';
           legendContent +=
-            '<i style="background: #238b45"></i><span>283 - 427</span><br>';
+            '<i style="background: #238b45"></i><span>283 - 426</span><br>';
           legendContent +=
-            '<i style="background: #41ae76"></i><span>166 - 283</span><br>';
+            '<i style="background: #41ae76"></i><span>166 - 282</span><br>';
           legendContent +=
-            '<i style="background: #66c2a4"></i><span>84 - 166</span><br>';
+            '<i style="background: #66c2a4"></i><span>84 - 165</span><br>';
           legendContent +=
-            '<i style="background: #99d8c9"></i><span>26 - 84</span><br>';
+            '<i style="background: #99d8c9"></i><span>26 - 83</span><br>';
           legendContent +=
-            '<i style="background: #ccece6"></i><span>0 - 26</span><br>';
+            '<i style="background: #ccece6"></i><span>0 - 25</span><br>';
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
@@ -1313,17 +1299,17 @@ function updateLegend(selectedLayer, selectedLanguage) {
           legendContent +=
             '<i style="background: #00441b"></i><span>> 2653</span><br>';
           legendContent +=
-            '<i style="background: #006d2c"></i><span>1357 - 2653</span><br>';
+            '<i style="background: #006d2c"></i><span>1357 - 2652</span><br>';
           legendContent +=
-            '<i style="background: #238b45"></i><span>777 - 1357</span><br>';
+            '<i style="background: #238b45"></i><span>777 - 1356</span><br>';
           legendContent +=
-            '<i style="background: #41ae76"></i><span>449 - 777</span><br>';
+            '<i style="background: #41ae76"></i><span>449 - 776</span><br>';
           legendContent +=
-            '<i style="background: #66c2a4"></i><span>238 - 449</span><br>';
+            '<i style="background: #66c2a4"></i><span>238 - 448</span><br>';
           legendContent +=
-            '<i style="background: #99d8c9"></i><span>87 - 238</span><br>';
+            '<i style="background: #99d8c9"></i><span>87 - 237</span><br>';
           legendContent +=
-            '<i style="background: #ccece6"></i><span>0 - 87</span><br>';
+            '<i style="background: #ccece6"></i><span>0 - 86</span><br>';
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
@@ -1331,17 +1317,17 @@ function updateLegend(selectedLayer, selectedLanguage) {
           legendContent +=
             '<i style="background: #00441b"></i><span>> 3818</span><br>';
           legendContent +=
-            '<i style="background: #006d2c"></i><span>2369 - 3818</span><br>';
+            '<i style="background: #006d2c"></i><span>2369 - 3817</span><br>';
           legendContent +=
-            '<i style="background: #238b45"></i><span>1409 - 2369</span><br>';
+            '<i style="background: #238b45"></i><span>1409 - 2368</span><br>';
           legendContent +=
-            '<i style="background: #41ae76"></i><span>818 - 1409</span><br>';
+            '<i style="background: #41ae76"></i><span>818 - 1408</span><br>';
           legendContent +=
-            '<i style="background: #66c2a4"></i><span>416 - 818</span><br>';
+            '<i style="background: #66c2a4"></i><span>416 - 817</span><br>';
           legendContent +=
-            '<i style="background: #99d8c9"></i><span>128 - 416</span><br>';
+            '<i style="background: #99d8c9"></i><span>128 - 415</span><br>';
           legendContent +=
-            '<i style="background: #ccece6"></i><span>0 - 128</span><br>';
+            '<i style="background: #ccece6"></i><span>0 - 127</span><br>';
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
@@ -1349,17 +1335,17 @@ function updateLegend(selectedLayer, selectedLanguage) {
           legendContent +=
             '<i style="background: #00441b"></i><span>> 9883</span><br>';
           legendContent +=
-            '<i style="background: #006d2c"></i><span>5570 - 9883</span><br>';
+            '<i style="background: #006d2c"></i><span>5570 - 9882</span><br>';
           legendContent +=
-            '<i style="background: #238b45"></i><span>3588 - 5570</span><br>';
+            '<i style="background: #238b45"></i><span>3588 - 5569</span><br>';
           legendContent +=
-            '<i style="background: #41ae76"></i><span>2273 - 3588</span><br>';
+            '<i style="background: #41ae76"></i><span>2273 - 3587</span><br>';
           legendContent +=
-            '<i style="background: #66c2a4"></i><span>1269 - 2273</span><br>';
+            '<i style="background: #66c2a4"></i><span>1269 - 2272</span><br>';
           legendContent +=
-            '<i style="background: #99d8c9"></i><span>519 - 1269</span><br>';
+            '<i style="background: #99d8c9"></i><span>519 - 1268</span><br>';
           legendContent +=
-            '<i style="background: #ccece6"></i><span>0 - 519</span><br>';
+            '<i style="background: #ccece6"></i><span>0 - 518</span><br>';
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
@@ -1367,17 +1353,17 @@ function updateLegend(selectedLayer, selectedLanguage) {
           legendContent +=
             '<i style="background: #00441b"></i><span>> 962</span><br>';
           legendContent +=
-            '<i style="background: #006d2c"></i><span>524 - 962</span><br>';
+            '<i style="background: #006d2c"></i><span>524 - 961</span><br>';
           legendContent +=
-            '<i style="background: #238b45"></i><span>268 - 524</span><br>';
+            '<i style="background: #238b45"></i><span>268 - 523</span><br>';
           legendContent +=
-            '<i style="background: #41ae76"></i><span>132 - 268</span><br>';
+            '<i style="background: #41ae76"></i><span>132 - 267</span><br>';
           legendContent +=
-            '<i style="background: #66c2a4"></i><span>62 - 132</span><br>';
+            '<i style="background: #66c2a4"></i><span>62 - 131</span><br>';
           legendContent +=
-            '<i style="background: #99d8c9"></i><span>19 - 62</span><br>';
+            '<i style="background: #99d8c9"></i><span>19 - 61</span><br>';
           legendContent +=
-            '<i style="background: #ccece6"></i><span>0 - 19</span><br>';
+            '<i style="background: #ccece6"></i><span>0 - 18</span><br>';
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
@@ -1385,17 +1371,17 @@ function updateLegend(selectedLayer, selectedLanguage) {
           legendContent +=
             '<i style="background: #00441b"></i><span>> 256</span><br>';
           legendContent +=
-            '<i style="background: #006d2c"></i><span>131 - 256</span><br>';
+            '<i style="background: #006d2c"></i><span>131 - 255</span><br>';
           legendContent +=
-            '<i style="background: #238b45"></i><span>74 - 131</span><br>';
+            '<i style="background: #238b45"></i><span>74 - 130</span><br>';
           legendContent +=
-            '<i style="background: #41ae76"></i><span>41 - 74</span><br>';
+            '<i style="background: #41ae76"></i><span>41 - 73</span><br>';
           legendContent +=
-            '<i style="background: #66c2a4"></i><span>20 - 41</span><br>';
+            '<i style="background: #66c2a4"></i><span>20 - 40</span><br>';
           legendContent +=
-            '<i style="background: #99d8c9"></i><span>6 - 20</span><br>';
+            '<i style="background: #99d8c9"></i><span>6 - 19</span><br>';
           legendContent +=
-            '<i style="background: #ccece6"></i><span>0 - 6</span><br>';
+            '<i style="background: #ccece6"></i><span>0 - 5</span><br>';
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
@@ -1404,20 +1390,21 @@ function updateLegend(selectedLayer, selectedLanguage) {
   } else if ((selectedLayer = "demographics")) {
     legendContent += "<h4>Population Density</h4>";
     legendContent +=
-      '<i style="background: #00441b"></i><span>15945+</span><br>';
+      '<i style="background: #00441b"></i><span>> 15946</span><br>';
     legendContent +=
-      '<i style="background: #006d2c"></i><span>8460 - 15945</span><br>';
+      '<i style="background: #006d2c"></i><span>8461 - 15945</span><br>';
     legendContent +=
-      '<i style="background: #238b45"></i><span>6159 - 8460</span><br>';
+      '<i style="background: #238b45"></i><span>6160 - 8460</span><br>';
     legendContent +=
-      '<i style="background: #41ae76"></i><span>4636 - 6159</span><br>';
+      '<i style="background: #41ae76"></i><span>4637 - 6159</span><br>';
     legendContent +=
-      '<i style="background: #66c2a4"></i><span>3380 - 4636</span><br>';
+      '<i style="background: #66c2a4"></i><span>3381 - 4636</span><br>';
     legendContent +=
-      '<i style="background: #99d8c9"></i><span>2181 - 3380</span><br>';
+      '<i style="background: #99d8c9"></i><span>2182 - 3380</span><br>';
     legendContent +=
       '<i style="background: #ccece6"></i><span>0 - 2181</span><br>';
-    legendContent += '<i style="background: #606060"></i><span>0</span><br>';
+    legendContent +=
+      '<i style="background: #606060"></i><span>No Data</span><br>';
   }
 
   document.querySelector(".legend").innerHTML = legendContent;
@@ -1523,7 +1510,6 @@ function healthRiskStyle(propertyName, colorFunction) {
   };
 }
 
-// TEMPORARY WILL CHANGE LATER
 function getColorForUninsured(percent) {
   return percent > 31.1
     ? "#034e7b"
@@ -1544,7 +1530,6 @@ function getColorForUninsured(percent) {
     : "#606060";
 }
 
-// TEMPORARY WILL CHANGE LATER
 function getColorForFrequentDrinkers(percent) {
   return percent > 29.4
     ? "#034e7b"
@@ -1565,7 +1550,6 @@ function getColorForFrequentDrinkers(percent) {
     : "#606060";
 }
 
-// TEMPORARY WILL CHANGE LATER
 function getColorForCurrentSmokers(percent) {
   return percent > 45.4
     ? "#034e7b"
@@ -1586,7 +1570,6 @@ function getColorForCurrentSmokers(percent) {
     : "#606060";
 }
 
-// TEMPORARY WILL CHANGE LATER
 function getColorForSedentaryLifestyle(percent) {
   return percent > 63.9
     ? "#034e7b"
@@ -1607,7 +1590,6 @@ function getColorForSedentaryLifestyle(percent) {
     : "#606060";
 }
 
-// TEMPORARY WILL CHANGE LATER
 function getColorForSleepLessThan7Hours(percent) {
   return percent > 49.1
     ? "#034e7b"
@@ -1755,13 +1737,13 @@ healthRisklegend.onAdd = function () {
   var div = L.DomUtil.create("div", "healthRiskLegend");
   div.innerHTML = `
     <h4>Percent Uninsured</h4>
-    <i style="background: #034e7b"></i><span> > 31.1%</span><br>
-    <i style="background: #0570b0"></i><span>21.3% - 31.1%</span><br>
-    <i style="background: #3690c0"></i><span>16.1% - 21.3%</span><br>
-    <i style="background: #74a9cf"></i><span>12% - 16.1%</span><br>
-    <i style="background: #a6bddb"></i><span>8.6% - 12%</span><br>
-    <i style="background: #d0d1e6"></i><span>5.6% - 8.6%</span><br>
-    <i style="background: #f1eef6"></i><span>2% - 5.6%</span><br>
+    <i style="background: #034e7b"></i><span> > 31.2%</span><br>
+    <i style="background: #0570b0"></i><span>21.4% - 31.1%</span><br>
+    <i style="background: #3690c0"></i><span>16.2% - 21.3%</span><br>
+    <i style="background: #74a9cf"></i><span>12.1% - 16.1%</span><br>
+    <i style="background: #a6bddb"></i><span>8.7% - 12%</span><br>
+    <i style="background: #d0d1e6"></i><span>5.7% - 8.6%</span><br>
+    <i style="background: #f1eef6"></i><span>2.1% - 5.6%</span><br>
     <i style="background: #f1eef6"></i><span>0% - 2%</span><br>
     <i style="background: #606060"></i><span>No Data</span><br>
   `;
@@ -1776,13 +1758,13 @@ function updateLegendForHealthRisk(layerName) {
     case "Uninsured":
       legendContent = `
         <h4>Percent Uninsured</h4>
-        <i style="background: #034e7b"></i><span> > 31.1%</span><br>
-        <i style="background: #0570b0"></i><span>21.3% - 31.1%</span><br>
-        <i style="background: #3690c0"></i><span>16.1% - 21.3%</span><br>
-        <i style="background: #74a9cf"></i><span>12% - 16.1%</span><br>
-        <i style="background: #a6bddb"></i><span>8.6% - 12%</span><br>
-        <i style="background: #d0d1e6"></i><span>5.6% - 8.6%</span><br>
-        <i style="background: #f1eef6"></i><span>2% - 5.6%</span><br>
+        <i style="background: #034e7b"></i><span> > 31.2%</span><br>
+        <i style="background: #0570b0"></i><span>21.4% - 31.1%</span><br>
+        <i style="background: #3690c0"></i><span>16.2% - 21.3%</span><br>
+        <i style="background: #74a9cf"></i><span>12.1% - 16.1%</span><br>
+        <i style="background: #a6bddb"></i><span>8.7% - 12%</span><br>
+        <i style="background: #d0d1e6"></i><span>5.7% - 8.6%</span><br>
+        <i style="background: #f1eef6"></i><span>2.1% - 5.6%</span><br>
         <i style="background: #f1eef6"></i><span>0% - 2%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
@@ -1790,13 +1772,13 @@ function updateLegendForHealthRisk(layerName) {
     case "Frequent Drinkers":
       legendContent = `
         <h4>Frequent Drinkers</h4>
-        <i style="background: #034e7b"></i><span> > 29.4%</span><br>
-        <i style="background: #0570b0"></i><span>23.1% - 29.4%</span><br>
-        <i style="background: #3690c0"></i><span>20.1% - 23.1%</span><br>
-        <i style="background: #74a9cf"></i><span>17.3% - 20.1%</span><br>
-        <i style="background: #a6bddb"></i><span>15% - 17.3%</span><br>
-        <i style="background: #d0d1e6"></i><span>12.8% - 15%</span><br>
-        <i style="background: #f1eef6"></i><span>4.9% - 12.8%</span><br>
+        <i style="background: #034e7b"></i><span> > 29.5%</span><br>
+        <i style="background: #0570b0"></i><span>23.2% - 29.4%</span><br>
+        <i style="background: #3690c0"></i><span>20.2% - 23.1%</span><br>
+        <i style="background: #74a9cf"></i><span>17.4% - 20.1%</span><br>
+        <i style="background: #a6bddb"></i><span>15.1% - 17.3%</span><br>
+        <i style="background: #d0d1e6"></i><span>12.9% - 15%</span><br>
+        <i style="background: #f1eef6"></i><span>5% - 12.8%</span><br>
         <i style="background: #f1eef6"></i><span>0% - 4.9%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
@@ -1804,13 +1786,13 @@ function updateLegendForHealthRisk(layerName) {
     case "Current Smokers":
       legendContent = `
         <h4>Adult Smokers</h4>
-        <i style="background: #034e7b"></i><span> > 45.4%</span><br>
-        <i style="background: #0570b0"></i><span>23.1% - 45.4%</span><br>
-        <i style="background: #3690c0"></i><span>18.7% - 23.1%</span><br>
-        <i style="background: #74a9cf"></i><span>15.4% - 18.7%</span><br>
-        <i style="background: #a6bddb"></i><span>12.6% - 15.4%</span><br>
-        <i style="background: #d0d1e6"></i><span>9.5% - 12.6%</span><br>
-        <i style="background: #f1eef6"></i><span>5.1% - 9.5%</span><br>
+        <i style="background: #034e7b"></i><span> > 45.5%</span><br>
+        <i style="background: #0570b0"></i><span>23.2% - 45.4%</span><br>
+        <i style="background: #3690c0"></i><span>18.8% - 23.1%</span><br>
+        <i style="background: #74a9cf"></i><span>15.5% - 18.7%</span><br>
+        <i style="background: #a6bddb"></i><span>12.7% - 15.4%</span><br>
+        <i style="background: #d0d1e6"></i><span>9.6% - 12.6%</span><br>
+        <i style="background: #f1eef6"></i><span>5.2% - 9.5%</span><br>
         <i style="background: #f1eef6"></i><span>0% - 5.1%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
@@ -1818,13 +1800,13 @@ function updateLegendForHealthRisk(layerName) {
     case "Sedentary Lifestyle":
       legendContent = `
         <h4>Phyiscally Inactive</h4>
-        <i style="background: #034e7b"></i><span> > 63.9%</span><br>
-        <i style="background: #0570b0"></i><span>40.5% - 63.9%</span><br>
-        <i style="background: #3690c0"></i><span>34.2% - 40.5%</span><br>
-        <i style="background: #74a9cf"></i><span>28.9% - 34.2%</span><br>
-        <i style="background: #a6bddb"></i><span>23.7% - 28.9%</span><br>
-        <i style="background: #d0d1e6"></i><span>17.4% - 23.7%</span><br>
-        <i style="background: #f1eef6"></i><span>9.4% - 17.4%</span><br>
+        <i style="background: #034e7b"></i><span> > 64%</span><br>
+        <i style="background: #0570b0"></i><span>40.6% - 63.9%</span><br>
+        <i style="background: #3690c0"></i><span>34.3% - 40.5%</span><br>
+        <i style="background: #74a9cf"></i><span>29% - 34.2%</span><br>
+        <i style="background: #a6bddb"></i><span>23.8% - 28.9%</span><br>
+        <i style="background: #d0d1e6"></i><span>17.5% - 23.7%</span><br>
+        <i style="background: #f1eef6"></i><span>9.5% - 17.4%</span><br>
         <i style="background: #f1eef6"></i><span>0% - 9.4%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
@@ -1832,13 +1814,13 @@ function updateLegendForHealthRisk(layerName) {
     case "<7 Hours Sleep":
       legendContent = `
         <h4>Sleep <7 Hours</h4>
-        <i style="background: #034e7b"></i><span> > 49.1%</span><br>
-        <i style="background: #0570b0"></i><span>41.5% - 49.1%</span><br>
-        <i style="background: #3690c0"></i><span>38.5% - 41.5%</span><br>
-        <i style="background: #74a9cf"></i><span>35.7% - 38.5%</span><br>
-        <i style="background: #a6bddb"></i><span>32.9% - 35.7%</span><br>
-        <i style="background: #d0d1e6"></i><span>29.9% - 32.9%</span><br>
-        <i style="background: #f1eef6"></i><span>23.2% - 29.9%</span><br>
+        <i style="background: #034e7b"></i><span> > 49.2%</span><br>
+        <i style="background: #0570b0"></i><span>41.6% - 49.1%</span><br>
+        <i style="background: #3690c0"></i><span>38.6% - 41.5%</span><br>
+        <i style="background: #74a9cf"></i><span>35.8% - 38.5%</span><br>
+        <i style="background: #a6bddb"></i><span>33% - 35.7%</span><br>
+        <i style="background: #d0d1e6"></i><span>30% - 32.9%</span><br>
+        <i style="background: #f1eef6"></i><span>23.3% - 29.9%</span><br>
         <i style="background: #f1eef6"></i><span>0% - 23.2%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
@@ -2396,13 +2378,13 @@ healthOutcomesLegend.onAdd = function () {
   var div = L.DomUtil.create("div", "healthOutcomesLegend");
   div.innerHTML = `
     <h4>Asthma Prevalence</h4>
-    <i style="background: #91003f"></i><span>> 16.5%</span><br>
-    <i style="background: #ce1256"></i><span>13.5% - 16.5%</span><br>
-    <i style="background: #e7298a"></i><span>12.2% - 13.5%</span><br>
-    <i style="background: #df65b0"></i><span>11% - 12.2%</span><br>
-    <i style="background: #c994c7"></i><span>9.9% - 11%</span><br>
-    <i style="background: #d4b9da"></i><span>8.9% - 9.9%</span><br>
-    <i style="background: #e7e1ef"></i><span>7.4% - 8.9%</span><br>
+    <i style="background: #91003f"></i><span>> 16.6%</span><br>
+    <i style="background: #ce1256"></i><span>13.6% - 16.5%</span><br>
+    <i style="background: #e7298a"></i><span>12.3% - 13.5%</span><br>
+    <i style="background: #df65b0"></i><span>11.1% - 12.2%</span><br>
+    <i style="background: #c994c7"></i><span>10% - 11%</span><br>
+    <i style="background: #d4b9da"></i><span>9% - 9.9%</span><br>
+    <i style="background: #e7e1ef"></i><span>7.5% - 8.9%</span><br>
     <i style="background: #e7e1ef"></i><span>0% - 7.4%</span><br>
     <i style="background: #606060"></i><span>No Data</span><br>
   `;
@@ -2417,13 +2399,13 @@ function updateLegendForHealthOutcomes(layerName) {
     case asthmaPrevalence:
       legendContent = `
         <h4>Asthma Prevalence</h4>
-        <i style="background: #91003f"></i><span>> 16.5%</span><br>
-        <i style="background: #ce1256"></i><span>13.5% - 16.5%</span><br>
-        <i style="background: #e7298a"></i><span>12.2% - 13.5%</span><br>
-        <i style="background: #df65b0"></i><span>11% - 12.2%</span><br>
-        <i style="background: #c994c7"></i><span>9.9% - 11%</span><br>
-        <i style="background: #d4b9da"></i><span>8.9% - 9.9%</span><br>
-        <i style="background: #e7e1ef"></i><span>7.4% - 8.9%</span><br>
+        <i style="background: #91003f"></i><span>> 16.6%</span><br>
+        <i style="background: #ce1256"></i><span>13.6% - 16.5%</span><br>
+        <i style="background: #e7298a"></i><span>12.3% - 13.5%</span><br>
+        <i style="background: #df65b0"></i><span>11.1% - 12.2%</span><br>
+        <i style="background: #c994c7"></i><span>10% - 11%</span><br>
+        <i style="background: #d4b9da"></i><span>9% - 9.9%</span><br>
+        <i style="background: #e7e1ef"></i><span>7.5% - 8.9%</span><br>
         <i style="background: #e7e1ef"></i><span>0% - 7.4%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
@@ -2431,13 +2413,13 @@ function updateLegendForHealthOutcomes(layerName) {
     case highBloodPressure:
       legendContent = `
         <h4>High Blood Pressure</h4>
-        <i style="background: #91003f"></i><span>> 73.3%</span><br>
-        <i style="background: #ce1256"></i><span>37.6% - 73.3%</span><br>
-        <i style="background: #e7298a"></i><span>32.7% - 37.6%</span><br>
-        <i style="background: #df65b0"></i><span>28.5% - 32.7%</span><br>
-        <i style="background: #c994c7"></i><span>24.4% - 28.5%</span><br>
-        <i style="background: #d4b9da"></i><span>19.3% - 24.4%</span><br>
-        <i style="background: #e7e1ef"></i><span>9% - 19.3%</span><br>
+        <i style="background: #91003f"></i><span>> 73.4%</span><br>
+        <i style="background: #ce1256"></i><span>37.7% - 73.3%</span><br>
+        <i style="background: #e7298a"></i><span>32.8% - 37.6%</span><br>
+        <i style="background: #df65b0"></i><span>28.6% - 32.7%</span><br>
+        <i style="background: #c994c7"></i><span>24.5% - 28.5%</span><br>
+        <i style="background: #d4b9da"></i><span>19.4% - 24.4%</span><br>
+        <i style="background: #e7e1ef"></i><span>9.1% - 19.3%</span><br>
         <i style="background: #e7e1ef"></i><span>0% - 9%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
@@ -2445,13 +2427,13 @@ function updateLegendForHealthOutcomes(layerName) {
     case cancerPrevalence:
       legendContent = `
         <h4>Cancer Prevalence (except skin)</h4>
-        <i style="background: #91003f"></i><span>> 19.4%</span><br>
-        <i style="background: #ce1256"></i><span>9.4% - 19.4%</span><br>
-        <i style="background: #e7298a"></i><span>7.2% - 9.4%</span><br>
-        <i style="background: #df65b0"></i><span>5.9% - 7.2%</span><br>
-        <i style="background: #c994c7"></i><span>4.9% - 5.9%</span><br>
-        <i style="background: #d4b9da"></i><span>3.9% - 4.9%</span><br>
-        <i style="background: #e7e1ef"></i><span>1.5% - 3.9%</span><br>
+        <i style="background: #91003f"></i><span>> 19.5%</span><br>
+        <i style="background: #ce1256"></i><span>9.5% - 19.4%</span><br>
+        <i style="background: #e7298a"></i><span>7.3% - 9.4%</span><br>
+        <i style="background: #df65b0"></i><span>6% - 7.2%</span><br>
+        <i style="background: #c994c7"></i><span>5% - 5.9%</span><br>
+        <i style="background: #d4b9da"></i><span>4% - 4.9%</span><br>
+        <i style="background: #e7e1ef"></i><span>1.6% - 3.9%</span><br>
         <i style="background: #e7e1ef"></i><span>0% - 1.5%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
@@ -2459,13 +2441,13 @@ function updateLegendForHealthOutcomes(layerName) {
     case highCholesterol:
       legendContent = `
         <h4>High Cholesterol</h4>
-        <i style="background: #91003f"></i><span>> 97.3%</span><br>
-        <i style="background: #ce1256"></i><span>89.7% - 97.3%</span><br>
-        <i style="background: #e7298a"></i><span>87.2% - 89.7%</span><br>
-        <i style="background: #df65b0"></i><span>84.5% - 87.2%</span><br>
-        <i style="background: #c994c7"></i><span>81.4% - 84.5%</span><br>
-        <i style="background: #d4b9da"></i><span>75.9% - 81.4%</span><br>
-        <i style="background: #e7e1ef"></i><span>62.5% - 75.9%</span><br>
+        <i style="background: #91003f"></i><span>> 97.4%</span><br>
+        <i style="background: #ce1256"></i><span>89.8% - 97.3%</span><br>
+        <i style="background: #e7298a"></i><span>87.3% - 89.7%</span><br>
+        <i style="background: #df65b0"></i><span>84.6% - 87.2%</span><br>
+        <i style="background: #c994c7"></i><span>81.5% - 84.5%</span><br>
+        <i style="background: #d4b9da"></i><span>76% - 81.4%</span><br>
+        <i style="background: #e7e1ef"></i><span>62.6% - 75.9%</span><br>
         <i style="background: #e7e1ef"></i><span>0% - 62.5%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
@@ -2473,13 +2455,13 @@ function updateLegendForHealthOutcomes(layerName) {
     case chronicKidneyDisease:
       legendContent = `
         <h4>Chronic Kidney Disease</h4>
-        <i style="background: #91003f"></i><span>> 11.9%</span><br>
-        <i style="background: #ce1256"></i><span>5.1% - 11.9%</span><br>
-        <i style="background: #e7298a"></i><span>3.8% - 5.1%</span><br>
-        <i style="background: #df65b0"></i><span>3.2% - 3.8%</span><br>
-        <i style="background: #c994c7"></i><span>2.7% - 3.2%</span><br>
-        <i style="background: #d4b9da"></i><span>2.1% - 2.7%</span><br>
-        <i style="background: #e7e1ef"></i><span>0.8% - 2.1%</span><br>
+        <i style="background: #91003f"></i><span>> 12%</span><br>
+        <i style="background: #ce1256"></i><span>5.2% - 11.9%</span><br>
+        <i style="background: #e7298a"></i><span>3.9% - 5.1%</span><br>
+        <i style="background: #df65b0"></i><span>3.3% - 3.8%</span><br>
+        <i style="background: #c994c7"></i><span>2.8% - 3.2%</span><br>
+        <i style="background: #d4b9da"></i><span>2.2% - 2.7%</span><br>
+        <i style="background: #e7e1ef"></i><span>0.9% - 2.1%</span><br>
         <i style="background: #e7e1ef"></i><span>0% - 0.8%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
@@ -2487,13 +2469,13 @@ function updateLegendForHealthOutcomes(layerName) {
     case pulmonaryDisease:
       legendContent = `
         <h4>Pulmonary Disease</h4>
-        <i style="background: #91003f"></i><span>> 49.4%</span><br>
-        <i style="background: #ce1256"></i><span>27.9% - 49.4%</span><br>
-        <i style="background: #e7298a"></i><span>22.8% - 27.9%</span><br>
-        <i style="background: #df65b0"></i><span>20% - 22.8%</span><br>
-        <i style="background: #c994c7"></i><span>17.3% - 20%</span><br>
-        <i style="background: #d4b9da"></i><span>14% - 17.3%</span><br>
-        <i style="background: #e7e1ef"></i><span>6.1% - 14%</span><br>
+        <i style="background: #91003f"></i><span>> 49.5%</span><br>
+        <i style="background: #ce1256"></i><span>28% - 49.4%</span><br>
+        <i style="background: #e7298a"></i><span>22.9% - 27.9%</span><br>
+        <i style="background: #df65b0"></i><span>20.1% - 22.8%</span><br>
+        <i style="background: #c994c7"></i><span>17.4% - 20%</span><br>
+        <i style="background: #d4b9da"></i><span>14.1% - 17.3%</span><br>
+        <i style="background: #e7e1ef"></i><span>6.2% - 14%</span><br>
         <i style="background: #e7e1ef"></i><span>0% - 6.1%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
@@ -2501,13 +2483,13 @@ function updateLegendForHealthOutcomes(layerName) {
     case heartDisease:
       legendContent = `
         <h4>Heart Disease</h4>
-        <i style="background: #91003f"></i><span>> 34%</span><br>
-        <i style="background: #ce1256"></i><span>11.5% - 34%</span><br>
-        <i style="background: #e7298a"></i><span>7.5% - 11.5%</span><br>
-        <i style="background: #df65b0"></i><span>5.8% - 7.5%</span><br>
-        <i style="background: #c994c7"></i><span>4.7% - 5.8%</span><br>
-        <i style="background: #d4b9da"></i><span>3.5% - 4.7%</span><br>
-        <i style="background: #e7e1ef"></i><span>1% - 3.5%</span><br>
+        <i style="background: #91003f"></i><span>> 34.1%</span><br>
+        <i style="background: #ce1256"></i><span>11.6% - 34%</span><br>
+        <i style="background: #e7298a"></i><span>7.6% - 11.5%</span><br>
+        <i style="background: #df65b0"></i><span>5.9% - 7.5%</span><br>
+        <i style="background: #c994c7"></i><span>4.8% - 5.8%</span><br>
+        <i style="background: #d4b9da"></i><span>3.6% - 4.7%</span><br>
+        <i style="background: #e7e1ef"></i><span>1.1% - 3.5%</span><br>
         <i style="background: #e7e1ef"></i><span>0% - 1%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
@@ -2515,13 +2497,13 @@ function updateLegendForHealthOutcomes(layerName) {
     case diabetesPrevalence:
       legendContent = `
         <h4>Diabetes Prevalence</h4>
-        <i style="background: #91003f"></i><span>> 46.1%</span><br>
-        <i style="background: #ce1256"></i><span>17.7% - 46.1%</span><br>
-        <i style="background: #e7298a"></i><span>14.4% - 17.7%</span><br>
-        <i style="background: #df65b0"></i><span>12.1% - 14.4%</span><br>
-        <i style="background: #c994c7"></i><span>9.8% - 12.1%</span><br>
-        <i style="background: #d4b9da"></i><span>6.9% - 9.8%</span><br>
-        <i style="background: #e7e1ef"></i><span>2% - 6.9%</span><br>
+        <i style="background: #91003f"></i><span>> 46.2%</span><br>
+        <i style="background: #ce1256"></i><span>17.8% - 46.1%</span><br>
+        <i style="background: #e7298a"></i><span>14.5% - 17.7%</span><br>
+        <i style="background: #df65b0"></i><span>12.2% - 14.4%</span><br>
+        <i style="background: #c994c7"></i><span>9.9% - 12.1%</span><br>
+        <i style="background: #d4b9da"></i><span>7% - 9.8%</span><br>
+        <i style="background: #e7e1ef"></i><span>2.1% - 6.9%</span><br>
         <i style="background: #e7e1ef"></i><span>0% - 2%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
@@ -2529,13 +2511,13 @@ function updateLegendForHealthOutcomes(layerName) {
     case obesityPrevalence:
       legendContent = `
         <h4>Obesity Prevalence</h4>
-        <i style="background: #91003f"></i><span>> 48.8%</span><br>
-        <i style="background: #ce1256"></i><span>36.6% - 48.8%</span><br>
-        <i style="background: #e7298a"></i><span>32.2% - 36.6%</span><br>
-        <i style="background: #df65b0"></i><span>27.9% - 32.2%</span><br>
-        <i style="background: #c994c7"></i><span>23.6% - 27.9%</span><br>
-        <i style="background: #d4b9da"></i><span>18.9% - 23.6%</span><br>
-        <i style="background: #e7e1ef"></i><span>12.6% - 18.9%</span><br>
+        <i style="background: #91003f"></i><span>> 48.9%</span><br>
+        <i style="background: #ce1256"></i><span>36.7% - 48.8%</span><br>
+        <i style="background: #e7298a"></i><span>32.3% - 36.6%</span><br>
+        <i style="background: #df65b0"></i><span>28% - 32.2%</span><br>
+        <i style="background: #c994c7"></i><span>23.7% - 27.9%</span><br>
+        <i style="background: #d4b9da"></i><span>19% - 23.6%</span><br>
+        <i style="background: #e7e1ef"></i><span>12.7% - 18.9%</span><br>
         <i style="background: #e7e1ef"></i><span>0% - 12.6%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
@@ -2543,13 +2525,13 @@ function updateLegendForHealthOutcomes(layerName) {
     case strokePrevalence:
       legendContent = `
         <h4>Stroke Prevalence</h4>
-        <i style="background: #91003f"></i><span>> 17.4%</span><br>
-        <i style="background: #ce1256"></i><span>6.3% - 17.4%</span><br>
-        <i style="background: #e7298a"></i><span>4.3% - 6.3%</span><br>
-        <i style="background: #df65b0"></i><span>3.4% - 4.3%</span><br>
-        <i style="background: #c994c7"></i><span>2.7% - 3.4%</span><br>
-        <i style="background: #d4b9da"></i><span>1.9% - 2.7%</span><br>
-        <i style="background: #e7e1ef"></i><span>0.6% - 1.9%</span><br>
+        <i style="background: #91003f"></i><span>> 17.5%</span><br>
+        <i style="background: #ce1256"></i><span>6.4% - 17.4%</span><br>
+        <i style="background: #e7298a"></i><span>4.4% - 6.3%</span><br>
+        <i style="background: #df65b0"></i><span>3.5% - 4.3%</span><br>
+        <i style="background: #c994c7"></i><span>2.8% - 3.4%</span><br>
+        <i style="background: #d4b9da"></i><span>2% - 2.7%</span><br>
+        <i style="background: #e7e1ef"></i><span>0.7% - 1.9%</span><br>
         <i style="background: #e7e1ef"></i><span>0% - 0.6%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
@@ -2911,13 +2893,13 @@ screeningRatesLegend.onAdd = function () {
   var div = L.DomUtil.create("div", "screeningRatesLegend");
   div.innerHTML = `
     <h4>Percent Annual Checkup</h4>
-    <i style="background: #6e016b"></i><span>> 91.3%</span><br>
-    <i style="background: #88419d"></i><span>81.5% - 91.3%</span><br>
-    <i style="background: #8c6bb1"></i><span>78.7% - 81.5%</span><br>
-    <i style="background: #8c96c6"></i><span>76.5% - 78.7%</span><br>
-    <i style="background: #9ebcda"></i><span>74.4% - 76.5%</span><br>
-    <i style="background: #bfd3e6"></i><span>71.7% - 74.4%</span><br>
-    <i style="background: #edf8fb"></i><span>66.1% - 71.7%</span><br>
+    <i style="background: #6e016b"></i><span>> 91.4%</span><br>
+    <i style="background: #88419d"></i><span>81.6% - 91.3%</span><br>
+    <i style="background: #8c6bb1"></i><span>78.8% - 81.5%</span><br>
+    <i style="background: #8c96c6"></i><span>76.6% - 78.7%</span><br>
+    <i style="background: #9ebcda"></i><span>74.5% - 76.5%</span><br>
+    <i style="background: #bfd3e6"></i><span>71.8% - 74.4%</span><br>
+    <i style="background: #edf8fb"></i><span>66.2% - 71.7%</span><br>
     <i style="background: #edf8fb"></i><span>0% - 66.1%</span><br>
     <i style="background: #606060"></i><span>No Data</span><br>
   `;
@@ -2932,13 +2914,13 @@ function updateLegendForScreeningRates(layerName) {
     case "Annual Checkup":
       legendContent = `
         <h4>Percent Annual Checkup</h4>
-        <i style="background: #6e016b"></i><span>> 91.3%</span><br>
-        <i style="background: #88419d"></i><span>81.5% - 91.3%</span><br>
-        <i style="background: #8c6bb1"></i><span>78.7% - 81.5%</span><br>
-        <i style="background: #8c96c6"></i><span>76.5% - 78.7%</span><br>
-        <i style="background: #9ebcda"></i><span>74.4% - 76.5%</span><br>
-        <i style="background: #bfd3e6"></i><span>71.7% - 74.4%</span><br>
-        <i style="background: #edf8fb"></i><span>66.1% - 71.7%</span><br>
+        <i style="background: #6e016b"></i><span>> 91.4%</span><br>
+        <i style="background: #88419d"></i><span>81.6% - 91.3%</span><br>
+        <i style="background: #8c6bb1"></i><span>78.8% - 81.5%</span><br>
+        <i style="background: #8c96c6"></i><span>76.6% - 78.7%</span><br>
+        <i style="background: #9ebcda"></i><span>74.5% - 76.5%</span><br>
+        <i style="background: #bfd3e6"></i><span>71.8% - 74.4%</span><br>
+        <i style="background: #edf8fb"></i><span>66.2% - 71.7%</span><br>
         <i style="background: #edf8fb"></i><span>0% - 66.1%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
@@ -2946,13 +2928,13 @@ function updateLegendForScreeningRates(layerName) {
     case "Dental Visit":
       legendContent = `
         <h4>Percent Dental Visit</h4>
-        <i style="background: #6e016b"></i><span>> 82.9%</span><br>
-        <i style="background: #88419d"></i><span>72.1% - 82.9%</span><br>
-        <i style="background: #8c6bb1"></i><span>64.8% - 72.1%</span><br>
-        <i style="background: #8c96c6"></i><span>58.5% - 64.8%</span><br>
-        <i style="background: #9ebcda"></i><span>52.2% - 58.5%</span><br>
-        <i style="background: #bfd3e6"></i><span>45% - 52.2%</span><br>
-        <i style="background: #edf8fb"></i><span>23.3% - 45%</span><br>
+        <i style="background: #6e016b"></i><span>> 83%</span><br>
+        <i style="background: #88419d"></i><span>72.2% - 82.9%</span><br>
+        <i style="background: #8c6bb1"></i><span>64.9% - 72.1%</span><br>
+        <i style="background: #8c96c6"></i><span>58.6% - 64.8%</span><br>
+        <i style="background: #9ebcda"></i><span>52.3% - 58.5%</span><br>
+        <i style="background: #bfd3e6"></i><span>45.1% - 52.2%</span><br>
+        <i style="background: #edf8fb"></i><span>23.4% - 45%</span><br>
         <i style="background: #edf8fb"></i><span>0% - 23.3%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
@@ -2960,13 +2942,13 @@ function updateLegendForScreeningRates(layerName) {
     case "Cholesterol Screening":
       legendContent = `
         <h4>Percent Cholesterol Screening</h4>
-        <i style="background: #6e016b"></i><span>> 97.3%</span><br>
-        <i style="background: #88419d"></i><span>89.7% - 97.3%</span><br>
-        <i style="background: #8c6bb1"></i><span>87.2% - 89.7%</span><br>
-        <i style="background: #8c96c6"></i><span>84.5% - 87.2%</span><br>
-        <i style="background: #9ebcda"></i><span>81.4% - 84.5%</span><br>
-        <i style="background: #bfd3e6"></i><span>75.9% - 81.4%</span><br>
-        <i style="background: #edf8fb"></i><span>62.5% - 75.9%</span><br>
+        <i style="background: #6e016b"></i><span>> 97.4%</span><br>
+        <i style="background: #88419d"></i><span>89.8% - 97.3%</span><br>
+        <i style="background: #8c6bb1"></i><span>87.3% - 89.7%</span><br>
+        <i style="background: #8c96c6"></i><span>84.6% - 87.2%</span><br>
+        <i style="background: #9ebcda"></i><span>81.5% - 84.5%</span><br>
+        <i style="background: #bfd3e6"></i><span>76% - 81.4%</span><br>
+        <i style="background: #edf8fb"></i><span>62.6% - 75.9%</span><br>
         <i style="background: #edf8fb"></i><span>0% - 62.5%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
@@ -2974,13 +2956,13 @@ function updateLegendForScreeningRates(layerName) {
     case "Mammography Screening":
       legendContent = `
         <h4>Percent Mammography Screening</h4>
-        <i style="background: #6e016b"></i><span>> 86.3%</span><br>
-        <i style="background: #88419d"></i><span>83.1% - 86.3%</span><br>
-        <i style="background: #8c6bb1"></i><span>81.1% - 83.1%</span><br>
-        <i style="background: #8c96c6"></i><span>79.4% - 81.1%</span><br>
-        <i style="background: #9ebcda"></i><span>77.8% - 79.4%</span><br>
-        <i style="background: #bfd3e6"></i><span>75.2% - 77.8%</span><br>
-        <i style="background: #edf8fb"></i><span>69.5% - 75.2%</span><br>
+        <i style="background: #6e016b"></i><span>> 86.4%</span><br>
+        <i style="background: #88419d"></i><span>83.2% - 86.3%</span><br>
+        <i style="background: #8c6bb1"></i><span>81.2% - 83.1%</span><br>
+        <i style="background: #8c96c6"></i><span>79.5% - 81.1%</span><br>
+        <i style="background: #9ebcda"></i><span>77.9% - 79.4%</span><br>
+        <i style="background: #bfd3e6"></i><span>75.3% - 77.8%</span><br>
+        <i style="background: #edf8fb"></i><span>69.6% - 75.2%</span><br>
         <i style="background: #edf8fb"></i><span>0% - 69.5%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
@@ -2988,13 +2970,13 @@ function updateLegendForScreeningRates(layerName) {
     case "Cervical Screening":
       legendContent = `
         <h4>Percent Cervical Screening</h4>
-        <i style="background: #6e016b"></i><span>> 91.4%</span><br>
-        <i style="background: #88419d"></i><span>86.2% - 91.4%</span><br>
-        <i style="background: #8c6bb1"></i><span>83% - 86.2%</span><br>
-        <i style="background: #8c96c6"></i><span>79.7% - 83%</span><br>
-        <i style="background: #9ebcda"></i><span>75.8% - 79.7%</span><br>
-        <i style="background: #bfd3e6"></i><span>69.4% - 75.8%</span><br>
-        <i style="background: #edf8fb"></i><span>51.6% - 69.4%</span><br>
+        <i style="background: #6e016b"></i><span>> 91.5%</span><br>
+        <i style="background: #88419d"></i><span>86.3% - 91.4%</span><br>
+        <i style="background: #8c6bb1"></i><span>83.1% - 86.2%</span><br>
+        <i style="background: #8c96c6"></i><span>79.8% - 83%</span><br>
+        <i style="background: #9ebcda"></i><span>75.9% - 79.7%</span><br>
+        <i style="background: #bfd3e6"></i><span>69.5% - 75.8%</span><br>
+        <i style="background: #edf8fb"></i><span>51.7% - 69.4%</span><br>
         <i style="background: #edf8fb"></i><span>0% - 51.6%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
@@ -3002,13 +2984,13 @@ function updateLegendForScreeningRates(layerName) {
     case "Colorectal Screening":
       legendContent = `
         <h4>Percent Colorectal Screening</h4>
-        <i style="background: #6e016b"></i><span>> 85.1%</span><br>
-        <i style="background: #88419d"></i><span>79.4% - 85.1%</span><br>
-        <i style="background: #8c6bb1"></i><span>76% - 79.4%</span><br>
-        <i style="background: #8c96c6"></i><span>72.7% - 76%</span><br>
-        <i style="background: #9ebcda"></i><span>69.2% - 72.7%</span><br>
-        <i style="background: #bfd3e6"></i><span>64.8% - 69.2%</span><br>
-        <i style="background: #edf8fb"></i><span>53.9% - 64.8%</span><br>
+        <i style="background: #6e016b"></i><span>> 85.2%</span><br>
+        <i style="background: #88419d"></i><span>79.5% - 85.1%</span><br>
+        <i style="background: #8c6bb1"></i><span>76.1% - 79.4%</span><br>
+        <i style="background: #8c96c6"></i><span>72.8% - 76%</span><br>
+        <i style="background: #9ebcda"></i><span>69.3% - 72.7%</span><br>
+        <i style="background: #bfd3e6"></i><span>64.9% - 69.2%</span><br>
+        <i style="background: #edf8fb"></i><span>54% - 64.8%</span><br>
         <i style="background: #edf8fb"></i><span>0% - 53.9%</span><br>
         <i style="background: #606060"></i><span>No Data</span><br>
       `;
@@ -3461,13 +3443,13 @@ healthStatusLegend.onAdd = function () {
   var div = L.DomUtil.create("div", "healthStatusLegend");
   div.innerHTML = `
     <h4>${healthStatusLayerNames.DEPRESSION}</h4>
-    <i style="background: ${healthStatusColors[0]}"></i><span>> 32.4%</span><br>
-    <i style="background: ${healthStatusColors[1]}"></i><span>23.2% - 32.4%</span><br>
-    <i style="background: ${healthStatusColors[2]}"></i><span>20.6% - 23.2%</span><br>
-    <i style="background: ${healthStatusColors[3]}"></i><span>18.8% - 20.6%</span><br>
-    <i style="background: ${healthStatusColors[4]}"></i><span>17.1% - 18.8%</span><br>
-    <i style="background: ${healthStatusColors[5]}"></i><span>15.2% - 17.1%</span><br>
-    <i style="background: ${healthStatusColors[6]}"></i><span>11.8% - 15.2%</span><br>
+    <i style="background: ${healthStatusColors[0]}"></i><span>> 32.5%</span><br>
+    <i style="background: ${healthStatusColors[1]}"></i><span>23.3% - 32.4%</span><br>
+    <i style="background: ${healthStatusColors[2]}"></i><span>20.7% - 23.2%</span><br>
+    <i style="background: ${healthStatusColors[3]}"></i><span>18.9% - 20.6%</span><br>
+    <i style="background: ${healthStatusColors[4]}"></i><span>17.2% - 18.8%</span><br>
+    <i style="background: ${healthStatusColors[5]}"></i><span>15.3% - 17.1%</span><br>
+    <i style="background: ${healthStatusColors[6]}"></i><span>11.9% - 15.2%</span><br>
     <i style="background: ${healthStatusColors[7]}"></i><span>0% - 11.8%</span><br>
     <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
   `;
@@ -3482,13 +3464,13 @@ function updateLegendForHealthStatus(layerName) {
     case healthStatusLayerNames.DEPRESSION:
       legendContent = `
         <h4>${healthStatusLayerNames.DEPRESSION}</h4>
-        <i style="background: ${healthStatusColors[0]}"></i><span>> 32.4%</span><br>
-        <i style="background: ${healthStatusColors[1]}"></i><span>23.2% - 32.4%</span><br>
-        <i style="background: ${healthStatusColors[2]}"></i><span>20.6% - 23.2%</span><br>
-        <i style="background: ${healthStatusColors[3]}"></i><span>18.8% - 20.6%</span><br>
-        <i style="background: ${healthStatusColors[4]}"></i><span>17.1% - 18.8%</span><br>
-        <i style="background: ${healthStatusColors[5]}"></i><span>15.2% - 17.1%</span><br>
-        <i style="background: ${healthStatusColors[6]}"></i><span>11.8% - 15.2%</span><br>
+        <i style="background: ${healthStatusColors[0]}"></i><span>> 32.5%</span><br>
+        <i style="background: ${healthStatusColors[1]}"></i><span>23.3% - 32.4%</span><br>
+        <i style="background: ${healthStatusColors[2]}"></i><span>20.7% - 23.2%</span><br>
+        <i style="background: ${healthStatusColors[3]}"></i><span>18.9% - 20.6%</span><br>
+        <i style="background: ${healthStatusColors[4]}"></i><span>17.2% - 18.8%</span><br>
+        <i style="background: ${healthStatusColors[5]}"></i><span>15.3% - 17.1%</span><br>
+        <i style="background: ${healthStatusColors[6]}"></i><span>11.9% - 15.2%</span><br>
         <i style="background: ${healthStatusColors[7]}"></i><span>0% - 11.8%</span><br>
         <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
       `;
@@ -3496,13 +3478,13 @@ function updateLegendForHealthStatus(layerName) {
     case healthStatusLayerNames.MENTAL_HEALTH_BAD:
       legendContent = `
         <h4>${healthStatusLayerNames.MENTAL_HEALTH_BAD}</h4>
-        <i style="background: ${healthStatusColors[0]}"></i><span>> 31%</span><br>
-        <i style="background: ${healthStatusColors[1]}"></i><span>22.1% - 31%</span><br>
-        <i style="background: ${healthStatusColors[2]}"></i><span>18.8% - 22.1%</span><br>
-        <i style="background: ${healthStatusColors[3]}"></i><span>16.5% - 18.8%</span><br>
-        <i style="background: ${healthStatusColors[4]}"></i><span>14.6% - 16.5%</span><br>
-        <i style="background: ${healthStatusColors[5]}"></i><span>12.7% - 14.6%</span><br>
-        <i style="background: ${healthStatusColors[6]}"></i><span>7.2% - 12.7%</span><br>
+        <i style="background: ${healthStatusColors[0]}"></i><span>> 31.1%</span><br>
+        <i style="background: ${healthStatusColors[1]}"></i><span>22.2% - 31%</span><br>
+        <i style="background: ${healthStatusColors[2]}"></i><span>18.9% - 22.1%</span><br>
+        <i style="background: ${healthStatusColors[3]}"></i><span>16.6% - 18.8%</span><br>
+        <i style="background: ${healthStatusColors[4]}"></i><span>14.7% - 16.5%</span><br>
+        <i style="background: ${healthStatusColors[5]}"></i><span>12.8% - 14.6%</span><br>
+        <i style="background: ${healthStatusColors[6]}"></i><span>7.3% - 12.7%</span><br>
         <i style="background: ${healthStatusColors[7]}"></i><span>0% - 7.2%</span><br>
         <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
       `;
@@ -3510,13 +3492,13 @@ function updateLegendForHealthStatus(layerName) {
     case healthStatusLayerNames.PHYSICAL_HEALTH_BAD:
       legendContent = `
         <h4>${healthStatusLayerNames.PHYSICAL_HEALTH_BAD}</h4>
-        <i style="background: ${healthStatusColors[0]}"></i><span>> 31.3%</span><br>
-        <i style="background: ${healthStatusColors[1]}"></i><span>17% - 31.3%</span><br>
-        <i style="background: ${healthStatusColors[2]}"></i><span>13.9% - 17%</span><br>
-        <i style="background: ${healthStatusColors[3]}"></i><span>11.6% - 13.9%</span><br>
-        <i style="background: ${healthStatusColors[4]}"></i><span>9.7% - 11.6%</span><br>
-        <i style="background: ${healthStatusColors[5]}"></i><span>7.5% - 9.7%</span><br>
-        <i style="background: ${healthStatusColors[6]}"></i><span>3.8% - 7.5%</span><br>
+        <i style="background: ${healthStatusColors[0]}"></i><span>> 31.4%</span><br>
+        <i style="background: ${healthStatusColors[1]}"></i><span>17.1% - 31.3%</span><br>
+        <i style="background: ${healthStatusColors[2]}"></i><span>14% - 17%</span><br>
+        <i style="background: ${healthStatusColors[3]}"></i><span>11.7% - 13.9%</span><br>
+        <i style="background: ${healthStatusColors[4]}"></i><span>9.8% - 11.6%</span><br>
+        <i style="background: ${healthStatusColors[5]}"></i><span>7.6% - 9.7%</span><br>
+        <i style="background: ${healthStatusColors[6]}"></i><span>3.9% - 7.5%</span><br>
         <i style="background: ${healthStatusColors[7]}"></i><span>0% - 3.8%</span><br>
         <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
       `;
@@ -3524,13 +3506,13 @@ function updateLegendForHealthStatus(layerName) {
     case healthStatusLayerNames.POOR_SELF_RATED_HEALTH:
       legendContent = `
         <h4>${healthStatusLayerNames.POOR_SELF_RATED_HEALTH}</h4>
-        <i style="background: ${healthStatusColors[0]}"></i><span>> 57.1%</span><br>
-        <i style="background: ${healthStatusColors[1]}"></i><span>29.7% - 57.1%</span><br>
-        <i style="background: ${healthStatusColors[2]}"></i><span>23.1% - 29.7%</span><br>
-        <i style="background: ${healthStatusColors[3]}"></i><span>18.3% - 23.1%</span><br>
-        <i style="background: ${healthStatusColors[4]}"></i><span>14.3% - 18.3%</span><br>
-        <i style="background: ${healthStatusColors[5]}"></i><span>10.1% - 14.3%</span><br>
-        <i style="background: ${healthStatusColors[6]}"></i><span>4.3% - 10.1%</span><br>
+        <i style="background: ${healthStatusColors[0]}"></i><span>> 57.2%</span><br>
+        <i style="background: ${healthStatusColors[1]}"></i><span>29.8% - 57.1%</span><br>
+        <i style="background: ${healthStatusColors[2]}"></i><span>23.2% - 29.7%</span><br>
+        <i style="background: ${healthStatusColors[3]}"></i><span>18.4% - 23.1%</span><br>
+        <i style="background: ${healthStatusColors[4]}"></i><span>14.4% - 18.3%</span><br>
+        <i style="background: ${healthStatusColors[5]}"></i><span>10.2% - 14.3%</span><br>
+        <i style="background: ${healthStatusColors[6]}"></i><span>4.4% - 10.1%</span><br>
         <i style="background: ${healthStatusColors[7]}"></i><span>0% - 4.3%</span><br>
         <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
       `;
@@ -3538,13 +3520,13 @@ function updateLegendForHealthStatus(layerName) {
     case healthStatusLayerNames.DISABILITY:
       legendContent = `
         <h4>${healthStatusLayerNames.DISABILITY}</h4>
-        <i style="background: ${healthStatusColors[0]}"></i><span>> 70.5%</span><br>
-        <i style="background: ${healthStatusColors[1]}"></i><span>40.8% - 70.5%</span><br>
-        <i style="background: ${healthStatusColors[2]}"></i><span>33.9% - 40.8%</span><br>
-        <i style="background: ${healthStatusColors[3]}"></i><span>28.8% - 33.9%</span><br>
-        <i style="background: ${healthStatusColors[4]}"></i><span>24.5% - 28.8%</span><br>
-        <i style="background: ${healthStatusColors[5]}"></i><span>19.5% - 24.5%</span><br>
-        <i style="background: ${healthStatusColors[6]}"></i><span>11.3% - 19.5%</span><br>
+        <i style="background: ${healthStatusColors[0]}"></i><span>> 70.6%</span><br>
+        <i style="background: ${healthStatusColors[1]}"></i><span>40.9% - 70.5%</span><br>
+        <i style="background: ${healthStatusColors[2]}"></i><span>34% - 40.8%</span><br>
+        <i style="background: ${healthStatusColors[3]}"></i><span>28.9% - 33.9%</span><br>
+        <i style="background: ${healthStatusColors[4]}"></i><span>24.6% - 28.8%</span><br>
+        <i style="background: ${healthStatusColors[5]}"></i><span>19.6% - 24.5%</span><br>
+        <i style="background: ${healthStatusColors[6]}"></i><span>11.4% - 19.5%</span><br>
         <i style="background: ${healthStatusColors[7]}"></i><span>0% - 11.3%</span><br>
         <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
       `;
@@ -3552,13 +3534,13 @@ function updateLegendForHealthStatus(layerName) {
     case healthStatusLayerNames.HEARING_DISABILITY:
       legendContent = `
           <h4>${healthStatusLayerNames.HEARING_DISABILITY}</h4>
-          <i style="background: ${healthStatusColors[0]}"></i><span>> 29.7%</span><br>
-          <i style="background: ${healthStatusColors[1]}"></i><span>11.6% - 29.7%</span><br>
-          <i style="background: ${healthStatusColors[2]}"></i><span>7.9% - 11.6%</span><br>
-          <i style="background: ${healthStatusColors[3]}"></i><span>6.2% - 7.9%</span><br>
-          <i style="background: ${healthStatusColors[4]}"></i><span>5.1% - 6.2%</span><br>
-          <i style="background: ${healthStatusColors[5]}"></i><span>4% - 5.1%</span><br>
-          <i style="background: ${healthStatusColors[6]}"></i><span>1.7% - 4%</span><br>
+          <i style="background: ${healthStatusColors[0]}"></i><span>> 29.8%</span><br>
+          <i style="background: ${healthStatusColors[1]}"></i><span>11.7% - 29.7%</span><br>
+          <i style="background: ${healthStatusColors[2]}"></i><span>8% - 11.6%</span><br>
+          <i style="background: ${healthStatusColors[3]}"></i><span>6.3% - 7.9%</span><br>
+          <i style="background: ${healthStatusColors[4]}"></i><span>5.2% - 6.2%</span><br>
+          <i style="background: ${healthStatusColors[5]}"></i><span>4.1% - 5.1%</span><br>
+          <i style="background: ${healthStatusColors[6]}"></i><span>1.8% - 4%</span><br>
           <i style="background: ${healthStatusColors[7]}"></i><span>0% - 1.7%</span><br>
           <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
         `;
@@ -3566,13 +3548,13 @@ function updateLegendForHealthStatus(layerName) {
     case healthStatusLayerNames.VISION_DISABILITY:
       legendContent = `
           <h4>${healthStatusLayerNames.VISION_DISABILITY}</h4>
-          <i style="background: ${healthStatusColors[0]}"></i><span>> 33.9%</span><br>
-          <i style="background: ${healthStatusColors[1]}"></i><span>14.2% - 33.9%</span><br>
-          <i style="background: ${healthStatusColors[2]}"></i><span>10.4% - 14.2%</span><br>
-          <i style="background: ${healthStatusColors[3]}"></i><span>7.8% - 10.4%</span><br>
-          <i style="background: ${healthStatusColors[4]}"></i><span>5.7% - 7.8%</span><br>
-          <i style="background: ${healthStatusColors[5]}"></i><span>3.8% - 5.7%</span><br>
-          <i style="background: ${healthStatusColors[6]}"></i><span>1.4% - 3.8%</span><br>
+          <i style="background: ${healthStatusColors[0]}"></i><span>> 34%</span><br>
+          <i style="background: ${healthStatusColors[1]}"></i><span>14.3% - 33.9%</span><br>
+          <i style="background: ${healthStatusColors[2]}"></i><span>10.5% - 14.2%</span><br>
+          <i style="background: ${healthStatusColors[3]}"></i><span>7.9% - 10.4%</span><br>
+          <i style="background: ${healthStatusColors[4]}"></i><span>5.8% - 7.8%</span><br>
+          <i style="background: ${healthStatusColors[5]}"></i><span>3.9% - 5.7%</span><br>
+          <i style="background: ${healthStatusColors[6]}"></i><span>1.5% - 3.8%</span><br>
           <i style="background: ${healthStatusColors[7]}"></i><span>0% - 1.4%</span><br>
           <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
         `;
@@ -3580,13 +3562,13 @@ function updateLegendForHealthStatus(layerName) {
     case healthStatusLayerNames.COGNITIVE_DISABILITY:
       legendContent = `
           <h4>${healthStatusLayerNames.COGNITIVE_DISABILITY}</h4>
-          <i style="background: ${healthStatusColors[0]}"></i><span>> 30.7%</span><br>
-          <i style="background: ${healthStatusColors[1]}"></i><span>21.5% - 30.7%</span><br>
-          <i style="background: ${healthStatusColors[2]}"></i><span>17.5% - 21.5%</span><br>
-          <i style="background: ${healthStatusColors[3]}"></i><span>14.2% - 17.5%</span><br>
-          <i style="background: ${healthStatusColors[4]}"></i><span>11.6% - 14.2%</span><br>
-          <i style="background: ${healthStatusColors[5]}"></i><span>9% - 11.6%</span><br>
-          <i style="background: ${healthStatusColors[6]}"></i><span>5.5% - 9%</span><br>
+          <i style="background: ${healthStatusColors[0]}"></i><span>> 30.8%</span><br>
+          <i style="background: ${healthStatusColors[1]}"></i><span>21.6% - 30.7%</span><br>
+          <i style="background: ${healthStatusColors[2]}"></i><span>17.6% - 21.5%</span><br>
+          <i style="background: ${healthStatusColors[3]}"></i><span>14.3% - 17.5%</span><br>
+          <i style="background: ${healthStatusColors[4]}"></i><span>11.7% - 14.2%</span><br>
+          <i style="background: ${healthStatusColors[5]}"></i><span>9.1% - 11.6%</span><br>
+          <i style="background: ${healthStatusColors[6]}"></i><span>5.6% - 9%</span><br>
           <i style="background: ${healthStatusColors[7]}"></i><span>0% - 5.5%</span><br>
           <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
         `;
@@ -3594,13 +3576,13 @@ function updateLegendForHealthStatus(layerName) {
     case healthStatusLayerNames.MOBILITY_DISABILITY:
       legendContent = `
           <h4>${healthStatusLayerNames.MOBILITY_DISABILITY}</h4>
-          <i style="background: ${healthStatusColors[0]}"></i><span>> 56.9%</span><br>
-          <i style="background: ${healthStatusColors[1]}"></i><span>24% - 56.9%</span><br>
-          <i style="background: ${healthStatusColors[2]}"></i><span>18.6% - 24%</span><br>
-          <i style="background: ${healthStatusColors[3]}"></i><span>15.1% - 18.6%</span><br>
-          <i style="background: ${healthStatusColors[4]}"></i><span>12.1% - 15.1%</span><br>
-          <i style="background: ${healthStatusColors[5]}"></i><span>8.5% - 12.1%</span><br>
-          <i style="background: ${healthStatusColors[6]}"></i><span>2.5% - 8.5%</span><br>
+          <i style="background: ${healthStatusColors[0]}"></i><span>> 57%</span><br>
+          <i style="background: ${healthStatusColors[1]}"></i><span>24.1% - 56.9%</span><br>
+          <i style="background: ${healthStatusColors[2]}"></i><span>18.7% - 24%</span><br>
+          <i style="background: ${healthStatusColors[3]}"></i><span>15.2% - 18.6%</span><br>
+          <i style="background: ${healthStatusColors[4]}"></i><span>12.2% - 15.1%</span><br>
+          <i style="background: ${healthStatusColors[5]}"></i><span>8.6% - 12.1%</span><br>
+          <i style="background: ${healthStatusColors[6]}"></i><span>2.6% - 8.5%</span><br>
           <i style="background: ${healthStatusColors[7]}"></i><span>0% - 2.5%</span><br>
           <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
         `;
@@ -3608,13 +3590,13 @@ function updateLegendForHealthStatus(layerName) {
     case healthStatusLayerNames.SELF_CARE_DISABILITY:
       legendContent = `
           <h4>${healthStatusLayerNames.SELF_CARE_DISABILITY}</h4>
-          <i style="background: ${healthStatusColors[0]}"></i><span>> 28.2%</span><br>
-          <i style="background: ${healthStatusColors[1]}"></i><span>9.9% - 28.2%</span><br>
-          <i style="background: ${healthStatusColors[2]}"></i><span>7.1% - 9.9%</span><br>
-          <i style="background: ${healthStatusColors[3]}"></i><span>5.2% - 7.1%</span><br>
-          <i style="background: ${healthStatusColors[4]}"></i><span>3.8% - 5.2%</span><br>
-          <i style="background: ${healthStatusColors[5]}"></i><span>2.5% - 3.8%</span><br>
-          <i style="background: ${healthStatusColors[6]}"></i><span>0.8% - 2.5%</span><br>
+          <i style="background: ${healthStatusColors[0]}"></i><span>> 28.3%</span><br>
+          <i style="background: ${healthStatusColors[1]}"></i><span>10% - 28.2%</span><br>
+          <i style="background: ${healthStatusColors[2]}"></i><span>7.2% - 9.9%</span><br>
+          <i style="background: ${healthStatusColors[3]}"></i><span>5.3% - 7.1%</span><br>
+          <i style="background: ${healthStatusColors[4]}"></i><span>3.9% - 5.2%</span><br>
+          <i style="background: ${healthStatusColors[5]}"></i><span>2.6% - 3.8%</span><br>
+          <i style="background: ${healthStatusColors[6]}"></i><span>0.9% - 2.5%</span><br>
           <i style="background: ${healthStatusColors[7]}"></i><span>0% - 0.8%</span><br>
           <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
         `;
@@ -3622,13 +3604,13 @@ function updateLegendForHealthStatus(layerName) {
     case healthStatusLayerNames.INDEPENDENT_LIVING_DISABILITY:
       legendContent = `
           <h4>${healthStatusLayerNames.INDEPENDENT_LIVING_DISABILITY}</h4>
-          <i style="background: ${healthStatusColors[0]}"></i><span>> 31.8%</span><br>
-          <i style="background: ${healthStatusColors[1]}"></i><span>16.6% - 31.8%</span><br>
-          <i style="background: ${healthStatusColors[2]}"></i><span>12.6% - 16.6%</span><br>
-          <i style="background: ${healthStatusColors[3]}"></i><span>9.8% - 12.6%</span><br>
-          <i style="background: ${healthStatusColors[4]}"></i><span>7.6% - 9.8%</span><br>
-          <i style="background: ${healthStatusColors[5]}"></i><span>5.5% - 7.6%</span><br>
-          <i style="background: ${healthStatusColors[6]}"></i><span>2.8% - 5.5%</span><br>
+          <i style="background: ${healthStatusColors[0]}"></i><span>> 31.9%</span><br>
+          <i style="background: ${healthStatusColors[1]}"></i><span>16.7% - 31.8%</span><br>
+          <i style="background: ${healthStatusColors[2]}"></i><span>12.7% - 16.6%</span><br>
+          <i style="background: ${healthStatusColors[3]}"></i><span>9.9% - 12.6%</span><br>
+          <i style="background: ${healthStatusColors[4]}"></i><span>7.7% - 9.8%</span><br>
+          <i style="background: ${healthStatusColors[5]}"></i><span>5.6% - 7.6%</span><br>
+          <i style="background: ${healthStatusColors[6]}"></i><span>2.9% - 5.5%</span><br>
           <i style="background: ${healthStatusColors[7]}"></i><span>0% - 2.8%</span><br>
           <i style="background: ${healthStatusColors[8]}"></i><span>No Data</span><br>
         `;

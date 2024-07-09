@@ -567,14 +567,13 @@ function updateMap() {
           popupContent += `No data avavailable for this Census Tract`;
         } else {
           popupContent +=
-            "Approximately " +
-            p.population +
-            " people live in " +
-            p.Total_pop +
-            ", and around " +
+            "Approximately <b>" +
+            parseInt(p.Total_pop).toLocaleString("en-US") +
+            "</b> people live in <b>" +
+            p.Geographic +
+            "</b>, and around <b>" +
             (p.Speak_anot * 100).toFixed(1) +
-            "% of these residents speak a language other than English." +
-            "The predominant non-English spoken language is: <b>" +
+            "%</b> of these residents speak a language other than English. The predominant non-English spoken language is: <b>" +
             p.Predominant +
             "</b>";
         }
@@ -820,9 +819,9 @@ demographicGeoJson = L.geoJson(languageGeoJsonData, {
     } else {
       // Text section
       popUpContent += `
-        <p>Approximately <b>${
-          p.Total_pop
-        }</b> people live in this census tract.</p>
+        <p>Approximately <b>${parseInt(p.Total_pop).toLocaleString(
+          "en-US"
+        )}</b> people live in this census tract.</p>
         <p><b>${(p.Male_Pct * 100).toFixed(1)}%</b> (${
         p.Male
       }) of the population are male and <b>${(p.Female_Pct * 100).toFixed(
@@ -938,6 +937,8 @@ function createPieChartForDemographic(id, data) {
     .style("border-radius", "5px")
     .style("display", "none");
 
+  var formatter = new Intl.NumberFormat("en-US");
+
   g.append("path")
     .attr("d", arc)
     .style("fill", (d) => color(d.data.label))
@@ -948,7 +949,7 @@ function createPieChartForDemographic(id, data) {
       div.transition().duration(50).style("opacity", 1);
       tooltip
         .style("display", "block")
-        .html(`${d.data.label}: ${d.data.value}`);
+        .html(`${d.data.label}: ${formatter.format(d.data.value)}`);
     })
     .on("mouseout", function (event, d) {
       d3.select(this).transition().duration(50).attr("opacity", "1");
@@ -1189,13 +1190,13 @@ function updateLegend(selectedLayer, selectedLanguage) {
           break;
         case "Chinese":
           legendContent +=
-            '<i style="background: #00441b"></i><span>> 6482</span><br>';
+            '<i style="background: #00441b"></i><span>> 6,482</span><br>';
           legendContent +=
-            '<i style="background: #006d2c"></i><span>2498 - 6481</span><br>';
+            '<i style="background: #006d2c"></i><span>2,498 - 6,481</span><br>';
           legendContent +=
-            '<i style="background: #238b45"></i><span>1562 - 2497</span><br>';
+            '<i style="background: #238b45"></i><span>1,562 - 2,497</span><br>';
           legendContent +=
-            '<i style="background: #41ae76"></i><span>914 - 1561</span><br>';
+            '<i style="background: #41ae76"></i><span>914 - 1,561</span><br>';
           legendContent +=
             '<i style="background: #66c2a4"></i><span>450 - 913</span><br>';
           legendContent +=
@@ -1207,9 +1208,9 @@ function updateLegend(selectedLayer, selectedLanguage) {
           break;
         case "French, Haitian Creole, or Cajun":
           legendContent +=
-            '<i style="background: #00441b"></i><span>> 1467</span><br>';
+            '<i style="background: #00441b"></i><span>> 1,467</span><br>';
           legendContent +=
-            '<i style="background: #006d2c"></i><span>663 - 1466</span><br>';
+            '<i style="background: #006d2c"></i><span>663 - 1,466</span><br>';
           legendContent +=
             '<i style="background: #238b45"></i><span>434 - 662</span><br>';
           legendContent +=
@@ -1225,15 +1226,15 @@ function updateLegend(selectedLayer, selectedLanguage) {
           break;
         case "German or other West Germanic languages":
           legendContent +=
-            '<i style="background: #00441b"></i><span>> 6170</span><br>';
+            '<i style="background: #00441b"></i><span>> 6,170</span><br>';
           legendContent +=
-            '<i style="background: #006d2c"></i><span>3445 - 6169</span><br>';
+            '<i style="background: #006d2c"></i><span>3,445 - 6,169</span><br>';
           legendContent +=
-            '<i style="background: #238b45"></i><span>2318 - 3444</span><br>';
+            '<i style="background: #238b45"></i><span>2,318 - 3,444</span><br>';
           legendContent +=
-            '<i style="background: #41ae76"></i><span>1486 - 2317</span><br>';
+            '<i style="background: #41ae76"></i><span>1,486 - 2,317</span><br>';
           legendContent +=
-            '<i style="background: #66c2a4"></i><span>625 - 1485</span><br>';
+            '<i style="background: #66c2a4"></i><span>625 - 1,485</span><br>';
           legendContent +=
             '<i style="background: #99d8c9"></i><span>124 - 624</span><br>';
           legendContent +=
@@ -1243,9 +1244,9 @@ function updateLegend(selectedLayer, selectedLanguage) {
           break;
         case "Korean":
           legendContent +=
-            '<i style="background: #00441b"></i><span>> 1307</span><br>';
+            '<i style="background: #00441b"></i><span>> 1,307</span><br>';
           legendContent +=
-            '<i style="background: #006d2c"></i><span>747 - 1306</span><br>';
+            '<i style="background: #006d2c"></i><span>747 - 1,306</span><br>';
           legendContent +=
             '<i style="background: #238b45"></i><span>476 - 746</span><br>';
           legendContent +=
@@ -1261,9 +1262,9 @@ function updateLegend(selectedLayer, selectedLanguage) {
           break;
         case "Other and unspecified languages":
           legendContent +=
-            '<i style="background: #00441b"></i><span>> 1514</span><br>';
+            '<i style="background: #00441b"></i><span>> 1,514</span><br>';
           legendContent +=
-            '<i style="background: #006d2c"></i><span>824 - 1513</span><br>';
+            '<i style="background: #006d2c"></i><span>824 - 1,513</span><br>';
           legendContent +=
             '<i style="background: #238b45"></i><span>457 - 823</span><br>';
           legendContent +=
@@ -1297,11 +1298,11 @@ function updateLegend(selectedLayer, selectedLanguage) {
           break;
         case "Other Indo-European languages":
           legendContent +=
-            '<i style="background: #00441b"></i><span>> 2653</span><br>';
+            '<i style="background: #00441b"></i><span>> 2,653</span><br>';
           legendContent +=
-            '<i style="background: #006d2c"></i><span>1357 - 2652</span><br>';
+            '<i style="background: #006d2c"></i><span>1,357 - 2,652</span><br>';
           legendContent +=
-            '<i style="background: #238b45"></i><span>777 - 1356</span><br>';
+            '<i style="background: #238b45"></i><span>777 - 1,356</span><br>';
           legendContent +=
             '<i style="background: #41ae76"></i><span>449 - 776</span><br>';
           legendContent +=
@@ -1315,13 +1316,13 @@ function updateLegend(selectedLayer, selectedLanguage) {
           break;
         case "Russian, Polish, or other Slavic languages":
           legendContent +=
-            '<i style="background: #00441b"></i><span>> 3818</span><br>';
+            '<i style="background: #00441b"></i><span>> 3,818</span><br>';
           legendContent +=
-            '<i style="background: #006d2c"></i><span>2369 - 3817</span><br>';
+            '<i style="background: #006d2c"></i><span>2,369 - 3,817</span><br>';
           legendContent +=
-            '<i style="background: #238b45"></i><span>1409 - 2368</span><br>';
+            '<i style="background: #238b45"></i><span>1,409 - 2,368</span><br>';
           legendContent +=
-            '<i style="background: #41ae76"></i><span>818 - 1408</span><br>';
+            '<i style="background: #41ae76"></i><span>818 - 1,408</span><br>';
           legendContent +=
             '<i style="background: #66c2a4"></i><span>416 - 817</span><br>';
           legendContent +=
@@ -1333,17 +1334,17 @@ function updateLegend(selectedLayer, selectedLanguage) {
           break;
         case "Spanish":
           legendContent +=
-            '<i style="background: #00441b"></i><span>> 9883</span><br>';
+            '<i style="background: #00441b"></i><span>> 9,883</span><br>';
           legendContent +=
-            '<i style="background: #006d2c"></i><span>5570 - 9882</span><br>';
+            '<i style="background: #006d2c"></i><span>5,570 - 9,882</span><br>';
           legendContent +=
-            '<i style="background: #238b45"></i><span>3588 - 5569</span><br>';
+            '<i style="background: #238b45"></i><span>3,588 - 5,569</span><br>';
           legendContent +=
-            '<i style="background: #41ae76"></i><span>2273 - 3587</span><br>';
+            '<i style="background: #41ae76"></i><span>2,273 - 3,587</span><br>';
           legendContent +=
-            '<i style="background: #66c2a4"></i><span>1269 - 2272</span><br>';
+            '<i style="background: #66c2a4"></i><span>1,269 - 2,272</span><br>';
           legendContent +=
-            '<i style="background: #99d8c9"></i><span>519 - 1268</span><br>';
+            '<i style="background: #99d8c9"></i><span>519 - 1,268</span><br>';
           legendContent +=
             '<i style="background: #ccece6"></i><span>0 - 518</span><br>';
           legendContent +=
@@ -1390,19 +1391,19 @@ function updateLegend(selectedLayer, selectedLanguage) {
   } else if ((selectedLayer = "demographics")) {
     legendContent += "<h4>Population Density</h4>";
     legendContent +=
-      '<i style="background: #00441b"></i><span>> 15946</span><br>';
+      '<i style="background: #00441b"></i><span>> 15,946</span><br>';
     legendContent +=
-      '<i style="background: #006d2c"></i><span>8461 - 15945</span><br>';
+      '<i style="background: #006d2c"></i><span>8,461 - 15,945</span><br>';
     legendContent +=
-      '<i style="background: #238b45"></i><span>6160 - 8460</span><br>';
+      '<i style="background: #238b45"></i><span>6,160 - 8,460</span><br>';
     legendContent +=
-      '<i style="background: #41ae76"></i><span>4637 - 6159</span><br>';
+      '<i style="background: #41ae76"></i><span>4,637 - 6,159</span><br>';
     legendContent +=
-      '<i style="background: #66c2a4"></i><span>3381 - 4636</span><br>';
+      '<i style="background: #66c2a4"></i><span>3,381 - 4,636</span><br>';
     legendContent +=
-      '<i style="background: #99d8c9"></i><span>2182 - 3380</span><br>';
+      '<i style="background: #99d8c9"></i><span>2,182 - 3,380</span><br>';
     legendContent +=
-      '<i style="background: #ccece6"></i><span>0 - 2181</span><br>';
+      '<i style="background: #ccece6"></i><span>0 - 2,181</span><br>';
     legendContent +=
       '<i style="background: #606060"></i><span>No Data</span><br>';
   }

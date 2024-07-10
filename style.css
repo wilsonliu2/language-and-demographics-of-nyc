@@ -7,7 +7,7 @@
 }
 
 #map-container {
-  height: 90vh;
+  height: calc(100vh - 50px);
   position: relative;
 }
 
@@ -83,4 +83,26 @@
 
 .leaflet-control-layers-list {
   overflow: hidden;
+}
+
+.mapSelectBtn {
+  background-color: #32cd32;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  font-size: 14px;
+  padding: 12px 24px;
+  margin: 4px 2px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.mapSelectBtn:hover {
+  background-color: #45a049;
+}
+
+.mapSelectBtn:active {
+  background-color: #006400;
+  transform: translateY(2px);
 }

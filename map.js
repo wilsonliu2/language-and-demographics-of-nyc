@@ -1020,7 +1020,7 @@ function createBarPlotForDemographics(id, data) {
   d3.select(id).selectAll("*").remove();
 
   // set the dimensions and margins of the graph
-  var margin = { top: 20, right: 20, bottom: 50, left: 30 },
+  var margin = { top: 20, right: 20, bottom: 100, left: 30 },
     width = 325 - margin.left - margin.right,
     height = 250 - margin.top - margin.bottom;
 
@@ -1080,11 +1080,12 @@ function createBarPlotForDemographics(id, data) {
   );
 
   // Bars
-  svg
-    .selectAll("mybar")
+  var bars = svg
+    .selectAll(".bar")
     .data(data)
     .enter()
     .append("rect")
+    .attr("class", "bar")
     .attr("x", function (d) {
       return x(d.label);
     })
@@ -1096,25 +1097,55 @@ function createBarPlotForDemographics(id, data) {
       return height - y(d.percentage);
     })
     .attr("fill", "#69b3a2");
+
+  // Tooltip
+  var tooltip = d3
+    .select(id)
+    .append("div")
+    .attr("class", "tooltip")
+    .style("border", "1px solid #000")
+    .style("padding", "5px")
+    .style("border-radius", "5px")
+    .style("display", "none");
+
+  var formatter = new Intl.NumberFormat("en-US");
+
+  // Bar hover effects
+  bars
+    .on("mouseover", function (event, d) {
+      d3.select(this).transition().duration(50).attr("opacity", ".7");
+      tooltip
+        .style("display", "block")
+        .html(
+          `${d.label}: ${formatter.format(
+            d.value
+          )}<br>Percentage: ${d.percentage.toFixed(2)}%`
+        );
+    })
+    .on("mouseout", function (event, d) {
+      d3.select(this).transition().duration(50).attr("opacity", "1");
+
+      tooltip.style("display", "none");
+    });
 }
 
 // Update bar plot value base on race data
 function updateBarPlotForRace(id, properties) {
   var barData = [
     { label: "White", value: parseInt(properties.White) },
-    { label: "Black or African American", value: parseInt(properties.Black) },
+    { label: "Black", value: parseInt(properties.Black) },
     {
-      label: "American Indian or Alaska Native",
+      label: "American Indian",
       value: parseInt(properties.AIAN),
     },
     { label: "Asian", value: parseInt(properties.Asian) },
     {
-      label: "Native Hawaiian or Other Pacific Islander",
+      label: "Other Pacific Islander",
       value: parseInt(properties.NHOPI),
     },
-    { label: "Hispanic or Latino", value: parseInt(properties.Hispanic) },
+    { label: "Hispanic", value: parseInt(properties.Hispanic) },
     {
-      label: "Not Hispanic or Latino",
+      label: "Not Hispanic",
       value: parseInt(properties.Not_Hispanic),
     },
   ];

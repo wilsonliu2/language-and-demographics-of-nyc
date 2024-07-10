@@ -833,23 +833,22 @@ demographicGeoJson = L.geoJson(languageGeoJsonData, {
       // Use JSON.stringify to turn the properties object into a string so it can be passed into updatePieChart function
       // Chart container must have a set size or responsive popup plugin will not work as intended
       popUpContent += `
-      <button id="more-btn-${id}" onclick='showMoreButtons(${id})'>More</button>
-        <button id="hide-btn-${id}" onclick='hideMoreButtons(${id})' style="display:none;">Hide</button>
+        <button id="more-btn-${id}" onclick='showMoreButtons(${id})' style="background: none; border: none; color: blue; cursor: pointer; text-decoration: underline; padding: 0; margin-bottom: 4px">More</button>
+        <button id="hide-btn-${id}" onclick='hideMoreButtons(${id})' style="background: none; border: none; color: blue; cursor: pointer; text-decoration: underline; padding: 0; display:none; margin-bottom: 4px">Hide</button>
         <div id="more-buttons-${id}" style="display:none;">
-        
-        <button onclick='updatePieChart(${id}, "gender", ${JSON.stringify(
+          <button onclick='updatePieChart(${id}, "gender", ${JSON.stringify(
         p
-      )})'>Gender</button>
-
-       <button onclick='updatePieChart(${id}, "age", ${JSON.stringify(
+      )})' style="background: none; border: none; color: black; cursor: pointer; text-decoration: none; padding: 0; margin-right: 4px;" onmouseover="this.style.color='blue'" onmouseout="this.style.color='black'">Gender</button>
+          <span style="color: black;">|</span>
+          <button onclick='updatePieChart(${id}, "age", ${JSON.stringify(
         p
-      )})'>Age</button>
-      
-       <button onclick='updateBarPlotForRace(${id}, ${JSON.stringify(
+      )})' style="background: none; border: none; color: black; cursor: pointer; text-decoration: none; padding: 0; margin: 0 4px;" onmouseover="this.style.color='blue'" onmouseout="this.style.color='black'">Age</button>
+          <span style="color: black;">|</span>
+          <button onclick='updateBarPlotForRace(${id}, ${JSON.stringify(
         p
-      )})'>Race</button>
-
-        <div id="chart-container-${id}" style="width: 150px; height: 200px; height: 100%;"></div>
+      )})' style="background: none; border: none; color: black; cursor: pointer; text-decoration: none; padding: 0; margin-left: 4px;" onmouseover="this.style.color='blue'" onmouseout="this.style.color='black'">Race</button>
+          <div id="chart-container-${id}" style="width: 150px; height: 200px; height: 100%;"></div>
+        </div>
       `;
     }
 

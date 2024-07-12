@@ -148,251 +148,6 @@ languageLegend.onAdd = function () {
 
 languageLegend.addTo(mymap);
 
-// Function to get color based on predominant language
-function getColorBasedOnLanguageLegend(language) {
-  return language == "Arabic"
-    ? "#fa9993ff"
-    : language == "Chinese"
-    ? "#963f92ff"
-    : language == "French, Haitian Creole, or Cajun"
-    ? "#6b5b95"
-    : language == "German or other West Germanic languages"
-    ? "#91c1fdff"
-    : language == "Korean"
-    ? "#e7298a"
-    : language == "Other and unspecified languages"
-    ? "#606060"
-    : language == "Other Asian and Pacific Island languages"
-    ? "#30bfc7ff"
-    : language == "Other Indo-European languages"
-    ? "#3288bd"
-    : language == "Russian, Polish, or other Slavic languages"
-    ? "#51eba6ff"
-    : language == "Spanish"
-    ? "#41ab5d"
-    : language == "Tagalog (incl. Filipino)"
-    ? "#eb554dff"
-    : language == "Vietnamese"
-    ? "#ccb8cbff"
-    : "#606060";
-}
-
-function getColorForArabic(value) {
-  return value > 965
-    ? "#00441b"
-    : value > 508
-    ? "#006d2c"
-    : value > 296
-    ? "#238b45"
-    : value > 157
-    ? "#41ae76"
-    : value > 73
-    ? "#66c2a4"
-    : value > 23
-    ? "#99d8c9"
-    : value > 0
-    ? "#ccece6"
-    : "#606060";
-}
-
-function getColorForChinese(value) {
-  return value > 6482
-    ? "#00441b"
-    : value > 2498
-    ? "#006d2c"
-    : value > 1562
-    ? "#238b45"
-    : value > 914
-    ? "#41ae76"
-    : value > 450
-    ? "#66c2a4"
-    : value > 145
-    ? "#99d8c9"
-    : value > 0
-    ? "#ccece6"
-    : "#606060";
-}
-
-function getColorForFrench(value) {
-  return value > 1467
-    ? "#00441b"
-    : value > 663
-    ? "#006d2c"
-    : value > 434
-    ? "#238b45"
-    : value > 266
-    ? "#41ae76"
-    : value > 136
-    ? "#66c2a4"
-    : value > 47
-    ? "#99d8c9"
-    : value > 0
-    ? "#ccece6"
-    : "#606060";
-}
-
-function getColorForGerman(value) {
-  return value > 6170
-    ? "#00441b"
-    : value > 3445
-    ? "#006d2c"
-    : value > 2318
-    ? "#238b45"
-    : value > 1486
-    ? "#41ae76"
-    : value > 625
-    ? "#66c2a4"
-    : value > 124
-    ? "#99d8c9"
-    : value > 0
-    ? "#ccece6"
-    : "#606060";
-}
-
-function getColorForKorean(value) {
-  return value > 1307
-    ? "#00441b"
-    : value > 747
-    ? "#006d2c"
-    : value > 476
-    ? "#238b45"
-    : value > 246
-    ? "#41ae76"
-    : value > 114
-    ? "#66c2a4"
-    : value > 32
-    ? "#99d8c9"
-    : value > 0
-    ? "#ccece6"
-    : "#606060";
-}
-
-function getColorForOther(value) {
-  return value > 1514
-    ? "#00441b"
-    : value > 824
-    ? "#006d2c"
-    : value > 457
-    ? "#238b45"
-    : value > 264
-    ? "#41ae76"
-    : value > 129
-    ? "#66c2a4"
-    : value > 43
-    ? "#99d8c9"
-    : value > 0
-    ? "#ccece6"
-    : "#606060";
-}
-
-function getColorForOtherAsia(value) {
-  return value > 785
-    ? "#00441b"
-    : value > 427
-    ? "#006d2c"
-    : value > 283
-    ? "#238b45"
-    : value > 166
-    ? "#41ae76"
-    : value > 84
-    ? "#66c2a4"
-    : value > 26
-    ? "#99d8c9"
-    : value > 0
-    ? "#ccece6"
-    : "#606060";
-}
-
-function getColorForOtherIndo(value) {
-  return value > 2653
-    ? "#00441b"
-    : value > 1357
-    ? "#006d2c"
-    : value > 777
-    ? "#238b45"
-    : value > 449
-    ? "#41ae76"
-    : value > 238
-    ? "#66c2a4"
-    : value > 87
-    ? "#99d8c9"
-    : value > 0
-    ? "#ccece6"
-    : "#606060";
-}
-
-function getColorForRussian(value) {
-  return value > 3818
-    ? "#00441b"
-    : value > 2369
-    ? "#006d2c"
-    : value > 1409
-    ? "#238b45"
-    : value > 818
-    ? "#41ae76"
-    : value > 416
-    ? "#66c2a4"
-    : value > 128
-    ? "#99d8c9"
-    : value > 0
-    ? "#ccece6"
-    : "#606060";
-}
-
-function getColorForSpanish(value) {
-  return value > 9883
-    ? "#00441b"
-    : value > 5570
-    ? "#006d2c"
-    : value > 3588
-    ? "#238b45"
-    : value > 2273
-    ? "#41ae76"
-    : value > 1269
-    ? "#66c2a4"
-    : value > 519
-    ? "#99d8c9"
-    : value > 0
-    ? "#ccece6"
-    : "#606060";
-}
-
-function getColorForTagalog(value) {
-  return value > 962
-    ? "#00441b"
-    : value > 524
-    ? "#006d2c"
-    : value > 268
-    ? "#238b45"
-    : value > 132
-    ? "#41ae76"
-    : value > 62
-    ? "#66c2a4"
-    : value > 19
-    ? "#99d8c9"
-    : value > 0
-    ? "#ccece6"
-    : "#606060";
-}
-
-function getColorForVietnamese(value) {
-  return value > 256
-    ? "#00441b"
-    : value > 131
-    ? "#006d2c"
-    : value > 74
-    ? "#238b45"
-    : value > 41
-    ? "#41ae76"
-    : value > 20
-    ? "#66c2a4"
-    : value > 6
-    ? "#99d8c9"
-    : value > 0
-    ? "#ccece6"
-    : "#606060";
-}
-
 // Function to format neighborhood names
 function formatNeighborhoodName(name) {
   const firstSpaceIndex = name.indexOf(" ");
@@ -711,8 +466,6 @@ function updateMap() {
   updateLegend(selectedLayer, selectedLanguage);
 }
 
-//=========================================================== LANGUAGE DROPDOWN =================================================================
-
 var LanguageControl = L.Control.extend({
   // Position
   options: {
@@ -862,25 +615,6 @@ demographicGeoJson = L.geoJson(languageGeoJsonData, {
     });
   },
 });
-
-// Function for demographic data to get color based on population
-function getColorScaleForDemographics(population) {
-  return population > 15945
-    ? "#00441b"
-    : population > 8460
-    ? "#006d2c"
-    : population > 6159
-    ? "#238b45"
-    : population > 4634
-    ? "#41ae76"
-    : population > 3380
-    ? "#66c2a4"
-    : population > 2181
-    ? "#99d8c9"
-    : population > 0
-    ? "#ccece6"
-    : "#606060";
-}
 
 // Function for demographic data to create a pie chart
 function createPieChartForDemographic(id, data) {
@@ -1163,8 +897,6 @@ function hideMoreButtons(id) {
   document.getElementById(`more-btn-${id}`).style.display = "block";
   document.getElementById(`hide-btn-${id}`).style.display = "none";
 }
-
-//=========================================================== LEGEND =================================================================
 
 // Function to update the legend based on the selected layer and language
 function updateLegend(selectedLayer, selectedLanguage) {
@@ -1482,7 +1214,7 @@ maps["healthRiskBehaviorsMap"] = L.map("healthRiskBehaviorsMap", {
   minZoom: 11,
 }).setView([40.65, -73.97], 11);
 
-var baseLayer2 = L.tileLayer(
+var baseLayer = L.tileLayer(
   "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
   {
     attribution:
@@ -1539,106 +1271,6 @@ function healthRiskStyle(propertyName, colorFunction) {
       fillOpacity: 0.8,
     };
   };
-}
-
-function getColorForUninsured(percent) {
-  return percent > 31.1
-    ? "#034e7b"
-    : percent > 21.3
-    ? "#0570b0"
-    : percent > 16.1
-    ? "#3690c0"
-    : percent > 12
-    ? "#74a9cf"
-    : percent > 8.6
-    ? "#a6bddb"
-    : percent > 5.6
-    ? "#d0d1e6"
-    : percent > 2
-    ? "#f1eef6"
-    : percent > 0
-    ? "#f1eef6"
-    : "#606060";
-}
-
-function getColorForFrequentDrinkers(percent) {
-  return percent > 29.4
-    ? "#034e7b"
-    : percent > 23.1
-    ? "#0570b0"
-    : percent > 20.1
-    ? "#3690c0"
-    : percent > 17.3
-    ? "#74a9cf"
-    : percent > 15
-    ? "#a6bddb"
-    : percent > 12.8
-    ? "#d0d1e6"
-    : percent > 4.9
-    ? "#f1eef6"
-    : percent > 0
-    ? "#f1eef6"
-    : "#606060";
-}
-
-function getColorForCurrentSmokers(percent) {
-  return percent > 45.4
-    ? "#034e7b"
-    : percent > 23.1
-    ? "#0570b0"
-    : percent > 18.7
-    ? "#3690c0"
-    : percent > 15.4
-    ? "#74a9cf"
-    : percent > 12.6
-    ? "#a6bddb"
-    : percent > 9.5
-    ? "#d0d1e6"
-    : percent > 5.1
-    ? "#f1eef6"
-    : percent > 0
-    ? "#f1eef6"
-    : "#606060";
-}
-
-function getColorForSedentaryLifestyle(percent) {
-  return percent > 63.9
-    ? "#034e7b"
-    : percent > 40.5
-    ? "#0570b0"
-    : percent > 34.2
-    ? "#3690c0"
-    : percent > 28.9
-    ? "#74a9cf"
-    : percent > 23.7
-    ? "#a6bddb"
-    : percent > 17.4
-    ? "#d0d1e6"
-    : percent > 9.4
-    ? "#f1eef6"
-    : percent > 0
-    ? "#f1eef6"
-    : "#606060";
-}
-
-function getColorForSleepLessThan7Hours(percent) {
-  return percent > 49.1
-    ? "#034e7b"
-    : percent > 41.5
-    ? "#0570b0"
-    : percent > 38.5
-    ? "#3690c0"
-    : percent > 35.7
-    ? "#74a9cf"
-    : percent > 32.9
-    ? "#a6bddb"
-    : percent > 29.9
-    ? "#d0d1e6"
-    : percent > 23.2
-    ? "#f1eef6"
-    : percent > 0
-    ? "#f1eef6"
-    : "#606060";
 }
 
 function addHealthRiskData(data) {
@@ -1975,206 +1607,6 @@ function healthOutcomesStyle(propertyName, colorFunction) {
       fillOpacity: 0.8,
     };
   };
-}
-
-function getColorForCurrentAsthma(percent) {
-  return percent > 16.5
-    ? "#91003f"
-    : percent > 13.5
-    ? "#ce1256"
-    : percent > 12.2
-    ? "#e7298a"
-    : percent > 11
-    ? "#df65b0"
-    : percent > 9.9
-    ? "#c994c7"
-    : percent > 8.9
-    ? "#d4b9da"
-    : percent > 7.4
-    ? "#e7e1ef"
-    : percent > 0
-    ? "#e7e1ef"
-    : "#606060";
-}
-
-function getColorForHighBlood(percent) {
-  return percent > 73.3
-    ? "#91003f"
-    : percent > 37.6
-    ? "#ce1256"
-    : percent > 32.7
-    ? "#e7298a"
-    : percent > 28.5
-    ? "#df65b0"
-    : percent > 24.4
-    ? "#c994c7"
-    : percent > 19.3
-    ? "#d4b9da"
-    : percent > 9
-    ? "#e7e1ef"
-    : percent > 0
-    ? "#e7e1ef"
-    : "#606060";
-}
-
-function getColorForCancerAdults(percent) {
-  return percent > 19.4
-    ? "#91003f"
-    : percent > 9.4
-    ? "#ce1256"
-    : percent > 7.2
-    ? "#e7298a"
-    : percent > 5.9
-    ? "#df65b0"
-    : percent > 4.9
-    ? "#c994c7"
-    : percent > 3.9
-    ? "#d4b9da"
-    : percent > 1.5
-    ? "#e7e1ef"
-    : percent > 0
-    ? "#e7e1ef"
-    : "#606060";
-}
-
-function getColorForHighCholesterol(percent) {
-  return percent > 97.3
-    ? "#91003f"
-    : percent > 89.7
-    ? "#ce1256"
-    : percent > 87.2
-    ? "#e7298a"
-    : percent > 84.5
-    ? "#df65b0"
-    : percent > 81.4
-    ? "#c994c7"
-    : percent > 75.9
-    ? "#d4b9da"
-    : percent > 62.5
-    ? "#e7e1ef"
-    : percent > 0
-    ? "#e7e1ef"
-    : "#606060";
-}
-
-function getColorForKidneyDisease(percent) {
-  return percent > 11.9
-    ? "#91003f"
-    : percent > 5.1
-    ? "#ce1256"
-    : percent > 3.8
-    ? "#e7298a"
-    : percent > 3.2
-    ? "#df65b0"
-    : percent > 2.7
-    ? "#c994c7"
-    : percent > 2.1
-    ? "#d4b9da"
-    : percent > 0.8
-    ? "#e7e1ef"
-    : percent > 0
-    ? "#e7e1ef"
-    : "#606060";
-}
-
-function getColorForPulmonaryDisease(percent) {
-  return percent > 49.4
-    ? "#91003f"
-    : percent > 27.9
-    ? "#ce1256"
-    : percent > 22.8
-    ? "#e7298a"
-    : percent > 20
-    ? "#df65b0"
-    : percent > 17.3
-    ? "#c994c7"
-    : percent > 14
-    ? "#d4b9da"
-    : percent > 6.1
-    ? "#e7e1ef"
-    : percent > 0
-    ? "#e7e1ef"
-    : "#606060";
-}
-
-function getColorForHeartDisease(percent) {
-  return percent > 34
-    ? "#91003f"
-    : percent > 11.5
-    ? "#ce1256"
-    : percent > 7.5
-    ? "#e7298a"
-    : percent > 5.8
-    ? "#df65b0"
-    : percent > 4.7
-    ? "#c994c7"
-    : percent > 3.5
-    ? "#d4b9da"
-    : percent > 1
-    ? "#e7e1ef"
-    : percent > 0
-    ? "#e7e1ef"
-    : "#606060";
-}
-
-function getColorForDiabetes(percent) {
-  return percent > 46.1
-    ? "#91003f"
-    : percent > 17.7
-    ? "#ce1256"
-    : percent > 14.4
-    ? "#e7298a"
-    : percent > 12.1
-    ? "#df65b0"
-    : percent > 9.8
-    ? "#c994c7"
-    : percent > 6.9
-    ? "#d4b9da"
-    : percent > 2
-    ? "#e7e1ef"
-    : percent > 0
-    ? "#e7e1ef"
-    : "#606060";
-}
-
-function getColorForObesity(percent) {
-  return percent > 48.8
-    ? "#91003f"
-    : percent > 36.6
-    ? "#ce1256"
-    : percent > 32.2
-    ? "#e7298a"
-    : percent > 27.9
-    ? "#df65b0"
-    : percent > 23.6
-    ? "#c994c7"
-    : percent > 18.9
-    ? "#d4b9da"
-    : percent > 12.6
-    ? "#e7e1ef"
-    : percent > 0
-    ? "#e7e1ef"
-    : "#606060";
-}
-
-function getColorForStroke(percent) {
-  return percent > 17.4
-    ? "#91003f"
-    : percent > 6.3
-    ? "#ce1256"
-    : percent > 4.3
-    ? "#e7298a"
-    : percent > 3.4
-    ? "#df65b0"
-    : percent > 2.7
-    ? "#c994c7"
-    : percent > 1.9
-    ? "#d4b9da"
-    : percent > 0.6
-    ? "#e7e1ef"
-    : percent > 0
-    ? "#e7e1ef"
-    : "#606060";
 }
 
 function addHealthOutcomesData(data) {
@@ -2652,126 +2084,6 @@ function screeningRatesStyle(propertyName, colorFunction) {
   };
 }
 
-function getColorForAnnualCheckUp(percent) {
-  return percent > 91.3
-    ? "#6e016b"
-    : percent > 81.5
-    ? "#88419d"
-    : percent > 78.7
-    ? "#8c6bb1"
-    : percent > 76.5
-    ? "#8c96c6"
-    : percent > 74.4
-    ? "#9ebcda"
-    : percent > 71.7
-    ? "#bfd3e6"
-    : percent > 66.1
-    ? "#edf8fb"
-    : percent > 0
-    ? "#edf8fb"
-    : "#606060";
-}
-
-function getColorForDentalVisit(percent) {
-  return percent > 82.9
-    ? "#6e016b"
-    : percent > 72.1
-    ? "#88419d"
-    : percent > 64.8
-    ? "#8c6bb1"
-    : percent > 58.5
-    ? "#8c96c6"
-    : percent > 52.2
-    ? "#9ebcda"
-    : percent > 45
-    ? "#bfd3e6"
-    : percent > 23.3
-    ? "#edf8fb"
-    : percent > 0
-    ? "#edf8fb"
-    : "#606060";
-}
-
-function getColorForCholesterolScreening(percent) {
-  return percent > 97.3
-    ? "#6e016b"
-    : percent > 89.7
-    ? "#88419d"
-    : percent > 87.2
-    ? "#8c6bb1"
-    : percent > 84.5
-    ? "#8c96c6"
-    : percent > 81.4
-    ? "#9ebcda"
-    : percent > 75.9
-    ? "#bfd3e6"
-    : percent > 62.5
-    ? "#edf8fb"
-    : percent > 0
-    ? "#edf8fb"
-    : "#606060";
-}
-
-function getColorForMammographyScreening(percent) {
-  return percent > 86.3
-    ? "#6e016b"
-    : percent > 83.1
-    ? "#88419d"
-    : percent > 81.1
-    ? "#8c6bb1"
-    : percent > 79.4
-    ? "#8c96c6"
-    : percent > 77.8
-    ? "#9ebcda"
-    : percent > 75.2
-    ? "#bfd3e6"
-    : percent > 69.5
-    ? "#edf8fb"
-    : percent > 0
-    ? "#edf8fb"
-    : "#606060";
-}
-
-function getColorForCervicalScreening(percent) {
-  return percent > 91.4
-    ? "#6e016b"
-    : percent > 86.2
-    ? "#88419d"
-    : percent > 83
-    ? "#8c6bb1"
-    : percent > 79.7
-    ? "#8c96c6"
-    : percent > 75.8
-    ? "#9ebcda"
-    : percent > 69.4
-    ? "#bfd3e6"
-    : percent > 51.6
-    ? "#edf8fb"
-    : percent > 0
-    ? "#edf8fb"
-    : "#606060";
-}
-
-function getColorForColorectalScreening(percent) {
-  return percent > 85.1
-    ? "#6e016b"
-    : percent > 79.4
-    ? "#88419d"
-    : percent > 76
-    ? "#8c6bb1"
-    : percent > 72.7
-    ? "#8c96c6"
-    : percent > 69.2
-    ? "#9ebcda"
-    : percent > 64.8
-    ? "#bfd3e6"
-    : percent > 53.9
-    ? "#edf8fb"
-    : percent > 0
-    ? "#edf8fb"
-    : "#606060";
-}
-
 function addScreeningRatesData(data) {
   data.features.forEach(function (feature) {
     var p = feature.properties;
@@ -3109,227 +2421,6 @@ function getColorHealthStatus(layerName) {
     default:
       return () => "#606060"; // Default color if no match found
   }
-}
-
-// Color functions implementations
-function getColorForDepression(percent) {
-  return percent > 32.4
-    ? healthStatusColors[0]
-    : percent > 23.2
-    ? healthStatusColors[1]
-    : percent > 20.6
-    ? healthStatusColors[2]
-    : percent > 18.8
-    ? healthStatusColors[3]
-    : percent > 17.1
-    ? healthStatusColors[4]
-    : percent > 15.2
-    ? healthStatusColors[5]
-    : percent > 11.8
-    ? healthStatusColors[6]
-    : percent > 0
-    ? healthStatusColors[7]
-    : healthStatusColors[8];
-}
-
-function getColorForMentalHealthBad(percent) {
-  return percent > 31
-    ? healthStatusColors[0]
-    : percent > 22.1
-    ? healthStatusColors[1]
-    : percent > 18.8
-    ? healthStatusColors[2]
-    : percent > 16.5
-    ? healthStatusColors[3]
-    : percent > 14.6
-    ? healthStatusColors[4]
-    : percent > 12.7
-    ? healthStatusColors[5]
-    : percent > 7.2
-    ? healthStatusColors[6]
-    : percent > 0
-    ? healthStatusColors[7]
-    : healthStatusColors[8];
-}
-
-function getColorForPhysicalHealthBad(percent) {
-  return percent > 31.3
-    ? healthStatusColors[0]
-    : percent > 17
-    ? healthStatusColors[1]
-    : percent > 13.9
-    ? healthStatusColors[2]
-    : percent > 11.6
-    ? healthStatusColors[3]
-    : percent > 9.7
-    ? healthStatusColors[4]
-    : percent > 7.5
-    ? healthStatusColors[5]
-    : percent > 3.8
-    ? healthStatusColors[6]
-    : percent > 0
-    ? healthStatusColors[7]
-    : healthStatusColors[8];
-}
-
-function getColorForPoorSelfRatedHealth(percent) {
-  return percent > 57.1
-    ? healthStatusColors[0]
-    : percent > 29.7
-    ? healthStatusColors[1]
-    : percent > 23.1
-    ? healthStatusColors[2]
-    : percent > 18.3
-    ? healthStatusColors[3]
-    : percent > 14.3
-    ? healthStatusColors[4]
-    : percent > 10.1
-    ? healthStatusColors[5]
-    : percent > 4.3
-    ? healthStatusColors[6]
-    : percent > 0
-    ? healthStatusColors[7]
-    : healthStatusColors[8];
-}
-
-function getColorForDisability(percent) {
-  return percent > 70.5
-    ? healthStatusColors[0]
-    : percent > 40.8
-    ? healthStatusColors[1]
-    : percent > 33.9
-    ? healthStatusColors[2]
-    : percent > 28.8
-    ? healthStatusColors[3]
-    : percent > 24.5
-    ? healthStatusColors[4]
-    : percent > 19.5
-    ? healthStatusColors[5]
-    : percent > 11.3
-    ? healthStatusColors[6]
-    : percent > 0
-    ? healthStatusColors[7]
-    : healthStatusColors[8];
-}
-
-function getColorForHearingDisability(percent) {
-  return percent > 29.7
-    ? healthStatusColors[0]
-    : percent > 11.6
-    ? healthStatusColors[1]
-    : percent > 7.9
-    ? healthStatusColors[2]
-    : percent > 6.2
-    ? healthStatusColors[3]
-    : percent > 5.1
-    ? healthStatusColors[4]
-    : percent > 4
-    ? healthStatusColors[5]
-    : percent > 1.7
-    ? healthStatusColors[6]
-    : percent > 0
-    ? healthStatusColors[7]
-    : healthStatusColors[8];
-}
-
-function getColorForVisionDisability(percent) {
-  return percent > 33.9
-    ? healthStatusColors[0]
-    : percent > 14.2
-    ? healthStatusColors[1]
-    : percent > 10.4
-    ? healthStatusColors[2]
-    : percent > 7.8
-    ? healthStatusColors[3]
-    : percent > 5.7
-    ? healthStatusColors[4]
-    : percent > 3.8
-    ? healthStatusColors[5]
-    : percent > 1.4
-    ? healthStatusColors[6]
-    : percent > 0
-    ? healthStatusColors[7]
-    : healthStatusColors[8];
-}
-
-function getColorForCognitiveDisability(percent) {
-  return percent > 30.7
-    ? healthStatusColors[0]
-    : percent > 21.5
-    ? healthStatusColors[1]
-    : percent > 17.5
-    ? healthStatusColors[2]
-    : percent > 14.2
-    ? healthStatusColors[3]
-    : percent > 11.6
-    ? healthStatusColors[4]
-    : percent > 9
-    ? healthStatusColors[5]
-    : percent > 5.5
-    ? healthStatusColors[6]
-    : percent > 0
-    ? healthStatusColors[7]
-    : healthStatusColors[8];
-}
-
-function getColorForMobilityDisability(percent) {
-  return percent > 56.9
-    ? healthStatusColors[0]
-    : percent > 24
-    ? healthStatusColors[1]
-    : percent > 18.6
-    ? healthStatusColors[2]
-    : percent > 15.1
-    ? healthStatusColors[3]
-    : percent > 12.1
-    ? healthStatusColors[4]
-    : percent > 8.5
-    ? healthStatusColors[5]
-    : percent > 2.5
-    ? healthStatusColors[6]
-    : percent > 0
-    ? healthStatusColors[7]
-    : healthStatusColors[8];
-}
-
-function getColorForSelfCareDisability(percent) {
-  return percent > 28.2
-    ? healthStatusColors[0]
-    : percent > 9.9
-    ? healthStatusColors[1]
-    : percent > 7.1
-    ? healthStatusColors[2]
-    : percent > 5.2
-    ? healthStatusColors[3]
-    : percent > 3.8
-    ? healthStatusColors[4]
-    : percent > 2.5
-    ? healthStatusColors[5]
-    : percent > 0.8
-    ? healthStatusColors[6]
-    : percent > 0
-    ? healthStatusColors[7]
-    : healthStatusColors[8];
-}
-
-function getColorForIndependentLivingDisability(percent) {
-  return percent > 31.8
-    ? healthStatusColors[0]
-    : percent > 16.6
-    ? healthStatusColors[1]
-    : percent > 12.6
-    ? healthStatusColors[2]
-    : percent > 9.8
-    ? healthStatusColors[3]
-    : percent > 7.6
-    ? healthStatusColors[4]
-    : percent > 5.5
-    ? healthStatusColors[5]
-    : percent > 2.8
-    ? healthStatusColors[6]
-    : percent > 0
-    ? healthStatusColors[7]
-    : healthStatusColors[8];
 }
 
 function addHealthStatusData(data) {
@@ -3931,3 +3022,912 @@ updateLegendForHealthStatus(healthStatusLayerNames.DEPRESSION);
 healthStatusLayers[healthStatusLayerNames.DEPRESSION].addTo(
   maps["healthStatusMap"]
 );
+
+//=========================================================== COLOR FUNCTIONS =================================================================
+//=========================================================== LANGUAGE COLOR FUNCTIONS =================================================================
+function getColorBasedOnLanguageLegend(language) {
+  return language == "Arabic"
+    ? "#fa9993ff"
+    : language == "Chinese"
+    ? "#963f92ff"
+    : language == "French, Haitian Creole, or Cajun"
+    ? "#6b5b95"
+    : language == "German or other West Germanic languages"
+    ? "#91c1fdff"
+    : language == "Korean"
+    ? "#e7298a"
+    : language == "Other and unspecified languages"
+    ? "#606060"
+    : language == "Other Asian and Pacific Island languages"
+    ? "#30bfc7ff"
+    : language == "Other Indo-European languages"
+    ? "#3288bd"
+    : language == "Russian, Polish, or other Slavic languages"
+    ? "#51eba6ff"
+    : language == "Spanish"
+    ? "#41ab5d"
+    : language == "Tagalog (incl. Filipino)"
+    ? "#eb554dff"
+    : language == "Vietnamese"
+    ? "#ccb8cbff"
+    : "#606060";
+}
+
+function getColorForArabic(value) {
+  return value > 965
+    ? "#00441b"
+    : value > 508
+    ? "#006d2c"
+    : value > 296
+    ? "#238b45"
+    : value > 157
+    ? "#41ae76"
+    : value > 73
+    ? "#66c2a4"
+    : value > 23
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForChinese(value) {
+  return value > 6482
+    ? "#00441b"
+    : value > 2498
+    ? "#006d2c"
+    : value > 1562
+    ? "#238b45"
+    : value > 914
+    ? "#41ae76"
+    : value > 450
+    ? "#66c2a4"
+    : value > 145
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForFrench(value) {
+  return value > 1467
+    ? "#00441b"
+    : value > 663
+    ? "#006d2c"
+    : value > 434
+    ? "#238b45"
+    : value > 266
+    ? "#41ae76"
+    : value > 136
+    ? "#66c2a4"
+    : value > 47
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForGerman(value) {
+  return value > 6170
+    ? "#00441b"
+    : value > 3445
+    ? "#006d2c"
+    : value > 2318
+    ? "#238b45"
+    : value > 1486
+    ? "#41ae76"
+    : value > 625
+    ? "#66c2a4"
+    : value > 124
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForKorean(value) {
+  return value > 1307
+    ? "#00441b"
+    : value > 747
+    ? "#006d2c"
+    : value > 476
+    ? "#238b45"
+    : value > 246
+    ? "#41ae76"
+    : value > 114
+    ? "#66c2a4"
+    : value > 32
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForOther(value) {
+  return value > 1514
+    ? "#00441b"
+    : value > 824
+    ? "#006d2c"
+    : value > 457
+    ? "#238b45"
+    : value > 264
+    ? "#41ae76"
+    : value > 129
+    ? "#66c2a4"
+    : value > 43
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForOtherAsia(value) {
+  return value > 785
+    ? "#00441b"
+    : value > 427
+    ? "#006d2c"
+    : value > 283
+    ? "#238b45"
+    : value > 166
+    ? "#41ae76"
+    : value > 84
+    ? "#66c2a4"
+    : value > 26
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForOtherIndo(value) {
+  return value > 2653
+    ? "#00441b"
+    : value > 1357
+    ? "#006d2c"
+    : value > 777
+    ? "#238b45"
+    : value > 449
+    ? "#41ae76"
+    : value > 238
+    ? "#66c2a4"
+    : value > 87
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForRussian(value) {
+  return value > 3818
+    ? "#00441b"
+    : value > 2369
+    ? "#006d2c"
+    : value > 1409
+    ? "#238b45"
+    : value > 818
+    ? "#41ae76"
+    : value > 416
+    ? "#66c2a4"
+    : value > 128
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForSpanish(value) {
+  return value > 9883
+    ? "#00441b"
+    : value > 5570
+    ? "#006d2c"
+    : value > 3588
+    ? "#238b45"
+    : value > 2273
+    ? "#41ae76"
+    : value > 1269
+    ? "#66c2a4"
+    : value > 519
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForTagalog(value) {
+  return value > 962
+    ? "#00441b"
+    : value > 524
+    ? "#006d2c"
+    : value > 268
+    ? "#238b45"
+    : value > 132
+    ? "#41ae76"
+    : value > 62
+    ? "#66c2a4"
+    : value > 19
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+function getColorForVietnamese(value) {
+  return value > 256
+    ? "#00441b"
+    : value > 131
+    ? "#006d2c"
+    : value > 74
+    ? "#238b45"
+    : value > 41
+    ? "#41ae76"
+    : value > 20
+    ? "#66c2a4"
+    : value > 6
+    ? "#99d8c9"
+    : value > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+//=========================================================== DEMOGRAPHIC COLOR FUNCTIONS =================================================================
+function getColorScaleForDemographics(population) {
+  return population > 15945
+    ? "#00441b"
+    : population > 8460
+    ? "#006d2c"
+    : population > 6159
+    ? "#238b45"
+    : population > 4634
+    ? "#41ae76"
+    : population > 3380
+    ? "#66c2a4"
+    : population > 2181
+    ? "#99d8c9"
+    : population > 0
+    ? "#ccece6"
+    : "#606060";
+}
+
+//=========================================================== HEALTH RISK COLOR FUNCTIONS =================================================================
+function getColorForUninsured(percent) {
+  return percent > 31.1
+    ? "#034e7b"
+    : percent > 21.3
+    ? "#0570b0"
+    : percent > 16.1
+    ? "#3690c0"
+    : percent > 12
+    ? "#74a9cf"
+    : percent > 8.6
+    ? "#a6bddb"
+    : percent > 5.6
+    ? "#d0d1e6"
+    : percent > 2
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForFrequentDrinkers(percent) {
+  return percent > 29.4
+    ? "#034e7b"
+    : percent > 23.1
+    ? "#0570b0"
+    : percent > 20.1
+    ? "#3690c0"
+    : percent > 17.3
+    ? "#74a9cf"
+    : percent > 15
+    ? "#a6bddb"
+    : percent > 12.8
+    ? "#d0d1e6"
+    : percent > 4.9
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForCurrentSmokers(percent) {
+  return percent > 45.4
+    ? "#034e7b"
+    : percent > 23.1
+    ? "#0570b0"
+    : percent > 18.7
+    ? "#3690c0"
+    : percent > 15.4
+    ? "#74a9cf"
+    : percent > 12.6
+    ? "#a6bddb"
+    : percent > 9.5
+    ? "#d0d1e6"
+    : percent > 5.1
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForSedentaryLifestyle(percent) {
+  return percent > 63.9
+    ? "#034e7b"
+    : percent > 40.5
+    ? "#0570b0"
+    : percent > 34.2
+    ? "#3690c0"
+    : percent > 28.9
+    ? "#74a9cf"
+    : percent > 23.7
+    ? "#a6bddb"
+    : percent > 17.4
+    ? "#d0d1e6"
+    : percent > 9.4
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+function getColorForSleepLessThan7Hours(percent) {
+  return percent > 49.1
+    ? "#034e7b"
+    : percent > 41.5
+    ? "#0570b0"
+    : percent > 38.5
+    ? "#3690c0"
+    : percent > 35.7
+    ? "#74a9cf"
+    : percent > 32.9
+    ? "#a6bddb"
+    : percent > 29.9
+    ? "#d0d1e6"
+    : percent > 23.2
+    ? "#f1eef6"
+    : percent > 0
+    ? "#f1eef6"
+    : "#606060";
+}
+
+//=========================================================== HEALTH OUTCOMES COLOR FUNCTIONS =================================================================
+function getColorForCurrentAsthma(percent) {
+  return percent > 16.5
+    ? "#91003f"
+    : percent > 13.5
+    ? "#ce1256"
+    : percent > 12.2
+    ? "#e7298a"
+    : percent > 11
+    ? "#df65b0"
+    : percent > 9.9
+    ? "#c994c7"
+    : percent > 8.9
+    ? "#d4b9da"
+    : percent > 7.4
+    ? "#e7e1ef"
+    : percent > 0
+    ? "#e7e1ef"
+    : "#606060";
+}
+
+function getColorForHighBlood(percent) {
+  return percent > 73.3
+    ? "#91003f"
+    : percent > 37.6
+    ? "#ce1256"
+    : percent > 32.7
+    ? "#e7298a"
+    : percent > 28.5
+    ? "#df65b0"
+    : percent > 24.4
+    ? "#c994c7"
+    : percent > 19.3
+    ? "#d4b9da"
+    : percent > 9
+    ? "#e7e1ef"
+    : percent > 0
+    ? "#e7e1ef"
+    : "#606060";
+}
+
+function getColorForCancerAdults(percent) {
+  return percent > 19.4
+    ? "#91003f"
+    : percent > 9.4
+    ? "#ce1256"
+    : percent > 7.2
+    ? "#e7298a"
+    : percent > 5.9
+    ? "#df65b0"
+    : percent > 4.9
+    ? "#c994c7"
+    : percent > 3.9
+    ? "#d4b9da"
+    : percent > 1.5
+    ? "#e7e1ef"
+    : percent > 0
+    ? "#e7e1ef"
+    : "#606060";
+}
+
+function getColorForHighCholesterol(percent) {
+  return percent > 97.3
+    ? "#91003f"
+    : percent > 89.7
+    ? "#ce1256"
+    : percent > 87.2
+    ? "#e7298a"
+    : percent > 84.5
+    ? "#df65b0"
+    : percent > 81.4
+    ? "#c994c7"
+    : percent > 75.9
+    ? "#d4b9da"
+    : percent > 62.5
+    ? "#e7e1ef"
+    : percent > 0
+    ? "#e7e1ef"
+    : "#606060";
+}
+
+function getColorForKidneyDisease(percent) {
+  return percent > 11.9
+    ? "#91003f"
+    : percent > 5.1
+    ? "#ce1256"
+    : percent > 3.8
+    ? "#e7298a"
+    : percent > 3.2
+    ? "#df65b0"
+    : percent > 2.7
+    ? "#c994c7"
+    : percent > 2.1
+    ? "#d4b9da"
+    : percent > 0.8
+    ? "#e7e1ef"
+    : percent > 0
+    ? "#e7e1ef"
+    : "#606060";
+}
+
+function getColorForPulmonaryDisease(percent) {
+  return percent > 49.4
+    ? "#91003f"
+    : percent > 27.9
+    ? "#ce1256"
+    : percent > 22.8
+    ? "#e7298a"
+    : percent > 20
+    ? "#df65b0"
+    : percent > 17.3
+    ? "#c994c7"
+    : percent > 14
+    ? "#d4b9da"
+    : percent > 6.1
+    ? "#e7e1ef"
+    : percent > 0
+    ? "#e7e1ef"
+    : "#606060";
+}
+
+function getColorForHeartDisease(percent) {
+  return percent > 34
+    ? "#91003f"
+    : percent > 11.5
+    ? "#ce1256"
+    : percent > 7.5
+    ? "#e7298a"
+    : percent > 5.8
+    ? "#df65b0"
+    : percent > 4.7
+    ? "#c994c7"
+    : percent > 3.5
+    ? "#d4b9da"
+    : percent > 1
+    ? "#e7e1ef"
+    : percent > 0
+    ? "#e7e1ef"
+    : "#606060";
+}
+
+function getColorForDiabetes(percent) {
+  return percent > 46.1
+    ? "#91003f"
+    : percent > 17.7
+    ? "#ce1256"
+    : percent > 14.4
+    ? "#e7298a"
+    : percent > 12.1
+    ? "#df65b0"
+    : percent > 9.8
+    ? "#c994c7"
+    : percent > 6.9
+    ? "#d4b9da"
+    : percent > 2
+    ? "#e7e1ef"
+    : percent > 0
+    ? "#e7e1ef"
+    : "#606060";
+}
+
+function getColorForObesity(percent) {
+  return percent > 48.8
+    ? "#91003f"
+    : percent > 36.6
+    ? "#ce1256"
+    : percent > 32.2
+    ? "#e7298a"
+    : percent > 27.9
+    ? "#df65b0"
+    : percent > 23.6
+    ? "#c994c7"
+    : percent > 18.9
+    ? "#d4b9da"
+    : percent > 12.6
+    ? "#e7e1ef"
+    : percent > 0
+    ? "#e7e1ef"
+    : "#606060";
+}
+
+function getColorForStroke(percent) {
+  return percent > 17.4
+    ? "#91003f"
+    : percent > 6.3
+    ? "#ce1256"
+    : percent > 4.3
+    ? "#e7298a"
+    : percent > 3.4
+    ? "#df65b0"
+    : percent > 2.7
+    ? "#c994c7"
+    : percent > 1.9
+    ? "#d4b9da"
+    : percent > 0.6
+    ? "#e7e1ef"
+    : percent > 0
+    ? "#e7e1ef"
+    : "#606060";
+}
+
+//=========================================================== SCREENING RATES COLOR FUNCTIONS =================================================================
+function getColorForAnnualCheckUp(percent) {
+  return percent > 91.3
+    ? "#6e016b"
+    : percent > 81.5
+    ? "#88419d"
+    : percent > 78.7
+    ? "#8c6bb1"
+    : percent > 76.5
+    ? "#8c96c6"
+    : percent > 74.4
+    ? "#9ebcda"
+    : percent > 71.7
+    ? "#bfd3e6"
+    : percent > 66.1
+    ? "#edf8fb"
+    : percent > 0
+    ? "#edf8fb"
+    : "#606060";
+}
+
+function getColorForDentalVisit(percent) {
+  return percent > 82.9
+    ? "#6e016b"
+    : percent > 72.1
+    ? "#88419d"
+    : percent > 64.8
+    ? "#8c6bb1"
+    : percent > 58.5
+    ? "#8c96c6"
+    : percent > 52.2
+    ? "#9ebcda"
+    : percent > 45
+    ? "#bfd3e6"
+    : percent > 23.3
+    ? "#edf8fb"
+    : percent > 0
+    ? "#edf8fb"
+    : "#606060";
+}
+
+function getColorForCholesterolScreening(percent) {
+  return percent > 97.3
+    ? "#6e016b"
+    : percent > 89.7
+    ? "#88419d"
+    : percent > 87.2
+    ? "#8c6bb1"
+    : percent > 84.5
+    ? "#8c96c6"
+    : percent > 81.4
+    ? "#9ebcda"
+    : percent > 75.9
+    ? "#bfd3e6"
+    : percent > 62.5
+    ? "#edf8fb"
+    : percent > 0
+    ? "#edf8fb"
+    : "#606060";
+}
+
+function getColorForMammographyScreening(percent) {
+  return percent > 86.3
+    ? "#6e016b"
+    : percent > 83.1
+    ? "#88419d"
+    : percent > 81.1
+    ? "#8c6bb1"
+    : percent > 79.4
+    ? "#8c96c6"
+    : percent > 77.8
+    ? "#9ebcda"
+    : percent > 75.2
+    ? "#bfd3e6"
+    : percent > 69.5
+    ? "#edf8fb"
+    : percent > 0
+    ? "#edf8fb"
+    : "#606060";
+}
+
+function getColorForCervicalScreening(percent) {
+  return percent > 91.4
+    ? "#6e016b"
+    : percent > 86.2
+    ? "#88419d"
+    : percent > 83
+    ? "#8c6bb1"
+    : percent > 79.7
+    ? "#8c96c6"
+    : percent > 75.8
+    ? "#9ebcda"
+    : percent > 69.4
+    ? "#bfd3e6"
+    : percent > 51.6
+    ? "#edf8fb"
+    : percent > 0
+    ? "#edf8fb"
+    : "#606060";
+}
+
+function getColorForColorectalScreening(percent) {
+  return percent > 85.1
+    ? "#6e016b"
+    : percent > 79.4
+    ? "#88419d"
+    : percent > 76
+    ? "#8c6bb1"
+    : percent > 72.7
+    ? "#8c96c6"
+    : percent > 69.2
+    ? "#9ebcda"
+    : percent > 64.8
+    ? "#bfd3e6"
+    : percent > 53.9
+    ? "#edf8fb"
+    : percent > 0
+    ? "#edf8fb"
+    : "#606060";
+}
+
+//=========================================================== HEALTH STATUS COLOR FUNCTIONS =================================================================
+function getColorForDepression(percent) {
+  return percent > 32.4
+    ? healthStatusColors[0]
+    : percent > 23.2
+    ? healthStatusColors[1]
+    : percent > 20.6
+    ? healthStatusColors[2]
+    : percent > 18.8
+    ? healthStatusColors[3]
+    : percent > 17.1
+    ? healthStatusColors[4]
+    : percent > 15.2
+    ? healthStatusColors[5]
+    : percent > 11.8
+    ? healthStatusColors[6]
+    : percent > 0
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
+}
+
+function getColorForMentalHealthBad(percent) {
+  return percent > 31
+    ? healthStatusColors[0]
+    : percent > 22.1
+    ? healthStatusColors[1]
+    : percent > 18.8
+    ? healthStatusColors[2]
+    : percent > 16.5
+    ? healthStatusColors[3]
+    : percent > 14.6
+    ? healthStatusColors[4]
+    : percent > 12.7
+    ? healthStatusColors[5]
+    : percent > 7.2
+    ? healthStatusColors[6]
+    : percent > 0
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
+}
+
+function getColorForPhysicalHealthBad(percent) {
+  return percent > 31.3
+    ? healthStatusColors[0]
+    : percent > 17
+    ? healthStatusColors[1]
+    : percent > 13.9
+    ? healthStatusColors[2]
+    : percent > 11.6
+    ? healthStatusColors[3]
+    : percent > 9.7
+    ? healthStatusColors[4]
+    : percent > 7.5
+    ? healthStatusColors[5]
+    : percent > 3.8
+    ? healthStatusColors[6]
+    : percent > 0
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
+}
+
+function getColorForPoorSelfRatedHealth(percent) {
+  return percent > 57.1
+    ? healthStatusColors[0]
+    : percent > 29.7
+    ? healthStatusColors[1]
+    : percent > 23.1
+    ? healthStatusColors[2]
+    : percent > 18.3
+    ? healthStatusColors[3]
+    : percent > 14.3
+    ? healthStatusColors[4]
+    : percent > 10.1
+    ? healthStatusColors[5]
+    : percent > 4.3
+    ? healthStatusColors[6]
+    : percent > 0
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
+}
+
+function getColorForDisability(percent) {
+  return percent > 70.5
+    ? healthStatusColors[0]
+    : percent > 40.8
+    ? healthStatusColors[1]
+    : percent > 33.9
+    ? healthStatusColors[2]
+    : percent > 28.8
+    ? healthStatusColors[3]
+    : percent > 24.5
+    ? healthStatusColors[4]
+    : percent > 19.5
+    ? healthStatusColors[5]
+    : percent > 11.3
+    ? healthStatusColors[6]
+    : percent > 0
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
+}
+
+function getColorForHearingDisability(percent) {
+  return percent > 29.7
+    ? healthStatusColors[0]
+    : percent > 11.6
+    ? healthStatusColors[1]
+    : percent > 7.9
+    ? healthStatusColors[2]
+    : percent > 6.2
+    ? healthStatusColors[3]
+    : percent > 5.1
+    ? healthStatusColors[4]
+    : percent > 4
+    ? healthStatusColors[5]
+    : percent > 1.7
+    ? healthStatusColors[6]
+    : percent > 0
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
+}
+
+function getColorForVisionDisability(percent) {
+  return percent > 33.9
+    ? healthStatusColors[0]
+    : percent > 14.2
+    ? healthStatusColors[1]
+    : percent > 10.4
+    ? healthStatusColors[2]
+    : percent > 7.8
+    ? healthStatusColors[3]
+    : percent > 5.7
+    ? healthStatusColors[4]
+    : percent > 3.8
+    ? healthStatusColors[5]
+    : percent > 1.4
+    ? healthStatusColors[6]
+    : percent > 0
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
+}
+
+function getColorForCognitiveDisability(percent) {
+  return percent > 30.7
+    ? healthStatusColors[0]
+    : percent > 21.5
+    ? healthStatusColors[1]
+    : percent > 17.5
+    ? healthStatusColors[2]
+    : percent > 14.2
+    ? healthStatusColors[3]
+    : percent > 11.6
+    ? healthStatusColors[4]
+    : percent > 9
+    ? healthStatusColors[5]
+    : percent > 5.5
+    ? healthStatusColors[6]
+    : percent > 0
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
+}
+
+function getColorForMobilityDisability(percent) {
+  return percent > 56.9
+    ? healthStatusColors[0]
+    : percent > 24
+    ? healthStatusColors[1]
+    : percent > 18.6
+    ? healthStatusColors[2]
+    : percent > 15.1
+    ? healthStatusColors[3]
+    : percent > 12.1
+    ? healthStatusColors[4]
+    : percent > 8.5
+    ? healthStatusColors[5]
+    : percent > 2.5
+    ? healthStatusColors[6]
+    : percent > 0
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
+}
+
+function getColorForSelfCareDisability(percent) {
+  return percent > 28.2
+    ? healthStatusColors[0]
+    : percent > 9.9
+    ? healthStatusColors[1]
+    : percent > 7.1
+    ? healthStatusColors[2]
+    : percent > 5.2
+    ? healthStatusColors[3]
+    : percent > 3.8
+    ? healthStatusColors[4]
+    : percent > 2.5
+    ? healthStatusColors[5]
+    : percent > 0.8
+    ? healthStatusColors[6]
+    : percent > 0
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
+}
+
+function getColorForIndependentLivingDisability(percent) {
+  return percent > 31.8
+    ? healthStatusColors[0]
+    : percent > 16.6
+    ? healthStatusColors[1]
+    : percent > 12.6
+    ? healthStatusColors[2]
+    : percent > 9.8
+    ? healthStatusColors[3]
+    : percent > 7.6
+    ? healthStatusColors[4]
+    : percent > 5.5
+    ? healthStatusColors[5]
+    : percent > 2.8
+    ? healthStatusColors[6]
+    : percent > 0
+    ? healthStatusColors[7]
+    : healthStatusColors[8];
+}

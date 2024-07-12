@@ -30,8 +30,51 @@ var baseLayer = L.tileLayer(
 
 //=========================================================== SETTINGS =================================================================
 
-// Work In Progress
-// Update the values to change the layer and legend names
+const healthRiskLayerNames = {
+  UNINSURED: "Uninsured",
+  FREQUENT_DRINKERS: "Frequent Drinkers",
+  CURRENT_SMOKERS: "Current Smokers",
+  SEDENTARY_LIFESTYLE: "Sedentary Lifestyle",
+  SLEEP_LESS_THAN_7_HOURS: "<7 Hours Sleep",
+};
+
+const healthRiskColors = [
+  "#034e7b",
+  "#0570b0",
+  "#3690c0",
+  "#74a9cf",
+  "#a6bddb",
+  "#d0d1e6",
+  "#f1eef6",
+  "#f1eef6",
+  "#606060",
+];
+
+const healthOutcomesLayerNames = {
+  CURRENT_ASTHMA: "Asthma Prevalence",
+  HIGH_BLOOD: "High Blood Pressure Prevalence",
+  CANCER_ADULTS: "Cancer Prevalence (except skin)",
+  HIGH_CHOLESTEROL: "High Cholesterol",
+  KIDNEY_DISEASE: "Chronic Kidney Disease",
+  PULMONARY_DISEASE: "Pulmonary Disease",
+  HEART_DISEASE: "Heart Disease",
+  DIABETES: "Diabetes",
+  OBESITY: "Obesity",
+  STROKE: "Stroke",
+};
+
+const healthOutcomesColors = [
+  "#91003f",
+  "#ce1256",
+  "#e7298a",
+  "#df65b0",
+  "#c994c7",
+  "#d4b9da",
+  "#e7e1ef",
+  "#e7e1ef",
+  "#606060",
+];
+
 const healthStatusLayerNames = {
   DEPRESSION: "Depression Prevalence",
   MENTAL_HEALTH_BAD: "Mental Health Distress Prevalence",
@@ -46,7 +89,6 @@ const healthStatusLayerNames = {
   INDEPENDENT_LIVING_DISABILITY: "Independent Living Disability Prevalence",
 };
 
-// Update the values to change the color scale
 const healthStatusColors = [
   "#662506",
   "#993404",
@@ -1228,38 +1270,12 @@ var baseLayer = L.tileLayer(
   }
 ).addTo(maps["healthRiskBehaviorsMap"]);
 
-var healthRiskLayers = {
-  uninsured: L.geoJson(null, {
-    style: healthRiskStyle(
-      "Lack of health insurance crude prevalence (%)",
-      getColorForUninsured
-    ),
-  }),
-  frequentDrinkers: L.geoJson(null, {
-    style: healthRiskStyle(
-      "Binge drinking crude prevalence (%)",
-      getColorForFrequentDrinkers
-    ),
-  }),
-  currentSmokers: L.geoJson(null, {
-    style: healthRiskStyle(
-      "Current smoking crude prevalence (%)",
-      getColorForCurrentSmokers
-    ),
-  }),
-  sedentaryLifestyle: L.geoJson(null, {
-    style: healthRiskStyle(
-      "Physical inactivity crude prevalence (%)",
-      getColorForSedentaryLifestyle
-    ),
-  }),
-  sleepLessThan7Hours: L.geoJson(null, {
-    style: healthRiskStyle(
-      "Sleep <7 hours crude prevalence (%)",
-      getColorForSleepLessThan7Hours
-    ),
-  }),
-};
+var healthRiskLayers = {};
+Object.values(healthRiskLayerNames).forEach((layerName) => {
+  healthRiskLayers[layerName] = L.geoJson(null, {
+    style: healthRiskStyle(layerName, getColorHealthRisk(layerName)),
+  });
+});
 
 function healthRiskStyle(propertyName, colorFunction) {
   return function (feature) {
@@ -1271,6 +1287,23 @@ function healthRiskStyle(propertyName, colorFunction) {
       fillOpacity: 0.8,
     };
   };
+}
+
+function getColorHealthRisk(layerName) {
+  switch (layerName) {
+    case healthRiskLayerNames.UNINSURED:
+      return getColorForUninsured;
+    case healthRiskLayerNames.FREQUENT_DRINKERS:
+      return getColorForFrequentDrinkers;
+    case healthRiskLayerNames.CURRENT_SMOKERS:
+      return getColorForCurrentSmokers;
+    case healthRiskLayerNames.SEDENTARY_LIFESTYLE:
+      return getColorForSedentaryLifestyle;
+    case healthRiskLayerNames.SLEEP_LESS_THAN_7_HOURS:
+      return getColorForSleepLessThan7Hours;
+    default:
+      return () => "#606060";
+  }
 }
 
 function addHealthRiskData(data) {
@@ -1285,32 +1318,32 @@ function addHealthRiskData(data) {
     `;
 
     var frequentDrinkersPopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated binge drinking crude prevalence is 
-    <b>${p["Binge drinking crude prevalence (%)"]}%</b> 
-    ${p["Binge drinking crude prevalence 95% CI"]}.
-  `;
+      <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+      Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated binge drinking crude prevalence is 
+      <b>${p["Binge drinking crude prevalence (%)"]}%</b> 
+      ${p["Binge drinking crude prevalence 95% CI"]}.
+    `;
 
     var currentSmokersPopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated current smoking crude prevalence is 
-    <b>${p["Current smoking crude prevalence (%)"]}%</b> 
-    ${p["Current smoking crude prevalence 95% CI"]}.
-  `;
+      <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+      Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated current smoking crude prevalence is 
+      <b>${p["Current smoking crude prevalence (%)"]}%</b> 
+      ${p["Current smoking crude prevalence 95% CI"]}.
+    `;
 
     var sedentaryLifestylePopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated physical inactivity crude prevalence is 
-    <b>${p["Physical inactivity crude prevalence (%)"]}%</b> 
-    ${p["Physical inactivity crude prevalence 95% CI"]}.
-  `;
+      <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+      Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated physical inactivity crude prevalence is 
+      <b>${p["Physical inactivity crude prevalence (%)"]}%</b> 
+      ${p["Physical inactivity crude prevalence 95% CI"]}.
+    `;
 
     var sleepLessThan7HoursPopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated prevalence of sleep less than 7 hours is 
-    <b>${p["Sleep <7 hours crude prevalence (%)"]}%</b> 
-    ${p["Sleep <7 hours crude prevalence 95% CI"]}.
-  `;
+      <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
+      Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated prevalence of sleep less than 7 hours is 
+      <b>${p["Sleep <7 hours crude prevalence (%)"]}%</b> 
+      ${p["Sleep <7 hours crude prevalence 95% CI"]}.
+    `;
 
     var uninsuredLayer = L.geoJson(feature, {
       style: healthRiskStyle(
@@ -1323,7 +1356,7 @@ function addHealthRiskData(data) {
         allFeatures(feature, layer);
       },
     });
-    healthRiskLayers.uninsured.addLayer(uninsuredLayer);
+    healthRiskLayers[healthRiskLayerNames.UNINSURED].addLayer(uninsuredLayer);
 
     var frequentDrinkersLayer = L.geoJson(feature, {
       style: healthRiskStyle(
@@ -1336,7 +1369,9 @@ function addHealthRiskData(data) {
         allFeatures(feature, layer);
       },
     });
-    healthRiskLayers.frequentDrinkers.addLayer(frequentDrinkersLayer);
+    healthRiskLayers[healthRiskLayerNames.FREQUENT_DRINKERS].addLayer(
+      frequentDrinkersLayer
+    );
 
     var currentSmokersLayer = L.geoJson(feature, {
       style: healthRiskStyle(
@@ -1349,7 +1384,9 @@ function addHealthRiskData(data) {
         allFeatures(feature, layer);
       },
     });
-    healthRiskLayers.currentSmokers.addLayer(currentSmokersLayer);
+    healthRiskLayers[healthRiskLayerNames.CURRENT_SMOKERS].addLayer(
+      currentSmokersLayer
+    );
 
     var sedentaryLifestyleLayer = L.geoJson(feature, {
       style: healthRiskStyle(
@@ -1362,7 +1399,9 @@ function addHealthRiskData(data) {
         allFeatures(feature, layer);
       },
     });
-    healthRiskLayers.sedentaryLifestyle.addLayer(sedentaryLifestyleLayer);
+    healthRiskLayers[healthRiskLayerNames.SEDENTARY_LIFESTYLE].addLayer(
+      sedentaryLifestyleLayer
+    );
 
     var sleepLessThan7HoursLayer = L.geoJson(feature, {
       style: healthRiskStyle(
@@ -1375,22 +1414,28 @@ function addHealthRiskData(data) {
         allFeatures(feature, layer);
       },
     });
-    healthRiskLayers.sleepLessThan7Hours.addLayer(sleepLessThan7HoursLayer);
+    healthRiskLayers[healthRiskLayerNames.SLEEP_LESS_THAN_7_HOURS].addLayer(
+      sleepLessThan7HoursLayer
+    );
   });
 }
 
 addHealthRiskData(healthDataGeojson);
 
-var baseLayers = {
-  Uninsured: healthRiskLayers.uninsured,
-  "Frequent Drinkers": healthRiskLayers.frequentDrinkers,
-  "Current Smokers": healthRiskLayers.currentSmokers,
-  "Sedentary Lifestyle": healthRiskLayers.sedentaryLifestyle,
-  "<7 Hours Sleep": healthRiskLayers.sleepLessThan7Hours,
+var healthRiskBaseLayers = {
+  [healthRiskLayerNames.UNINSURED]:
+    healthRiskLayers[healthRiskLayerNames.UNINSURED],
+  [healthRiskLayerNames.FREQUENT_DRINKERS]:
+    healthRiskLayers[healthRiskLayerNames.FREQUENT_DRINKERS],
+  [healthRiskLayerNames.CURRENT_SMOKERS]:
+    healthRiskLayers[healthRiskLayerNames.CURRENT_SMOKERS],
+  [healthRiskLayerNames.SEDENTARY_LIFESTYLE]:
+    healthRiskLayers[healthRiskLayerNames.SEDENTARY_LIFESTYLE],
+  [healthRiskLayerNames.SLEEP_LESS_THAN_7_HOURS]:
+    healthRiskLayers[healthRiskLayerNames.SLEEP_LESS_THAN_7_HOURS],
 };
-
 L.control
-  .layers(baseLayers, null, { collapsed: false })
+  .layers(healthRiskBaseLayers, null, { collapsed: false })
   .addTo(maps["healthRiskBehaviorsMap"]);
 
 // HEALTH RISK LEGEND CONTROL
@@ -1399,16 +1444,16 @@ var healthRisklegend = L.control({ position: "bottomleft" });
 healthRisklegend.onAdd = function () {
   var div = L.DomUtil.create("div", "healthRiskLegend");
   div.innerHTML = `
-    <h4>Percent Uninsured</h4>
-    <i style="background: #034e7b"></i><span> > 31.2%</span><br>
-    <i style="background: #0570b0"></i><span>21.4% - 31.1%</span><br>
-    <i style="background: #3690c0"></i><span>16.2% - 21.3%</span><br>
-    <i style="background: #74a9cf"></i><span>12.1% - 16.1%</span><br>
-    <i style="background: #a6bddb"></i><span>8.7% - 12%</span><br>
-    <i style="background: #d0d1e6"></i><span>5.7% - 8.6%</span><br>
-    <i style="background: #f1eef6"></i><span>2.1% - 5.6%</span><br>
-    <i style="background: #f1eef6"></i><span>0% - 2%</span><br>
-    <i style="background: #606060"></i><span>No Data</span><br>
+    <h4>${healthRiskLayerNames.UNINSURED}</h4>
+    <i style="background: ${healthRiskColors[0]}"></i><span> > 31.2%</span><br>
+    <i style="background: ${healthRiskColors[1]}"></i><span>21.4% - 31.1%</span><br>
+    <i style="background: ${healthRiskColors[2]}"></i><span>16.2% - 21.3%</span><br>
+    <i style="background: ${healthRiskColors[3]}"></i><span>12.1% - 16.1%</span><br>
+    <i style="background: ${healthRiskColors[4]}"></i><span>8.7% - 12%</span><br>
+    <i style="background: ${healthRiskColors[5]}"></i><span>5.7% - 8.6%</span><br>
+    <i style="background: ${healthRiskColors[6]}"></i><span>2.1% - 5.6%</span><br>
+    <i style="background: ${healthRiskColors[7]}"></i><span>0% - 2%</span><br>
+    <i style="background: ${healthRiskColors[8]}"></i><span>No Data</span><br>
   `;
   return div;
 };
@@ -1418,74 +1463,74 @@ healthRisklegend.addTo(maps["healthRiskBehaviorsMap"]);
 function updateLegendForHealthRisk(layerName) {
   var legendContent = "";
   switch (layerName) {
-    case "Uninsured":
+    case healthRiskLayerNames.UNINSURED:
       legendContent = `
-        <h4>Percent Uninsured</h4>
-        <i style="background: #034e7b"></i><span> > 31.2%</span><br>
-        <i style="background: #0570b0"></i><span>21.4% - 31.1%</span><br>
-        <i style="background: #3690c0"></i><span>16.2% - 21.3%</span><br>
-        <i style="background: #74a9cf"></i><span>12.1% - 16.1%</span><br>
-        <i style="background: #a6bddb"></i><span>8.7% - 12%</span><br>
-        <i style="background: #d0d1e6"></i><span>5.7% - 8.6%</span><br>
-        <i style="background: #f1eef6"></i><span>2.1% - 5.6%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 2%</span><br>
-        <i style="background: #606060"></i><span>No Data</span><br>
+        <h4>${healthRiskLayerNames.UNINSURED}</h4>
+        <i style="background: ${healthRiskColors[0]}"></i><span> > 31.2%</span><br>
+        <i style="background: ${healthRiskColors[1]}"></i><span>21.4% - 31.1%</span><br>
+        <i style="background: ${healthRiskColors[2]}"></i><span>16.2% - 21.3%</span><br>
+        <i style="background: ${healthRiskColors[3]}"></i><span>12.1% - 16.1%</span><br>
+        <i style="background: ${healthRiskColors[4]}"></i><span>8.7% - 12%</span><br>
+        <i style="background: ${healthRiskColors[5]}"></i><span>5.7% - 8.6%</span><br>
+        <i style="background: ${healthRiskColors[6]}"></i><span>2.1% - 5.6%</span><br>
+        <i style="background: ${healthRiskColors[7]}"></i><span>0% - 2%</span><br>
+        <i style="background: ${healthRiskColors[8]}"></i><span>No Data</span><br>
       `;
       break;
-    case "Frequent Drinkers":
+    case healthRiskLayerNames.FREQUENT_DRINKERS:
       legendContent = `
-        <h4>Frequent Drinkers</h4>
-        <i style="background: #034e7b"></i><span> > 29.5%</span><br>
-        <i style="background: #0570b0"></i><span>23.2% - 29.4%</span><br>
-        <i style="background: #3690c0"></i><span>20.2% - 23.1%</span><br>
-        <i style="background: #74a9cf"></i><span>17.4% - 20.1%</span><br>
-        <i style="background: #a6bddb"></i><span>15.1% - 17.3%</span><br>
-        <i style="background: #d0d1e6"></i><span>12.9% - 15%</span><br>
-        <i style="background: #f1eef6"></i><span>5% - 12.8%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 4.9%</span><br>
-        <i style="background: #606060"></i><span>No Data</span><br>
+        <h4>${healthRiskLayerNames.FREQUENT_DRINKERS}</h4>
+        <i style="background: ${healthRiskColors[0]}"></i><span> > 29.5%</span><br>
+        <i style="background: ${healthRiskColors[1]}"></i><span>23.2% - 29.4%</span><br>
+        <i style="background: ${healthRiskColors[2]}"></i><span>20.2% - 23.1%</span><br>
+        <i style="background: ${healthRiskColors[3]}"></i><span>17.4% - 20.1%</span><br>
+        <i style="background: ${healthRiskColors[4]}"></i><span>15.1% - 17.3%</span><br>
+        <i style="background: ${healthRiskColors[5]}"></i><span>12.9% - 15%</span><br>
+        <i style="background: ${healthRiskColors[6]}"></i><span>5% - 12.8%</span><br>
+        <i style="background: ${healthRiskColors[7]}"></i><span>0% - 4.9%</span><br>
+        <i style="background: ${healthRiskColors[8]}"></i><span>No Data</span><br>
       `;
       break;
-    case "Current Smokers":
+    case healthRiskLayerNames.CURRENT_SMOKERS:
       legendContent = `
-        <h4>Adult Smokers</h4>
-        <i style="background: #034e7b"></i><span> > 45.5%</span><br>
-        <i style="background: #0570b0"></i><span>23.2% - 45.4%</span><br>
-        <i style="background: #3690c0"></i><span>18.8% - 23.1%</span><br>
-        <i style="background: #74a9cf"></i><span>15.5% - 18.7%</span><br>
-        <i style="background: #a6bddb"></i><span>12.7% - 15.4%</span><br>
-        <i style="background: #d0d1e6"></i><span>9.6% - 12.6%</span><br>
-        <i style="background: #f1eef6"></i><span>5.2% - 9.5%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 5.1%</span><br>
-        <i style="background: #606060"></i><span>No Data</span><br>
+        <h4>${healthRiskLayerNames.CURRENT_SMOKERS}</h4>
+        <i style="background: ${healthRiskColors[0]}"></i><span> > 45.5%</span><br>
+        <i style="background: ${healthRiskColors[1]}"></i><span>23.2% - 45.4%</span><br>
+        <i style="background: ${healthRiskColors[2]}"></i><span>18.8% - 23.1%</span><br>
+        <i style="background: ${healthRiskColors[3]}"></i><span>15.5% - 18.7%</span><br>
+        <i style="background: ${healthRiskColors[4]}"></i><span>12.7% - 15.4%</span><br>
+        <i style="background: ${healthRiskColors[5]}"></i><span>9.6% - 12.6%</span><br>
+        <i style="background: ${healthRiskColors[6]}"></i><span>5.2% - 9.5%</span><br>
+        <i style="background: ${healthRiskColors[7]}"></i><span>0% - 5.1%</span><br>
+        <i style="background: ${healthRiskColors[8]}"></i><span>No Data</span><br>
       `;
       break;
-    case "Sedentary Lifestyle":
+    case healthRiskLayerNames.SEDENTARY_LIFESTYLE:
       legendContent = `
-        <h4>Phyiscally Inactive</h4>
-        <i style="background: #034e7b"></i><span> > 64%</span><br>
-        <i style="background: #0570b0"></i><span>40.6% - 63.9%</span><br>
-        <i style="background: #3690c0"></i><span>34.3% - 40.5%</span><br>
-        <i style="background: #74a9cf"></i><span>29% - 34.2%</span><br>
-        <i style="background: #a6bddb"></i><span>23.8% - 28.9%</span><br>
-        <i style="background: #d0d1e6"></i><span>17.5% - 23.7%</span><br>
-        <i style="background: #f1eef6"></i><span>9.5% - 17.4%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 9.4%</span><br>
-        <i style="background: #606060"></i><span>No Data</span><br>
+        <h4>${healthRiskLayerNames.SEDENTARY_LIFESTYLE}</h4>
+        <i style="background: ${healthRiskColors[0]}"></i><span> > 64%</span><br>
+        <i style="background: ${healthRiskColors[1]}"></i><span>40.6% - 63.9%</span><br>
+        <i style="background: ${healthRiskColors[2]}"></i><span>34.3% - 40.5%</span><br>
+        <i style="background: ${healthRiskColors[3]}"></i><span>29% - 34.2%</span><br>
+        <i style="background: ${healthRiskColors[4]}"></i><span>23.8% - 28.9%</span><br>
+        <i style="background: ${healthRiskColors[5]}"></i><span>17.5% - 23.7%</span><br>
+        <i style="background: ${healthRiskColors[6]}"></i><span>9.5% - 17.4%</span><br>
+        <i style="background: ${healthRiskColors[7]}"></i><span>0% - 9.4%</span><br>
+        <i style="background: ${healthRiskColors[8]}"></i><span>No Data</span><br>
       `;
       break;
-    case "<7 Hours Sleep":
+    case healthRiskLayerNames.SLEEP_LESS_THAN_7_HOURS:
       legendContent = `
-        <h4>Sleep <7 Hours</h4>
-        <i style="background: #034e7b"></i><span> > 49.2%</span><br>
-        <i style="background: #0570b0"></i><span>41.6% - 49.1%</span><br>
-        <i style="background: #3690c0"></i><span>38.6% - 41.5%</span><br>
-        <i style="background: #74a9cf"></i><span>35.8% - 38.5%</span><br>
-        <i style="background: #a6bddb"></i><span>33% - 35.7%</span><br>
-        <i style="background: #d0d1e6"></i><span>30% - 32.9%</span><br>
-        <i style="background: #f1eef6"></i><span>23.3% - 29.9%</span><br>
-        <i style="background: #f1eef6"></i><span>0% - 23.2%</span><br>
-        <i style="background: #606060"></i><span>No Data</span><br>
+        <h4>${healthRiskLayerNames.SLEEP_LESS_THAN_7_HOURS}</h4>
+        <i style="background: ${healthRiskColors[0]}"></i><span> > 49.2%</span><br>
+        <i style="background: ${healthRiskColors[1]}"></i><span>41.6% - 49.1%</span><br>
+        <i style="background: ${healthRiskColors[2]}"></i><span>38.6% - 41.5%</span><br>
+        <i style="background: ${healthRiskColors[3]}"></i><span>35.8% - 38.5%</span><br>
+        <i style="background: ${healthRiskColors[4]}"></i><span>33% - 35.7%</span><br>
+        <i style="background: ${healthRiskColors[5]}"></i><span>30% - 32.9%</span><br>
+        <i style="background: ${healthRiskColors[6]}"></i><span>23.3% - 29.9%</span><br>
+        <i style="background: ${healthRiskColors[7]}"></i><span>0% - 23.2%</span><br>
+        <i style="background: ${healthRiskColors[8]}"></i><span>No Data</span><br>
       `;
       break;
   }
@@ -1497,8 +1542,10 @@ maps["healthRiskBehaviorsMap"].on("baselayerchange", function (e) {
 });
 
 // Set uninsured layer as the default
-updateLegendForHealthRisk("Uninsured");
-healthRiskLayers.uninsured.addTo(maps["healthRiskBehaviorsMap"]);
+updateLegendForHealthRisk(healthRiskLayerNames.UNINSURED);
+healthRiskLayers[healthRiskLayerNames.UNINSURED].addTo(
+  maps["healthRiskBehaviorsMap"]
+);
 
 //=========================================================== Health Outcomes Map =================================================================
 
@@ -3291,303 +3338,303 @@ function getColorScaleForDemographics(population) {
 //=========================================================== HEALTH RISK COLOR FUNCTIONS =================================================================
 function getColorForUninsured(percent) {
   return percent > 31.1
-    ? "#034e7b"
+    ? healthRiskColors[0]
     : percent > 21.3
-    ? "#0570b0"
+    ? healthRiskColors[1]
     : percent > 16.1
-    ? "#3690c0"
+    ? healthRiskColors[2]
     : percent > 12
-    ? "#74a9cf"
+    ? healthRiskColors[3]
     : percent > 8.6
-    ? "#a6bddb"
+    ? healthRiskColors[4]
     : percent > 5.6
-    ? "#d0d1e6"
+    ? healthRiskColors[5]
     : percent > 2
-    ? "#f1eef6"
+    ? healthRiskColors[6]
     : percent > 0
-    ? "#f1eef6"
-    : "#606060";
+    ? healthRiskColors[7]
+    : healthRiskColors[8];
 }
 
 function getColorForFrequentDrinkers(percent) {
   return percent > 29.4
-    ? "#034e7b"
+    ? healthRiskColors[0]
     : percent > 23.1
-    ? "#0570b0"
+    ? healthRiskColors[1]
     : percent > 20.1
-    ? "#3690c0"
+    ? healthRiskColors[2]
     : percent > 17.3
-    ? "#74a9cf"
+    ? healthRiskColors[3]
     : percent > 15
-    ? "#a6bddb"
+    ? healthRiskColors[4]
     : percent > 12.8
-    ? "#d0d1e6"
+    ? healthRiskColors[5]
     : percent > 4.9
-    ? "#f1eef6"
+    ? healthRiskColors[6]
     : percent > 0
-    ? "#f1eef6"
-    : "#606060";
+    ? healthRiskColors[7]
+    : healthRiskColors[8];
 }
 
 function getColorForCurrentSmokers(percent) {
   return percent > 45.4
-    ? "#034e7b"
+    ? healthRiskColors[0]
     : percent > 23.1
-    ? "#0570b0"
+    ? healthRiskColors[1]
     : percent > 18.7
-    ? "#3690c0"
+    ? healthRiskColors[2]
     : percent > 15.4
-    ? "#74a9cf"
+    ? healthRiskColors[3]
     : percent > 12.6
-    ? "#a6bddb"
+    ? healthRiskColors[4]
     : percent > 9.5
-    ? "#d0d1e6"
+    ? healthRiskColors[5]
     : percent > 5.1
-    ? "#f1eef6"
+    ? healthRiskColors[6]
     : percent > 0
-    ? "#f1eef6"
-    : "#606060";
+    ? healthRiskColors[7]
+    : healthRiskColors[8];
 }
 
 function getColorForSedentaryLifestyle(percent) {
   return percent > 63.9
-    ? "#034e7b"
+    ? healthRiskColors[0]
     : percent > 40.5
-    ? "#0570b0"
+    ? healthRiskColors[1]
     : percent > 34.2
-    ? "#3690c0"
+    ? healthRiskColors[2]
     : percent > 28.9
-    ? "#74a9cf"
+    ? healthRiskColors[3]
     : percent > 23.7
-    ? "#a6bddb"
+    ? healthRiskColors[4]
     : percent > 17.4
-    ? "#d0d1e6"
+    ? healthRiskColors[5]
     : percent > 9.4
-    ? "#f1eef6"
+    ? healthRiskColors[6]
     : percent > 0
-    ? "#f1eef6"
-    : "#606060";
+    ? healthRiskColors[7]
+    : healthRiskColors[8];
 }
 
 function getColorForSleepLessThan7Hours(percent) {
   return percent > 49.1
-    ? "#034e7b"
+    ? healthRiskColors[0]
     : percent > 41.5
-    ? "#0570b0"
+    ? healthRiskColors[1]
     : percent > 38.5
-    ? "#3690c0"
+    ? healthRiskColors[2]
     : percent > 35.7
-    ? "#74a9cf"
+    ? healthRiskColors[3]
     : percent > 32.9
-    ? "#a6bddb"
+    ? healthRiskColors[4]
     : percent > 29.9
-    ? "#d0d1e6"
+    ? healthRiskColors[5]
     : percent > 23.2
-    ? "#f1eef6"
+    ? healthRiskColors[6]
     : percent > 0
-    ? "#f1eef6"
-    : "#606060";
+    ? healthRiskColors[7]
+    : healthRiskColors[8];
 }
 
 //=========================================================== HEALTH OUTCOMES COLOR FUNCTIONS =================================================================
 function getColorForCurrentAsthma(percent) {
   return percent > 16.5
-    ? "#91003f"
+    ? healthOutcomesColors[0]
     : percent > 13.5
-    ? "#ce1256"
+    ? healthOutcomesColors[1]
     : percent > 12.2
-    ? "#e7298a"
+    ? healthOutcomesColors[2]
     : percent > 11
-    ? "#df65b0"
+    ? healthOutcomesColors[3]
     : percent > 9.9
-    ? "#c994c7"
+    ? healthOutcomesColors[4]
     : percent > 8.9
-    ? "#d4b9da"
+    ? healthOutcomesColors[5]
     : percent > 7.4
-    ? "#e7e1ef"
+    ? healthOutcomesColors[6]
     : percent > 0
-    ? "#e7e1ef"
-    : "#606060";
+    ? healthOutcomesColors[7]
+    : healthOutcomesColors[8];
 }
 
 function getColorForHighBlood(percent) {
   return percent > 73.3
-    ? "#91003f"
+    ? healthOutcomesColors[0]
     : percent > 37.6
-    ? "#ce1256"
+    ? healthOutcomesColors[1]
     : percent > 32.7
-    ? "#e7298a"
+    ? healthOutcomesColors[2]
     : percent > 28.5
-    ? "#df65b0"
+    ? healthOutcomesColors[3]
     : percent > 24.4
-    ? "#c994c7"
+    ? healthOutcomesColors[4]
     : percent > 19.3
-    ? "#d4b9da"
+    ? healthOutcomesColors[5]
     : percent > 9
-    ? "#e7e1ef"
+    ? healthOutcomesColors[6]
     : percent > 0
-    ? "#e7e1ef"
-    : "#606060";
+    ? healthOutcomesColors[7]
+    : healthOutcomesColors[8];
 }
 
 function getColorForCancerAdults(percent) {
   return percent > 19.4
-    ? "#91003f"
+    ? healthOutcomesColors[0]
     : percent > 9.4
-    ? "#ce1256"
+    ? healthOutcomesColors[1]
     : percent > 7.2
-    ? "#e7298a"
+    ? healthOutcomesColors[2]
     : percent > 5.9
-    ? "#df65b0"
+    ? healthOutcomesColors[3]
     : percent > 4.9
-    ? "#c994c7"
+    ? healthOutcomesColors[4]
     : percent > 3.9
-    ? "#d4b9da"
+    ? healthOutcomesColors[5]
     : percent > 1.5
-    ? "#e7e1ef"
+    ? healthOutcomesColors[6]
     : percent > 0
-    ? "#e7e1ef"
-    : "#606060";
+    ? healthOutcomesColors[7]
+    : healthOutcomesColors[8];
 }
 
 function getColorForHighCholesterol(percent) {
   return percent > 97.3
-    ? "#91003f"
+    ? healthOutcomesColors[0]
     : percent > 89.7
-    ? "#ce1256"
+    ? healthOutcomesColors[1]
     : percent > 87.2
-    ? "#e7298a"
+    ? healthOutcomesColors[2]
     : percent > 84.5
-    ? "#df65b0"
+    ? healthOutcomesColors[3]
     : percent > 81.4
-    ? "#c994c7"
+    ? healthOutcomesColors[4]
     : percent > 75.9
-    ? "#d4b9da"
+    ? healthOutcomesColors[5]
     : percent > 62.5
-    ? "#e7e1ef"
+    ? healthOutcomesColors[6]
     : percent > 0
-    ? "#e7e1ef"
-    : "#606060";
+    ? healthOutcomesColors[7]
+    : healthOutcomesColors[8];
 }
 
 function getColorForKidneyDisease(percent) {
   return percent > 11.9
-    ? "#91003f"
+    ? healthOutcomesColors[0]
     : percent > 5.1
-    ? "#ce1256"
+    ? healthOutcomesColors[1]
     : percent > 3.8
-    ? "#e7298a"
+    ? healthOutcomesColors[2]
     : percent > 3.2
-    ? "#df65b0"
+    ? healthOutcomesColors[3]
     : percent > 2.7
-    ? "#c994c7"
+    ? healthOutcomesColors[4]
     : percent > 2.1
-    ? "#d4b9da"
+    ? healthOutcomesColors[5]
     : percent > 0.8
-    ? "#e7e1ef"
+    ? healthOutcomesColors[6]
     : percent > 0
-    ? "#e7e1ef"
-    : "#606060";
+    ? healthOutcomesColors[7]
+    : healthOutcomesColors[8];
 }
 
 function getColorForPulmonaryDisease(percent) {
   return percent > 49.4
-    ? "#91003f"
+    ? healthOutcomesColors[0]
     : percent > 27.9
-    ? "#ce1256"
+    ? healthOutcomesColors[1]
     : percent > 22.8
-    ? "#e7298a"
+    ? healthOutcomesColors[2]
     : percent > 20
-    ? "#df65b0"
+    ? healthOutcomesColors[3]
     : percent > 17.3
-    ? "#c994c7"
+    ? healthOutcomesColors[4]
     : percent > 14
-    ? "#d4b9da"
+    ? healthOutcomesColors[5]
     : percent > 6.1
-    ? "#e7e1ef"
+    ? healthOutcomesColors[6]
     : percent > 0
-    ? "#e7e1ef"
-    : "#606060";
+    ? healthOutcomesColors[7]
+    : healthOutcomesColors[8];
 }
 
 function getColorForHeartDisease(percent) {
   return percent > 34
-    ? "#91003f"
+    ? healthOutcomesColors[0]
     : percent > 11.5
-    ? "#ce1256"
+    ? healthOutcomesColors[1]
     : percent > 7.5
-    ? "#e7298a"
+    ? healthOutcomesColors[2]
     : percent > 5.8
-    ? "#df65b0"
+    ? healthOutcomesColors[3]
     : percent > 4.7
-    ? "#c994c7"
+    ? healthOutcomesColors[4]
     : percent > 3.5
-    ? "#d4b9da"
+    ? healthOutcomesColors[5]
     : percent > 1
-    ? "#e7e1ef"
+    ? healthOutcomesColors[6]
     : percent > 0
-    ? "#e7e1ef"
-    : "#606060";
+    ? healthOutcomesColors[7]
+    : healthOutcomesColors[8];
 }
 
 function getColorForDiabetes(percent) {
   return percent > 46.1
-    ? "#91003f"
+    ? healthOutcomesColors[0]
     : percent > 17.7
-    ? "#ce1256"
+    ? healthOutcomesColors[1]
     : percent > 14.4
-    ? "#e7298a"
+    ? healthOutcomesColors[2]
     : percent > 12.1
-    ? "#df65b0"
+    ? healthOutcomesColors[3]
     : percent > 9.8
-    ? "#c994c7"
+    ? healthOutcomesColors[4]
     : percent > 6.9
-    ? "#d4b9da"
+    ? healthOutcomesColors[5]
     : percent > 2
-    ? "#e7e1ef"
+    ? healthOutcomesColors[6]
     : percent > 0
-    ? "#e7e1ef"
-    : "#606060";
+    ? healthOutcomesColors[7]
+    : healthOutcomesColors[8];
 }
 
 function getColorForObesity(percent) {
   return percent > 48.8
-    ? "#91003f"
+    ? healthOutcomesColors[0]
     : percent > 36.6
-    ? "#ce1256"
+    ? healthOutcomesColors[1]
     : percent > 32.2
-    ? "#e7298a"
+    ? healthOutcomesColors[2]
     : percent > 27.9
-    ? "#df65b0"
+    ? healthOutcomesColors[3]
     : percent > 23.6
-    ? "#c994c7"
+    ? healthOutcomesColors[4]
     : percent > 18.9
-    ? "#d4b9da"
+    ? healthOutcomesColors[5]
     : percent > 12.6
-    ? "#e7e1ef"
+    ? healthOutcomesColors[6]
     : percent > 0
-    ? "#e7e1ef"
-    : "#606060";
+    ? healthOutcomesColors[7]
+    : healthOutcomesColors[8];
 }
 
 function getColorForStroke(percent) {
   return percent > 17.4
-    ? "#91003f"
+    ? healthOutcomesColors[0]
     : percent > 6.3
-    ? "#ce1256"
+    ? healthOutcomesColors[1]
     : percent > 4.3
-    ? "#e7298a"
+    ? healthOutcomesColors[2]
     : percent > 3.4
-    ? "#df65b0"
+    ? healthOutcomesColors[3]
     : percent > 2.7
-    ? "#c994c7"
+    ? healthOutcomesColors[4]
     : percent > 1.9
-    ? "#d4b9da"
+    ? healthOutcomesColors[5]
     : percent > 0.6
-    ? "#e7e1ef"
+    ? healthOutcomesColors[6]
     : percent > 0
-    ? "#e7e1ef"
-    : "#606060";
+    ? healthOutcomesColors[7]
+    : healthOutcomesColors[8];
 }
 
 //=========================================================== SCREENING RATES COLOR FUNCTIONS =================================================================

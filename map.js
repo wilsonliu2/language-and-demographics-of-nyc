@@ -28,8 +28,9 @@ var baseLayer = L.tileLayer(
   }
 ).addTo(maps["demographicLanguageMap"]);
 
-//=========================================================== SETTINGS =================================================================
+//=========================================================== CONFIGURATION =================================================================
 
+// Update layer and legend name for health risk map
 const healthRiskLayerNames = {
   UNINSURED: "Uninsured",
   FREQUENT_DRINKERS: "Frequent Drinkers",
@@ -38,6 +39,7 @@ const healthRiskLayerNames = {
   SLEEP_LESS_THAN_7_HOURS: "<7 Hours Sleep",
 };
 
+// Update color for health risk map
 const healthRiskColors = [
   "#034e7b",
   "#0570b0",
@@ -50,6 +52,7 @@ const healthRiskColors = [
   "#606060",
 ];
 
+// Update layer and legend name for health outcomes map
 const healthOutcomesLayerNames = {
   ASTHMA_PREVALENCE: "Asthma Prevalence",
   HIGH_BLOOD_PRESSURE: "High Blood Pressure",
@@ -63,6 +66,7 @@ const healthOutcomesLayerNames = {
   STROKE_PREVALENCE: "Stroke Prevalence",
 };
 
+// Update color for health outcomes map
 const healthOutcomesColors = [
   "#91003f",
   "#ce1256",
@@ -75,6 +79,7 @@ const healthOutcomesColors = [
   "#606060",
 ];
 
+// Update layer and legend name for screening rates map
 const screeningRatesLayerNames = {
   ANNUAL_CHECKUP: "Annual Checkup",
   DENTAL_VISIT: "Dental Visit",
@@ -84,6 +89,7 @@ const screeningRatesLayerNames = {
   COLORECTAL_SCREENING: "Colorectal Screening",
 };
 
+// Update color for screening rates map
 const screeningRatesColors = [
   "#6e016b",
   "#88419d",
@@ -96,6 +102,7 @@ const screeningRatesColors = [
   "#606060",
 ];
 
+// Update layer and legend name for health status map
 const healthStatusLayerNames = {
   DEPRESSION: "Depression Prevalence",
   MENTAL_HEALTH_BAD: "Mental Health Distress Prevalence",
@@ -110,6 +117,7 @@ const healthStatusLayerNames = {
   INDEPENDENT_LIVING_DISABILITY: "Independent Living Disability Prevalence",
 };
 
+// Update color for health status map
 const healthStatusColors = [
   "#662506",
   "#993404",
@@ -122,27 +130,24 @@ const healthStatusColors = [
   "#606060",
 ];
 
+// Feature will be applied to all maps
 var highlightedFeature;
-
-// Feature will be applied to all maps.
 function allFeatures(feature, layer) {
-  // Highlight effect on mouseover
+  // Highlight effect
   layer.on("mouseover", function () {
     layer.setStyle({
       fillOpacity: 0.3,
     });
   });
-
   layer.on("mouseout", function () {
     layer.setStyle({
       fillOpacity: 0.8,
     });
   });
 
-  // Outline feature when clicked
+  // Outline effect
   layer.on("click", function (e) {
     var layer = e.target;
-
     // Reset style of previous feature
     if (highlightedFeature) {
       highlightedFeature.setStyle({
@@ -151,25 +156,21 @@ function allFeatures(feature, layer) {
       });
     }
 
-    // Outline
+    // Outline style
     layer.setStyle({
       color: "cyan",
       weight: 5,
     });
 
-    // Store current feature
+    // Store last feature
     highlightedFeature = layer;
   });
 }
 
-//=========================================================== VARIABLES =================================================================
-
+//=========================================================== LANGUAGE =================================================================
 var selectedLayer = "language";
 var languageControl;
 var mymap = maps["demographicLanguageMap"];
-
-//=========================================================== LANGUAGE =================================================================
-
 // Create a FeatureGroup for language layers
 var languageGroup = new L.featureGroup().addTo(mymap);
 
@@ -2091,44 +2092,12 @@ var baseLayer4 = L.tileLayer(
   }
 ).addTo(maps["screeningRatesMap"]);
 
-var screeningRatesLayers = {
-  annualCheckUp: L.geoJson(null, {
-    style: screeningRatesStyle(
-      "Annual checkup crude prevalence (%)",
-      getColorForAnnualCheckUp
-    ),
-  }),
-  dentalVisit: L.geoJson(null, {
-    style: screeningRatesStyle(
-      "Dental visit crude prevalence (%)",
-      getColorForDentalVisit
-    ),
-  }),
-  cholesterolScreening: L.geoJson(null, {
-    style: screeningRatesStyle(
-      "Cholesterol screening crude prevalence (%)",
-      getColorForCholesterolScreening
-    ),
-  }),
-  mammographyScreening: L.geoJson(null, {
-    style: screeningRatesStyle(
-      "Mammography use crude prevalence (%)",
-      getColorForMammographyScreening
-    ),
-  }),
-  cervicalScreening: L.geoJson(null, {
-    style: screeningRatesStyle(
-      "Cervical cancer screening crude prevalence (%)",
-      getColorForCervicalScreening
-    ),
-  }),
-  colorectalScreening: L.geoJson(null, {
-    style: screeningRatesStyle(
-      "Colorectal cancer screening crude prevalence (%)",
-      getColorForColorectalScreening
-    ),
-  }),
-};
+var screeningRatesLayers = {};
+Object.values(screeningRatesLayerNames).forEach((layerName) => {
+  screeningRatesLayers[layerName] = L.geoJson(null, {
+    style: screeningRatesStyle(layerName, getColorScreeningRate(layerName)),
+  });
+});
 
 function screeningRatesStyle(propertyName, colorFunction) {
   return function (feature) {
@@ -2140,6 +2109,25 @@ function screeningRatesStyle(propertyName, colorFunction) {
       fillOpacity: 0.8,
     };
   };
+}
+
+function getColorScreeningRate(layerName) {
+  switch (layerName) {
+    case screeningRatesLayerNames.ANNUAL_CHECKUP:
+      return getColorForAnnualCheckUp;
+    case screeningRatesLayerNames.DENTAL_VISIT:
+      return getColorForDentalVisit;
+    case screeningRatesLayerNames.CHOLESTEROL_SCREENING:
+      return getColorForCholesterolScreening;
+    case screeningRatesLayerNames.MAMMOGRAPHY_SCREENING:
+      return getColorForMammographyScreening;
+    case screeningRatesLayerNames.CERVICAL_SCREENING:
+      return getColorForCervicalScreening;
+    case screeningRatesLayerNames.COLORECTAL_SCREENING:
+      return getColorForColorectalScreening;
+    default:
+      return () => "#606060";
+  }
 }
 
 function addScreeningRatesData(data) {
@@ -2199,7 +2187,9 @@ function addScreeningRatesData(data) {
         allFeatures(feature, layer);
       },
     });
-    screeningRatesLayers.annualCheckUp.addLayer(annualCheckUpLayer);
+    screeningRatesLayers[screeningRatesLayerNames.ANNUAL_CHECKUP].addLayer(
+      annualCheckUpLayer
+    );
 
     var dentalVisitLayer = L.geoJson(feature, {
       style: screeningRatesStyle(
@@ -2212,7 +2202,9 @@ function addScreeningRatesData(data) {
         allFeatures(feature, layer);
       },
     });
-    screeningRatesLayers.dentalVisit.addLayer(dentalVisitLayer);
+    screeningRatesLayers[screeningRatesLayerNames.DENTAL_VISIT].addLayer(
+      dentalVisitLayer
+    );
 
     var cholesterolScreeningLayer = L.geoJson(feature, {
       style: screeningRatesStyle(
@@ -2225,9 +2217,9 @@ function addScreeningRatesData(data) {
         allFeatures(feature, layer);
       },
     });
-    screeningRatesLayers.cholesterolScreening.addLayer(
-      cholesterolScreeningLayer
-    );
+    screeningRatesLayers[
+      screeningRatesLayerNames.CHOLESTEROL_SCREENING
+    ].addLayer(cholesterolScreeningLayer);
 
     var mammographyScreeningLayer = L.geoJson(feature, {
       style: screeningRatesStyle(
@@ -2240,9 +2232,9 @@ function addScreeningRatesData(data) {
         allFeatures(feature, layer);
       },
     });
-    screeningRatesLayers.mammographyScreening.addLayer(
-      mammographyScreeningLayer
-    );
+    screeningRatesLayers[
+      screeningRatesLayerNames.MAMMOGRAPHY_SCREENING
+    ].addLayer(mammographyScreeningLayer);
 
     var cervicalScreeningLayer = L.geoJson(feature, {
       style: screeningRatesStyle(
@@ -2255,7 +2247,9 @@ function addScreeningRatesData(data) {
         allFeatures(feature, layer);
       },
     });
-    screeningRatesLayers.cervicalScreening.addLayer(cervicalScreeningLayer);
+    screeningRatesLayers[screeningRatesLayerNames.CERVICAL_SCREENING].addLayer(
+      cervicalScreeningLayer
+    );
 
     var colorectalScreeningLayer = L.geoJson(feature, {
       style: screeningRatesStyle(
@@ -2268,23 +2262,31 @@ function addScreeningRatesData(data) {
         allFeatures(feature, layer);
       },
     });
-    screeningRatesLayers.colorectalScreening.addLayer(colorectalScreeningLayer);
+    screeningRatesLayers[
+      screeningRatesLayerNames.COLORECTAL_SCREENING
+    ].addLayer(colorectalScreeningLayer);
   });
 }
 
 addScreeningRatesData(healthDataGeojson);
 
-var screeningBaseLayers = {
-  "Annual Checkup": screeningRatesLayers.annualCheckUp,
-  "Dental Visit": screeningRatesLayers.dentalVisit,
-  "Cholesterol Screening": screeningRatesLayers.cholesterolScreening,
-  "Mammography Screening": screeningRatesLayers.mammographyScreening,
-  "Cervical Screening": screeningRatesLayers.cervicalScreening,
-  "Colorectal Screening": screeningRatesLayers.colorectalScreening,
+var screeningRatesBaseLayers = {
+  [screeningRatesLayerNames.ANNUAL_CHECKUP]:
+    screeningRatesLayers[screeningRatesLayerNames.ANNUAL_CHECKUP],
+  [screeningRatesLayerNames.DENTAL_VISIT]:
+    screeningRatesLayers[screeningRatesLayerNames.DENTAL_VISIT],
+  [screeningRatesLayerNames.CHOLESTEROL_SCREENING]:
+    screeningRatesLayers[screeningRatesLayerNames.CHOLESTEROL_SCREENING],
+  [screeningRatesLayerNames.MAMMOGRAPHY_SCREENING]:
+    screeningRatesLayers[screeningRatesLayerNames.MAMMOGRAPHY_SCREENING],
+  [screeningRatesLayerNames.CERVICAL_SCREENING]:
+    screeningRatesLayers[screeningRatesLayerNames.CERVICAL_SCREENING],
+  [screeningRatesLayerNames.COLORECTAL_SCREENING]:
+    screeningRatesLayers[screeningRatesLayerNames.COLORECTAL_SCREENING],
 };
 
 L.control
-  .layers(screeningBaseLayers, null, { collapsed: false })
+  .layers(screeningRatesBaseLayers, null, { collapsed: false })
   .addTo(maps["screeningRatesMap"]);
 
 // SCREENING RATES LEGEND CONTROL
@@ -2293,16 +2295,16 @@ var screeningRatesLegend = L.control({ position: "bottomleft" });
 screeningRatesLegend.onAdd = function () {
   var div = L.DomUtil.create("div", "screeningRatesLegend");
   div.innerHTML = `
-    <h4>Percent Annual Checkup</h4>
-    <i style="background: #6e016b"></i><span>> 91.4%</span><br>
-    <i style="background: #88419d"></i><span>81.6% - 91.3%</span><br>
-    <i style="background: #8c6bb1"></i><span>78.8% - 81.5%</span><br>
-    <i style="background: #8c96c6"></i><span>76.6% - 78.7%</span><br>
-    <i style="background: #9ebcda"></i><span>74.5% - 76.5%</span><br>
-    <i style="background: #bfd3e6"></i><span>71.8% - 74.4%</span><br>
-    <i style="background: #edf8fb"></i><span>66.2% - 71.7%</span><br>
-    <i style="background: #edf8fb"></i><span>0% - 66.1%</span><br>
-    <i style="background: #606060"></i><span>No Data</span><br>
+    <h4>${screeningRatesLayerNames.ANNUAL_CHECKUP}</h4>
+    <i style="background: ${screeningRatesColors[0]}"></i><span>> 91.4%</span><br>
+    <i style="background: ${screeningRatesColors[1]}"></i><span>81.6% - 91.3%</span><br>
+    <i style="background: ${screeningRatesColors[2]}"></i><span>78.8% - 81.5%</span><br>
+    <i style="background: ${screeningRatesColors[3]}"></i><span>76.6% - 78.7%</span><br>
+    <i style="background: ${screeningRatesColors[4]}"></i><span>74.5% - 76.5%</span><br>
+    <i style="background: ${screeningRatesColors[5]}"></i><span>71.8% - 74.4%</span><br>
+    <i style="background: ${screeningRatesColors[6]}"></i><span>66.2% - 71.7%</span><br>
+    <i style="background: ${screeningRatesColors[7]}"></i><span>0% - 66.1%</span><br>
+    <i style="background: ${screeningRatesColors[8]}"></i><span>No Data</span><br>
   `;
   return div;
 };
@@ -2312,88 +2314,88 @@ screeningRatesLegend.addTo(maps["screeningRatesMap"]);
 function updateLegendForScreeningRates(layerName) {
   var legendContent = "";
   switch (layerName) {
-    case "Annual Checkup":
+    case screeningRatesLayerNames.ANNUAL_CHECKUP:
       legendContent = `
-        <h4>Percent Annual Checkup</h4>
-        <i style="background: #6e016b"></i><span>> 91.4%</span><br>
-        <i style="background: #88419d"></i><span>81.6% - 91.3%</span><br>
-        <i style="background: #8c6bb1"></i><span>78.8% - 81.5%</span><br>
-        <i style="background: #8c96c6"></i><span>76.6% - 78.7%</span><br>
-        <i style="background: #9ebcda"></i><span>74.5% - 76.5%</span><br>
-        <i style="background: #bfd3e6"></i><span>71.8% - 74.4%</span><br>
-        <i style="background: #edf8fb"></i><span>66.2% - 71.7%</span><br>
-        <i style="background: #edf8fb"></i><span>0% - 66.1%</span><br>
-        <i style="background: #606060"></i><span>No Data</span><br>
+        <h4>${screeningRatesLayerNames.ANNUAL_CHECKUP}</h4>
+        <i style="background: ${screeningRatesColors[0]}"></i><span>> 91.4%</span><br>
+        <i style="background: ${screeningRatesColors[1]}"></i><span>81.6% - 91.3%</span><br>
+        <i style="background: ${screeningRatesColors[2]}"></i><span>78.8% - 81.5%</span><br>
+        <i style="background: ${screeningRatesColors[3]}"></i><span>76.6% - 78.7%</span><br>
+        <i style="background: ${screeningRatesColors[4]}"></i><span>74.5% - 76.5%</span><br>
+        <i style="background: ${screeningRatesColors[5]}"></i><span>71.8% - 74.4%</span><br>
+        <i style="background: ${screeningRatesColors[6]}"></i><span>66.2% - 71.7%</span><br>
+        <i style="background: ${screeningRatesColors[7]}"></i><span>0% - 66.1%</span><br>
+        <i style="background: ${screeningRatesColors[8]}"></i><span>No Data</span><br>
       `;
       break;
-    case "Dental Visit":
+    case screeningRatesLayerNames.DENTAL_VISIT:
       legendContent = `
-        <h4>Percent Dental Visit</h4>
-        <i style="background: #6e016b"></i><span>> 83%</span><br>
-        <i style="background: #88419d"></i><span>72.2% - 82.9%</span><br>
-        <i style="background: #8c6bb1"></i><span>64.9% - 72.1%</span><br>
-        <i style="background: #8c96c6"></i><span>58.6% - 64.8%</span><br>
-        <i style="background: #9ebcda"></i><span>52.3% - 58.5%</span><br>
-        <i style="background: #bfd3e6"></i><span>45.1% - 52.2%</span><br>
-        <i style="background: #edf8fb"></i><span>23.4% - 45%</span><br>
-        <i style="background: #edf8fb"></i><span>0% - 23.3%</span><br>
-        <i style="background: #606060"></i><span>No Data</span><br>
+        <h4>${screeningRatesLayerNames.DENTAL_VISIT}</h4>
+        <i style="background: ${screeningRatesColors[0]}"></i><span>> 83%</span><br>
+        <i style="background: ${screeningRatesColors[1]}"></i><span>72.2% - 82.9%</span><br>
+        <i style="background: ${screeningRatesColors[2]}"></i><span>64.9% - 72.1%</span><br>
+        <i style="background: ${screeningRatesColors[3]}"></i><span>58.6% - 64.8%</span><br>
+        <i style="background: ${screeningRatesColors[4]}"></i><span>52.3% - 58.5%</span><br>
+        <i style="background: ${screeningRatesColors[5]}"></i><span>45.1% - 52.2%</span><br>
+        <i style="background: ${screeningRatesColors[6]}"></i><span>23.4% - 45%</span><br>
+        <i style="background: ${screeningRatesColors[7]}"></i><span>0% - 23.3%</span><br>
+        <i style="background: ${screeningRatesColors[8]}"></i><span>No Data</span><br>
       `;
       break;
-    case "Cholesterol Screening":
+    case screeningRatesLayerNames.CHOLESTEROL_SCREENING:
       legendContent = `
-        <h4>Percent Cholesterol Screening</h4>
-        <i style="background: #6e016b"></i><span>> 97.4%</span><br>
-        <i style="background: #88419d"></i><span>89.8% - 97.3%</span><br>
-        <i style="background: #8c6bb1"></i><span>87.3% - 89.7%</span><br>
-        <i style="background: #8c96c6"></i><span>84.6% - 87.2%</span><br>
-        <i style="background: #9ebcda"></i><span>81.5% - 84.5%</span><br>
-        <i style="background: #bfd3e6"></i><span>76% - 81.4%</span><br>
-        <i style="background: #edf8fb"></i><span>62.6% - 75.9%</span><br>
-        <i style="background: #edf8fb"></i><span>0% - 62.5%</span><br>
-        <i style="background: #606060"></i><span>No Data</span><br>
+        <h4>${screeningRatesLayerNames.CHOLESTEROL_SCREENING}</h4>
+        <i style="background: ${screeningRatesColors[0]}"></i><span>> 97.4%</span><br>
+        <i style="background: ${screeningRatesColors[1]}"></i><span>89.8% - 97.3%</span><br>
+        <i style="background: ${screeningRatesColors[2]}"></i><span>87.3% - 89.7%</span><br>
+        <i style="background: ${screeningRatesColors[3]}"></i><span>84.6% - 87.2%</span><br>
+        <i style="background: ${screeningRatesColors[4]}"></i><span>81.5% - 84.5%</span><br>
+        <i style="background: ${screeningRatesColors[5]}"></i><span>76% - 81.4%</span><br>
+        <i style="background: ${screeningRatesColors[6]}"></i><span>62.6% - 75.9%</span><br>
+        <i style="background: ${screeningRatesColors[7]}"></i><span>0% - 62.5%</span><br>
+        <i style="background: ${screeningRatesColors[8]}"></i><span>No Data</span><br>
       `;
       break;
-    case "Mammography Screening":
+    case screeningRatesLayerNames.MAMMOGRAPHY_SCREENING:
       legendContent = `
-        <h4>Percent Mammography Screening</h4>
-        <i style="background: #6e016b"></i><span>> 86.4%</span><br>
-        <i style="background: #88419d"></i><span>83.2% - 86.3%</span><br>
-        <i style="background: #8c6bb1"></i><span>81.2% - 83.1%</span><br>
-        <i style="background: #8c96c6"></i><span>79.5% - 81.1%</span><br>
-        <i style="background: #9ebcda"></i><span>77.9% - 79.4%</span><br>
-        <i style="background: #bfd3e6"></i><span>75.3% - 77.8%</span><br>
-        <i style="background: #edf8fb"></i><span>69.6% - 75.2%</span><br>
-        <i style="background: #edf8fb"></i><span>0% - 69.5%</span><br>
-        <i style="background: #606060"></i><span>No Data</span><br>
+        <h4>${screeningRatesLayerNames.MAMMOGRAPHY_SCREENING}</h4>
+        <i style="background: ${screeningRatesColors[0]}"></i><span>> 86.4%</span><br>
+        <i style="background: ${screeningRatesColors[1]}"></i><span>83.2% - 86.3%</span><br>
+        <i style="background: ${screeningRatesColors[2]}"></i><span>81.2% - 83.1%</span><br>
+        <i style="background: ${screeningRatesColors[3]}"></i><span>79.5% - 81.1%</span><br>
+        <i style="background: ${screeningRatesColors[4]}"></i><span>77.9% - 79.4%</span><br>
+        <i style="background: ${screeningRatesColors[5]}"></i><span>75.3% - 77.8%</span><br>
+        <i style="background: ${screeningRatesColors[6]}"></i><span>69.6% - 75.2%</span><br>
+        <i style="background: ${screeningRatesColors[7]}"></i><span>0% - 69.5%</span><br>
+        <i style="background: ${screeningRatesColors[8]}"></i><span>No Data</span><br>
       `;
       break;
-    case "Cervical Screening":
+    case screeningRatesLayerNames.CERVICAL_SCREENING:
       legendContent = `
-        <h4>Percent Cervical Screening</h4>
-        <i style="background: #6e016b"></i><span>> 91.5%</span><br>
-        <i style="background: #88419d"></i><span>86.3% - 91.4%</span><br>
-        <i style="background: #8c6bb1"></i><span>83.1% - 86.2%</span><br>
-        <i style="background: #8c96c6"></i><span>79.8% - 83%</span><br>
-        <i style="background: #9ebcda"></i><span>75.9% - 79.7%</span><br>
-        <i style="background: #bfd3e6"></i><span>69.5% - 75.8%</span><br>
-        <i style="background: #edf8fb"></i><span>51.7% - 69.4%</span><br>
-        <i style="background: #edf8fb"></i><span>0% - 51.6%</span><br>
-        <i style="background: #606060"></i><span>No Data</span><br>
+        <h4>${screeningRatesLayerNames.CERVICAL_SCREENING}</h4>
+        <i style="background: ${screeningRatesColors[0]}"></i><span>> 91.5%</span><br>
+        <i style="background: ${screeningRatesColors[1]}"></i><span>86.3% - 91.4%</span><br>
+        <i style="background: ${screeningRatesColors[2]}"></i><span>83.1% - 86.2%</span><br>
+        <i style="background: ${screeningRatesColors[3]}"></i><span>79.8% - 83%</span><br>
+        <i style="background: ${screeningRatesColors[4]}"></i><span>75.9% - 79.7%</span><br>
+        <i style="background: ${screeningRatesColors[5]}"></i><span>69.5% - 75.8%</span><br>
+        <i style="background: ${screeningRatesColors[6]}"></i><span>51.7% - 69.4%</span><br>
+        <i style="background: ${screeningRatesColors[7]}"></i><span>0% - 51.6%</span><br>
+        <i style="background: ${screeningRatesColors[8]}"></i><span>No Data</span><br>
       `;
       break;
-    case "Colorectal Screening":
+    case screeningRatesLayerNames.COLORECTAL_SCREENING:
       legendContent = `
-        <h4>Percent Colorectal Screening</h4>
-        <i style="background: #6e016b"></i><span>> 85.2%</span><br>
-        <i style="background: #88419d"></i><span>79.5% - 85.1%</span><br>
-        <i style="background: #8c6bb1"></i><span>76.1% - 79.4%</span><br>
-        <i style="background: #8c96c6"></i><span>72.8% - 76%</span><br>
-        <i style="background: #9ebcda"></i><span>69.3% - 72.7%</span><br>
-        <i style="background: #bfd3e6"></i><span>64.9% - 69.2%</span><br>
-        <i style="background: #edf8fb"></i><span>54% - 64.8%</span><br>
-        <i style="background: #edf8fb"></i><span>0% - 53.9%</span><br>
-        <i style="background: #606060"></i><span>No Data</span><br>
+        <h4>${screeningRatesLayerNames.COLORECTAL_SCREENING}</h4>
+        <i style="background: ${screeningRatesColors[0]}"></i><span>> 85.2%</span><br>
+        <i style="background: ${screeningRatesColors[1]}"></i><span>79.5% - 85.1%</span><br>
+        <i style="background: ${screeningRatesColors[2]}"></i><span>76.1% - 79.4%</span><br>
+        <i style="background: ${screeningRatesColors[3]}"></i><span>72.8% - 76%</span><br>
+        <i style="background: ${screeningRatesColors[4]}"></i><span>69.3% - 72.7%</span><br>
+        <i style="background: ${screeningRatesColors[5]}"></i><span>64.9% - 69.2%</span><br>
+        <i style="background: ${screeningRatesColors[6]}"></i><span>54% - 64.8%</span><br>
+        <i style="background: ${screeningRatesColors[7]}"></i><span>0% - 53.9%</span><br>
+        <i style="background: ${screeningRatesColors[8]}"></i><span>No Data</span><br>
       `;
       break;
   }
@@ -2405,12 +2407,12 @@ maps["screeningRatesMap"].on("baselayerchange", function (e) {
 });
 
 // Set annualCheckUp layer as the default
-updateLegendForScreeningRates("Annual Checkup");
-screeningRatesLayers.annualCheckUp.addTo(maps["screeningRatesMap"]);
+updateLegendForScreeningRates(screeningRatesLayerNames.ANNUAL_CHECKUP);
+screeningRatesLayers[screeningRatesLayerNames.ANNUAL_CHECKUP].addTo(
+  maps["screeningRatesMap"]
+);
 
 //=========================================================== Health Status Map =================================================================
-
-// Map setup
 maps["healthStatusMap"] = L.map("healthStatusMap", {
   maxBounds: bounds,
   maxZoom: 18,
@@ -3113,9 +3115,9 @@ function getColorBasedOnLanguageLegend(language) {
 
 function getColorForArabic(value) {
   return value > 965
-    ? "#00441b"
+    ? languageColors[0]
     : value > 508
-    ? "#006d2c"
+    ? languageColors[1]
     : value > 296
     ? "#238b45"
     : value > 157

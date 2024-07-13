@@ -3,28 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Language and Demographics of New York City</title>
+    <title>Health Map of NYC</title>
+    <!-- Leaflet CSS -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
       crossorigin=""
     />
+    <!-- Leaflet JavaScript -->
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-
+    <!-- Leaflet pop-up plugin for responsive pop-ups -->
     <script src="https://unpkg.com/leaflet-responsive-popup@1.0.0/leaflet.responsive.popup.js"></script>
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet-responsive-popup@1.0.0/leaflet.responsive.popup.css"
     />
-
+    <!-- D3.js -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <!-- CSS files -->
     <link rel="stylesheet" href="style.css" />
   </head>
+  <!-- Container for map selection buttons -->
   <div id="map-btn-container">
     <button id="btnDemographicLanguageMap" class="mapSelectBtn">
       Demographics
@@ -40,6 +45,8 @@
     </button>
     <button id="btnHealthStatusMap" class="mapSelectBtn">Health Status</button>
   </div>
+
+  <!-- Container for maps -->
   <div id="map-container">
     <div id="demographicLanguageMap" class="map"></div>
     <div id="healthRiskBehaviorsMap" class="map"></div>
@@ -47,9 +54,11 @@
     <div id="screeningRatesMap" class="map"></div>
     <div id="healthStatusMap" class="map"></div>
   </div>
-  <script src="ALL - language demographics.js"></script>
-  <script src="NYC Borough Boundaries.js"></script>
-  <script src="NYC PLACES.js"></script>
+
+  <!-- Script files-->
+  <script src="geojson-data/nyc-language-demographic.js"></script>
+  <script src="geojson-data/nyc-health-data.js"></script>
+  <script src="geojson-data/nyc-borough-boundaries.js"></script>
   <script src="map.js"></script>
-  <script src="main.js"></script>
+  <script src="map-handler.js"></script>
 </html>

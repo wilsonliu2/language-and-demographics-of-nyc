@@ -650,23 +650,27 @@ demographicGeoJson = L.geoJson(languageGeoJsonData, {
       // Use JSON.stringify to turn the properties object into a string so it can be passed into updatePieChart function
       // Chart container must have a set size or responsive popup plugin will not work as intended
       popUpContent += `
-        <button id="more-btn-${id}" onclick='showMoreButtons(${id})' style="background: none; border: none; color: blue; cursor: pointer; text-decoration: underline; padding: 0; margin-bottom: 4px">More</button>
-        <button id="hide-btn-${id}" onclick='hideMoreButtons(${id})' style="background: none; border: none; color: blue; cursor: pointer; text-decoration: underline; padding: 0; display:none; margin-bottom: 4px">Hide</button>
-        <div id="more-buttons-${id}" style="display:none;">
-          <button onclick='updatePieChart(${id}, "gender", ${JSON.stringify(
+      <button id="more-btn-${id}" onclick='showMoreButtons(${id})' style="background: none; border: none; color: blue; cursor: pointer; text-decoration: underline; padding: 0; margin-bottom: 4px">More</button>
+      <button id="hide-btn-${id}" onclick='hideMoreButtons(${id})' style="background: none; border: none; color: blue; cursor: pointer; text-decoration: underline; padding: 0; display:none; margin-bottom: 4px">Hide</button>
+      <div id="more-buttons-${id}" style="display:none;">
+        <button onclick='updatePieChart(${id}, "gender", ${JSON.stringify(
         p
       )})' style="background: none; border: none; color: black; cursor: pointer; text-decoration: none; padding: 0; margin-right: 4px;" onmouseover="this.style.color='blue'" onmouseout="this.style.color='black'">Gender</button>
-          <span style="color: black;">|</span>
-          <button onclick='updatePieChart(${id}, "age", ${JSON.stringify(
+        <span style="color: black;">|</span>
+        <button onclick='updatePieChart(${id}, "age", ${JSON.stringify(
         p
       )})' style="background: none; border: none; color: black; cursor: pointer; text-decoration: none; padding: 0; margin: 0 4px;" onmouseover="this.style.color='blue'" onmouseout="this.style.color='black'">Age</button>
-          <span style="color: black;">|</span>
-          <button onclick='updateBarPlotForRace(${id}, ${JSON.stringify(
+        <span style="color: black;">|</span>
+        <button onclick='updatePieChart(${id}, "hispanic", ${JSON.stringify(
+        p
+      )})' style="background: none; border: none; color: black; cursor: pointer; text-decoration: none; padding: 0; margin: 0 4px;" onmouseover="this.style.color='blue'" onmouseout="this.style.color='black'">Hispanic</button>
+        <span style="color: black;">|</span>
+        <button onclick='updateBarPlotForRace(${id}, ${JSON.stringify(
         p
       )})' style="background: none; border: none; color: black; cursor: pointer; text-decoration: none; padding: 0; margin-left: 4px;" onmouseover="this.style.color='blue'" onmouseout="this.style.color='black'">Race</button>
-          <div id="chart-container-${id}" style="width: 150px; height: 200px; height: 100%;"></div>
-        </div>
-      `;
+        <div id="chart-container-${id}" style="width: 150px; height: 200px; height: 100%;"></div>
+      </div>
+    `;
     }
 
     var popup = L.responsivePopup().setContent(popUpContent);
@@ -685,7 +689,7 @@ function createPieChartForDemographic(id, data) {
   // Clear any existing element from the container
   d3.select(id).selectAll("*").remove();
 
-  var width = 300,
+  var width = 310,
     height = 200,
     radius = Math.min(width, height) / 2 - 25;
 
@@ -806,6 +810,11 @@ function updatePieChart(id, type, properties) {
       { label: "18 and over", value: properties["18_plus"] },
       { label: "65 and over", value: properties["65_plus"] },
     ];
+  } else if (type == "hispanic") {
+    pieData = [
+      { label: "Hispanic", value: properties.Hispanic },
+      { label: "Non-Hispanic", value: properties.Not_Hispanic },
+    ];
   }
 
   createPieChartForDemographic(`#chart-container-${id}`, pieData);
@@ -911,13 +920,27 @@ function createBarPlotForDemographics(id, data) {
   bars
     .on("mouseover", function (event, d) {
       d3.select(this).transition().duration(50).attr("opacity", ".7");
+
+      // Change label name for abbreviations
+      var label = d.label;
+      if (label === "AIAN") {
+        label = "American Indians and Alaska Natives";
+      } else if (label === "NHOPI") {
+        label = "Native Hawaiian or Other Pacific Islander";
+      }
+
       tooltip
         .style("display", "block")
         .html(
-          `${d.label}: ${formatter.format(
+          `${label}: ${formatter.format(
             d.value
           )}<br>Percentage: ${d.percentage.toFixed(2)}%`
         );
+    })
+    .on("mousemove", function (event) {
+      tooltip
+        .style("left", event.pageX + 10 + "px")
+        .style("top", event.pageY - 25 + "px");
     })
     .on("mouseout", function (event, d) {
       d3.select(this).transition().duration(50).attr("opacity", "1");
@@ -932,18 +955,13 @@ function updateBarPlotForRace(id, properties) {
     { label: "White", value: parseInt(properties.White) },
     { label: "Black", value: parseInt(properties.Black) },
     {
-      label: "American Indian",
+      label: "AIAN",
       value: parseInt(properties.AIAN),
     },
     { label: "Asian", value: parseInt(properties.Asian) },
     {
-      label: "Other Pacific Islander",
+      label: "NHOPI",
       value: parseInt(properties.NHOPI),
-    },
-    { label: "Hispanic", value: parseInt(properties.Hispanic) },
-    {
-      label: "Not Hispanic",
-      value: parseInt(properties.Not_Hispanic),
     },
   ];
 
